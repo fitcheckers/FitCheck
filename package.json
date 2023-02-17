@@ -1,0 +1,29 @@
+{
+  "name": "fitcheck",
+  "version": "1.0.0",
+  "description": "Fashion Based Social Media Platform",
+  "main": "index.js",
+  "scripts": {
+    "prod": "node react-server/index && node express-server/index",
+    "express": "node express-server/index",
+    "react": "node express-server/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fitcheckers/FitCheck.git"
+  },
+  "keywords": [
+    "fashion",
+    "social",
+    "social",
+    "media",
+    "react",
+    "express"
+  ],
+  "author": "FitCheckers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fitcheckers/FitCheck/issues"
+  },
+  "homepage": "https://github.com/fitcheckers/FitCheck#readme"
+}
