@@ -11,7 +11,7 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const { currentUser, register } = useAuth();
+    const { currentUser, register, setError } = useAuth();
 
     useEffect(() => {
       if(currentUser){
@@ -23,15 +23,20 @@ export default function Register() {
       e.preventDefault();
 
       if(password !== confirmPassword){
-        return alert("Password Do Not Match!");
+        return setError("Password Do Not Match!");
+      }
+
+      if(password.length < 6){
+        return setError("Password need to be at least 6 characters.")
       }
 
       try {
+        setError("");
         setLoading(true);
         await register(email, password);
         navigate("/profile");
       } catch (e) {
-        alert("Failed to register");
+        setError("Failed to register");
       }
 
       setLoading(false);

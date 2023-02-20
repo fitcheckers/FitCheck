@@ -8,7 +8,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { currentUser, login } = useAuth();
+  const { currentUser, login, setError } = useAuth();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,11 +21,22 @@ export default function Login() {
     e.preventDefault();
 
     try {
+      setError("")
       setLoading(true);
       await login(email, password);
       navigate("/profile");
     } catch (e) {
-      alert("Failed to register");
+      if(e.message === "Firebase: Error (auth/user-not-found).")
+      {
+        setError("Inputted email is not associated with any account!");
+      }
+      else if(e.message === "Firebase: Error (auth/wrong-password).")
+      {
+        setError("Password is incorrect!");
+      }
+      else{
+        setError("Failed to login")
+      }
     }
 
     setLoading(false);
