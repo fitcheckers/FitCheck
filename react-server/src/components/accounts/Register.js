@@ -1,17 +1,41 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Register() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const { currentUser, register } = useAuth();
+
+    useEffect(() => {
+      if(currentUser){
+        navigate("/");
+      }
+    }, [currentUser, navigate]);
 
     async function handleFormSubmit(e) {
-        e.preventDefault();
+      e.preventDefault();
+
+      if(password !== confirmPassword){
+        return alert("Password Do Not Match!");
+      }
+
+      try {
+        setLoading(true);
+        await register(email, password);
+        navigate("/profile");
+      } catch (e) {
+        alert("Failed to register");
+      }
+
+      setLoading(false);
     }
-
-
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -63,6 +87,7 @@ export default function Register() {
           <div>
             <button
               type="submit"
+              disabled={loading}
               className=" w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-sky-800 hover:bg-sky-900"
             >
               Register
