@@ -15,6 +15,7 @@ function App() {
         <LogButton/>
         <ErrorMessage />
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/profile" element={

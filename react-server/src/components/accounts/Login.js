@@ -43,7 +43,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-full flex items-center justify-center py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-4 text-3xl text-center tracking-tight font-light dark:text-white">
@@ -81,7 +81,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className=" w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-sky-800 hover:bg-sky-900"
+              className=" w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-600"
             >
               Login
             </button>
