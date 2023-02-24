@@ -11,8 +11,8 @@ const handleChange = (e) => {
 };
 
 if (searchInput.length > 0) {
-    countries.filter((country) => {
-    return country.name.match(searchInput);
+    query.filter((query) => {
+    return query.name.match(searchInput);
 });
 }
 
