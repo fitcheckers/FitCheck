@@ -7,7 +7,7 @@ import ErrorMessage from "./components/utils/ErrorMessage";
 import Profile from "./components/accounts/Profile";
 import LogButton from "./components/accounts/LogButton";
 import Private from "./components/utils/Private";
-import Home from "./components/home";
+import Home from "./components/Home";
 import Navbar from "./components/utils/Navbar";
 function App() {
   return (
