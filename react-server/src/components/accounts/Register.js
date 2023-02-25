@@ -48,7 +48,7 @@ export default function Register() {
     }
 
   return (
-    <div className="min-h-full flex items-center justify-center py-32 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-full flex items-center justify-center py-56 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-4 text-3xl text-center tracking-tight font-light dark:text-white">
