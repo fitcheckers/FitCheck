@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 
 const SearchBar = () => {
-
+const query ="";
  const [searchInput, setSearchInput] = useState("");
 
 const handleChange = (e) => {

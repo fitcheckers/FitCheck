@@ -9,11 +9,14 @@ import LogButton from "./components/accounts/LogButton";
 import Private from "./components/utils/Private";
 import Home from "./components/Home";
 import Navbar from "./components/utils/Navbar";
+import Sidebar from "./components/utils/Sidebar";
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Navbar/>
+        <Sidebar/>
         <LogButton/>
         <ErrorMessage />
         <Routes>
