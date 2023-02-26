@@ -34,8 +34,12 @@ export default function Login() {
       {
         setError("Password is incorrect!");
       }
+      else if(e.message === "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).")
+      {
+        setError("Access to the account has been disabled due to many login attempts")
+      }
       else{
-        setError("Failed to login")
+        setError("Failed to Login")
       }
     }
 
@@ -43,7 +47,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-full flex items-center justify-center py-56 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-full flex items-center justify-center py-36 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-4 text-3xl text-center tracking-tight font-light dark:text-white">

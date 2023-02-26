@@ -17,7 +17,6 @@ function App() {
       <Router>
         <Navbar/>
         <Sidebar/>
-        <LogButton/>
         <ErrorMessage />
         <Routes>
           <Route path="/" element={<Home />} />
