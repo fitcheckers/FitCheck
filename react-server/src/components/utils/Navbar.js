@@ -1,4 +1,4 @@
-imimport SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../img/logo.png";
