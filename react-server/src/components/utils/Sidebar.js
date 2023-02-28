@@ -3,7 +3,6 @@ import { FaHandHoldingHeart } from "react-icons/fa";
 import { BiCloset } from "react-icons/bi";
 import { MdShoppingCart } from "react-icons/md";
 
-
 const Sidebar = () => {
   return (
     <div
@@ -19,7 +18,7 @@ const Sidebar = () => {
         <SideBarIcon icon={<AiFillSnippets size="32" />} />{" "}
       </a>
       <SideBarIcon icon={<BiCloset size="32" />} />
-      <SideBarIcon icon={<FaHandHoldingHeart size="32" />} />
+      <a href="/"> <SideBarIcon icon={<FaHandHoldingHeart size="32" />} /> </a>
       <SideBarIcon icon={<MdShoppingCart size="32" />} />
     </div>
   );
