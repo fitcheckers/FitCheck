@@ -24,10 +24,10 @@ function App() {
           <ErrorMessage />
           
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/homePage" element={<Home />} />
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="/like" element={<LikePage />} />
+            <Route exact path="/likePage" element={<LikePage />} />
             <Route
               exact
               path="/profile"

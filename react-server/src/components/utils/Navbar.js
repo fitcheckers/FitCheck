@@ -1,11 +1,12 @@
 import SearchBar from "./SearchBar";
 
+
 const Navbar = () =>{
     return(
         <div className="p-5 bg-sky-300 shadow md:flex md:items-center md:justify-between w-screen fixed">
             <span className="text-2xl font-[Poppins]">
                 <img className="h-10 inline" src ="https://static.vecteezy.com/system/resources/thumbnails/003/746/974/small/fc-logo-monogram-isolated-on-circle-element-design-template-free-vector.jpg"></img>
-                <a href="/">Fitcheck</a>
+                <a href="/homePage">Fitcheck</a>
                 
             </span>
             <div className="w-80">

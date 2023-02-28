@@ -10,7 +10,7 @@ const Sidebar = () => {
                         flex flex-col
                         bg-gray-900 text-white shadow fixed"
     >
-      <a href="/">
+      <a href="/homePage">
         {" "}
         <SideBarIcon icon={<AiFillHome size="32" />} />{" "}
       </a>
@@ -18,7 +18,7 @@ const Sidebar = () => {
         <SideBarIcon icon={<AiFillSnippets size="32" />} />{" "}
       </a>
       <SideBarIcon icon={<BiCloset size="32" />} />
-      <a href="/"> <SideBarIcon icon={<FaHandHoldingHeart size="32" />} /> </a>
+      <a href="/likePage"> <SideBarIcon icon={<FaHandHoldingHeart size="32" />} /> </a>
       <SideBarIcon icon={<MdShoppingCart size="32" />} />
     </div>
   );
