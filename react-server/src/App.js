@@ -10,37 +10,35 @@ import Private from "./components/utils/Private";
 import Home from "./components/Home";
 import Navbar from "./components/utils/Navbar";
 import Sidebar from "./components/utils/Sidebar";
-import LikePage from './components/utils/LikePage'
+import LikePage from "./components/utils/LikePage";
 
 function App() {
   return (
-    <div className="flex">
-      <AuthProvider>
-        <Router>
-          <Sidebar />
-         <Navbar />
+    <AuthProvider>
+      <Router>
+        <Sidebar />
+        <Navbar />
 
-          <LogButton />
-          <ErrorMessage />
-          
-          <Routes>
-            <Route path="/homePage" element={<Home />} />
-            <Route exact path="/register" element={<Register />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/likePage" element={<LikePage />} />
-            <Route
-              exact
-              path="/profile"
-              element={
-                <Private>
-                  <Profile />
-                </Private>
-              }
-            />
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </div>
+        <LogButton />
+        <ErrorMessage />
+
+        <Routes>
+          <Route path="/homePage" element={<Home />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/likePage" element={<LikePage />} />
+          <Route
+            exact
+            path="/profile"
+            element={
+              <Private>
+                <Profile />
+              </Private>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
