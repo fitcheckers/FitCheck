@@ -15,19 +15,23 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar/>
-        <Sidebar/>
-        <LogButton/>
+        <Navbar />
+        <Sidebar />
+        <LogButton />
         <ErrorMessage />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/profile" element={
-            <Private>
-              <Profile/>
-            </Private>
-          } />
+          <Route
+            exact
+            path="/profile"
+            element={
+              <Private>
+                <Profile />
+              </Private>
+            }
+          />
         </Routes>
       </Router>
     </AuthProvider>
