@@ -32,7 +32,7 @@ function Pin(props) {
         <div className="modal_foot">
           <div className="destination">
             <div className="pint_mock_icon_container">
-              <MdTitle />
+              <MdTitle/>
             </div>
             <span>{props.pinDetails.destination}</span>
           </div>

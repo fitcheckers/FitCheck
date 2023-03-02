@@ -25,5 +25,14 @@
   "bugs": {
     "url": "https://github.com/fitcheckers/FitCheck/issues"
   },
-  "homepage": "https://github.com/fitcheckers/FitCheck#readme"
+  "homepage": "https://github.com/fitcheckers/FitCheck#readme",
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.11",
+    "@mui/styled-engine-sc": "^5.11.11",
+    "react-sticky-box": "^2.0.0",
+    "styled-components": "^5.3.7"
+  }
 }

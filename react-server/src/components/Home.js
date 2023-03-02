@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import "../styles/home.css";
 import Pin from "./Pin.js";
 import Modal from "./Modal";
-import { AiOutlinePlus } from "react-icons/ai";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 class Home extends Component {
   constructor(props) {
@@ -33,12 +33,15 @@ class Home extends Component {
     return (
       <div>
         <div className="navigation_bar">
-          <div
+          <Fab
             onClick={() => this.setState({ show_modal: true })}
             className="pint_mock_icon_container add_pin"
+            size="small"
+            color="primary"
+            aria-label="add"
           >
-            <AiOutlinePlus />
-          </div>
+            <AddIcon />
+          </Fab>
         </div>
 
         <div className="pin_container">{this.state.pins}</div>

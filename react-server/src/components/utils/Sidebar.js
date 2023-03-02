@@ -6,19 +6,20 @@ import { MdShoppingCart } from "react-icons/md";
 const Sidebar = () => {
   return (
     <div
-      className="top-[93px] left-0 h-screen w-16 m-0 
+      className="h-full  w-16 m
                         flex flex-col
-                        bg-gray-900 text-white shadow fixed"
+                        bg-gray-900 text-white shadow fixed  overflow-x-hidden 0"
     >
       <a href="/homePage">
-        {" "}
         <SideBarIcon icon={<AiFillHome size="32" />} />{" "}
       </a>
       <a href="/">
         <SideBarIcon icon={<AiFillSnippets size="32" />} />{" "}
       </a>
-      <SideBarIcon icon={<BiCloset size="32" />} />
-      <a href="/likePage"> <SideBarIcon icon={<FaHandHoldingHeart size="32" />} /> </a>
+      <SideBarIcon icon={<BiCloset size="32" />} />{" "}
+      <a href="/likePage">
+        <SideBarIcon icon={<FaHandHoldingHeart size="32" />} />{" "}
+      </a>
       <SideBarIcon icon={<MdShoppingCart size="32" />} />
     </div>
   );
