@@ -35,10 +35,10 @@ class Home extends Component {
         <div className="navigation_bar">
           <Fab
             onClick={() => this.setState({ show_modal: true })}
-            className="pint_mock_icon_container add_pin"
-            size="small"
+            className="pint_mock_icon_container"
             color="primary"
             aria-label="add"
+            size="medium"
           >
             <AddIcon />
           </Fab>
