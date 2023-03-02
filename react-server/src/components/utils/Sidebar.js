@@ -6,7 +6,7 @@ import { MdShoppingCart } from "react-icons/md";
 const Sidebar = () => {
   return (
     <div
-      className="h-full top-0 w-16
+      className="h-full w-16
                   flex flex-col
                   bg-gray-900 text-white shadow fixed overflow-x-hidden"
     >
@@ -18,6 +18,6 @@ const Sidebar = () => {
     </div>
   );
 };
-const SideBarIcon = ({ icon, href }) => <div className="sidebar-icon top-28 overflow-y-hidden"><a href={href}>{icon}</a></div>;
+const SideBarIcon = ({ icon, href }) => <div className="sidebar-icon top-5 overflow-y-hidden"><a href={href}>{icon}</a></div>;
 
 export default Sidebar;

@@ -23,7 +23,7 @@ const Navbar = () =>{
     if(currentUser)
     {
         return(
-            <div className="p-5 bg-[#015668] shadow md:flex md:items-center md:justify-between w-screen sticky">
+            <div className="p-5 bg-[#015668] shadow md:flex md:items-center md:justify-between w-screen fixed z-10 top">
                 <span className="text-2xl font-[Poppins]">
                     <a href="/"><img className="h-10 inline" src ={Logo} alt="fitcheck logo"></img></a>
                     
@@ -40,7 +40,7 @@ const Navbar = () =>{
         )
     }
         return(
-            <div className="p-5 bg-[#015668] shadow md:flex md:items-center md:justify-between w-screen sticky">
+            <div className="p-5 bg-[#015668] shadow md:flex md:items-center md:justify-between w-screen fixed z-10 top-0">
                 <span className="text-2xl font-[Poppins]">
                     <a href="/"><img className="h-10 inline" src ={Logo} alt="fitcheck logo"></img></a>
                     
