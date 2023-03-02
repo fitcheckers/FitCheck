@@ -16,9 +16,8 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
         <Sidebar />
-
+        <Navbar />
         <ErrorMessage />
         <Routes>
           <Route path="/" element={<Home />} />

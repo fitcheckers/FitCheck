@@ -6,25 +6,18 @@ import { MdShoppingCart } from "react-icons/md";
 const Sidebar = () => {
   return (
     <div
-      className="h-full  w-16 m
-                        flex flex-col
-                        bg-gray-900 text-white shadow fixed  overflow-x-hidden 0"
+      className="h-full top-0 w-16
+                  flex flex-col
+                  bg-gray-900 text-white shadow fixed overflow-x-hidden"
     >
-      <a href="/homePage">
-        <SideBarIcon icon={<AiFillHome size="32" />} />{" "}
-      </a>
-      <a href="/">
-        <SideBarIcon icon={<AiFillSnippets size="32" />} />{" "}
-      </a>
-      <SideBarIcon icon={<BiCloset size="32" />} />{" "}
-      <a href="/likePage">
-        <SideBarIcon icon={<FaHandHoldingHeart size="32" />} />{" "}
-      </a>
-      <SideBarIcon icon={<MdShoppingCart size="32" />} />
+      <SideBarIcon href={"/homePage"} icon={<AiFillHome size="32" />} />{" "}
+      <SideBarIcon href={"/"} icon={<AiFillSnippets size="32" />} />{" "}
+      <SideBarIcon href={"/Wardrobe"} icon={<BiCloset size="32" />} />{" "}
+      <SideBarIcon href={"/likePage"} icon={<FaHandHoldingHeart size="32" />} />{" "}
+      <SideBarIcon href={"/shoppingCart"} icon={<MdShoppingCart size="32" />} />
     </div>
   );
 };
-// relative mt-2 mb-2 items-center justify-center mx-auto
-const SideBarIcon = ({ icon }) => <div className="sidebar-icon">{icon}</div>;
+const SideBarIcon = ({ icon, href }) => <div className="sidebar-icon top-28 overflow-y-hidden"><a href={href}>{icon}</a></div>;
 
 export default Sidebar;
