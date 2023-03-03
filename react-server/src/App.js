@@ -5,12 +5,14 @@ import Register from "./components/accounts/Register";
 import Login from "./components/accounts/Login";
 import ErrorMessage from "./components/utils/ErrorMessage";
 import Profile from "./components/accounts/Profile";
-import LogButton from "./components/accounts/LogButton";
 import Private from "./components/utils/Private";
 import Home from "./components/Home";
 import Navbar from "./components/utils/Navbar";
 import LikePage from "./components/LikePage";
 import Sidebar from "./components/utils/Sidebar";
+import MyPost from "./components/MyPost";
+import Wardrobe from "./components/Wardrobe";
+import ShoppingCart from "./components/ShoppingCart";
 
 function App() {
   return (
@@ -23,7 +25,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/likePage" element={<LikePage />} />
+          <Route exact path="/LikePage" element={<Private><LikePage /></Private>} />
+          <Route exact path="/MyPost" element={<Private><MyPost /></Private>} />
+          <Route exact path="/ShoppingCart" element={<Private><ShoppingCart /></Private>} />
+          <Route exact path="/Wardrobe" element={<Private><Wardrobe /></Private>} />
           <Route
             exact
             path="/profile"

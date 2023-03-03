@@ -1,9 +1,9 @@
 import React from "react";
 
-function PinDetails() {
+function Wardrobe() {
   return(
   <div>
-
+    
 
 
 
@@ -13,4 +13,4 @@ function PinDetails() {
   );
 }
 
-export default PinDetails;
+export default Wardrobe;

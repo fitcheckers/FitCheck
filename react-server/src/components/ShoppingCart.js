@@ -1,6 +1,6 @@
 import React from "react";
 
-function PinDetails() {
+function ShoppingCart() {
   return(
   <div>
 
@@ -13,4 +13,4 @@ function PinDetails() {
   );
 }
 
-export default PinDetails;
+export default ShoppingCart;
