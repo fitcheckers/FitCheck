@@ -3,11 +3,19 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { maxHeight, maxWidth } from "@mui/system";
-
+import { borders } from "@mui/system";
 function LikePage() {
   return (
-    <Box sx={{ width: maxWidth, height: maxHeight, margin: 10 }}>
-      <ImageList variant="masonry" cols={5} gap={12}>
+    <Box
+      sx={{
+        width: maxWidth,
+        height: maxHeight,
+        paddingLeft: 10,
+        paddingRight: 2,
+        paddingTop: 15,
+      }}
+    >
+      <ImageList variant="masonry" cols={5} gap={35}>
         {itemData.map((item) => (
           <ImageListItem key={item.img}>
             <img
