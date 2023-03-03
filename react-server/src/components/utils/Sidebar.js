@@ -18,6 +18,6 @@ const Sidebar = () => {
     </div>
   );
 };
-const SideBarIcon = ({ icon, href }) => <div className="sidebar-icon top-5 overflow-y-hidden"><a href={href}>{icon}</a></div>;
+const SideBarIcon = ({ icon, href }) => <div className="sidebar-icon top-24 overflow-y-hidden"><a href={href}>{icon}</a></div>;
 
 export default Sidebar;
