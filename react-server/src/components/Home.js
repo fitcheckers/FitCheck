@@ -32,13 +32,12 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="navigation_bar">
+        <div className="fixed bottom-0 right-0 z-1 ">
           <Fab
             onClick={() => this.setState({ show_modal: true })}
-            className="pint_mock_icon_container"
             color="primary"
             aria-label="add"
-            size="medium"
+            size="large"
           >
             <AddIcon />
           </Fab>
