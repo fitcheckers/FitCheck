@@ -7,6 +7,7 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import picture from "./accounts/profile.webp";
+import background from "../img/background.jpeg";
 
 class MyPost extends Component {
   constructor(props) {
@@ -36,12 +37,13 @@ class MyPost extends Component {
     return (
       <div className="overflow-x-hidden">
         <div>
-          <img className="w-48 relative top-32 left-24 rounded-full" src={picture} alt="profile"></img>
-          <p className="relative left-80 text-lg font-bold">@username</p>
+          <img className="left-12 -z-10 top-[80px] w-screen h-52 relative" src={background} alt="background cover"></img>
+          <img className="w-48 relative left-24 rounded-full" src={picture} alt="profile"></img>
+          <p className="relative left-80 text-lg font-bold -mt-32">@username</p>
           <p className="relative left-80 text-lg">2 Post</p>
           <a href="/Profile" className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500">Edit Profile</a>
           <HiOutlineSquares2X2 size="32" className="relative left-24 top-16" />
-          <p className="relative left-32 top-9 font-extrabold text-xl">My Posts</p>
+          <p className="relative left-32 top-9 font-extrabold text-xl -mb-10">My Posts</p>
         </div>
         <div>
           <div className="fixed bottom-0 right-0 z-1 ">
