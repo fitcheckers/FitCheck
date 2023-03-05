@@ -32,7 +32,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="fixed bottom-0 right-0 z-1 ">
+        <div className="fixed bottom-0 right-0 z-10 ">
           <Fab
             onClick={() => this.setState({ show_modal: true })}
             color="primary"
