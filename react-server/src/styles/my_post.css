@@ -1,0 +1,28 @@
+
+.pin_container {
+  margin: 0;
+  padding-left: 49px;
+  padding-top: 85px;
+  width: 100vw;
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-auto-rows: 10px;
+  justify-content: center;
+}
+
+.card {
+  margin: 15px 10px;
+  padding: 0;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card_small {
+  grid-row-end: span 26;
+}
+
+.card_large {
+  grid-row-end: span 45;
+}
