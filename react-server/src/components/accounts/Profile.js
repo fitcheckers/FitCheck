@@ -72,8 +72,8 @@ export default function Profile(){
               <div class="h-60 w-60 cursor-pointer"
                 onClick={() => imageUploader.current.click()}
               >
-                <img className="shadow-lg rounded-full max-w-full h-full items-stretch border-none"
-                  alt="profile picture"
+                <img className="shadow-lg rounded-full max-w-full h-full items-stretch border-none object-cover"
+                  alt="profile"
                   src={displayPictureUrl || currentUser.photoURL || picture}
                 />
               </div>
