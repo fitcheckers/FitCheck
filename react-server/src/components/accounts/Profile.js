@@ -21,14 +21,6 @@ export default function Profile(){
       }
       const imageUrl = URL.createObjectURL(file);
       setDisplayPictureUrl(imageUrl);
-      if (file) {
-        const reader = new FileReader();
-        current.file = file;
-        reader.onload = e => {
-          current.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
     };
     const handleSaveImage = async (e) =>{
       e.preventDefault();
