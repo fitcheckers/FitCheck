@@ -13,7 +13,6 @@ export default function Profile(){
     const { currentUser, updateUserProfile, setError } = useAuth();
     const imageUploader = React.useRef(null);
     const [displayPictureUrl, setDisplayPictureUrl] = useState(currentUser.photoURL);
-    const [pictureLink, setpictureLink] = useState("");
 
     const handleImageUpload = async e => {
       const [file] = e.target.files;
@@ -24,7 +23,6 @@ export default function Profile(){
       setDisplayPictureUrl(imageUrl);
       if (file) {
         const reader = new FileReader();
-        const { current } = uploadedImage;
         current.file = file;
         reader.onload = e => {
           current.src = e.target.result;
@@ -48,8 +46,6 @@ export default function Profile(){
       }
       setLoading(false);
       document.getElementById("username").value = "";     
-    };
-    const handleImageUrl = async (e) => {
     };
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -85,6 +81,7 @@ export default function Profile(){
                 onClick={() => imageUploader.current.click()}
               >
                 <img className="shadow-lg rounded-full max-w-full h-full items-stretch border-none"
+                  alt="profile picture"
                   src={displayPictureUrl || currentUser.photoURL || picture}
                 />
               </div>
