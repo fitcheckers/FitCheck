@@ -2,14 +2,18 @@
 
 const FireStore = require('firebase-admin');
 
-const db = FireStore.initializeApp({
-    apiKey: "AIzaSyBSal0IsBhwXJI-6u8LbPPgR_KLCwMIM6U",
-    authDomain: "fitcheck-b023b.firebaseapp.com",
-    projectId: "fitcheck-b023b",
-    storageBucket: "fitcheck-b023b.appspot.com",
-    messagingSenderId: "13443459137",
-    appId: "1:13443459137:web:ebb9bd5bc9c13c77683ec0",
-    measurementId: "G-G647WKTTM7"
-  }).firestore();
+require('dotenv').config();
+
+const CONFIG = {
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.API_ID,
+  measurementId: process.env.MEASUREMENT_ID
+};
+
+const db = FireStore.initializeApp(CONFIG).firestore();
 
 module.exports = db;
