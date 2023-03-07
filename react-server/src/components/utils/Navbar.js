@@ -23,9 +23,9 @@ const Navbar = () =>{
     if(currentUser)
     {
         return(
-            <div className="p-5 bg-[#015668] shadow md:flex md:items-center md:justify-between w-screen fixed z-10 top-0">
+            <div className="p-5 bg-[#015668] shadow flex md:items-center md:justify-between w-screen fixed z-10 top-0 shrink-0">
                 <span className="text-2xl font-[Poppins]">
-                    <a href="/"><img className="h-10 inline" src ={Logo} alt="fitcheck logo"></img></a>
+                    <a href="/"><img className="h-10 inline object-cover" src ={Logo} alt="fitcheck logo"></img></a>
                     
                 </span>
                 <div className="w-80">
