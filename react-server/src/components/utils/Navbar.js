@@ -44,8 +44,8 @@ const Navbar = () =>{
                     </button>
                     <div className={`z-10 right-6 top-16 ${isOpen ? "fixed" : "hidden"}`}>
                     <ul>
-                        <li><a className="rounded-t-md px-5 flex bg-slate-300 border-b-2" href="/Profile">Edit Profile</a></li>
-                        <li><button className="w-full rounded-b-md px-5 flex bg-slate-300" onClick={handleLogout}>Log Out</button></li>
+                        <li><a className="rounded-t-md px-5 flex bg-gray-300 border-b-2" href="/Profile">Edit Profile</a></li>
+                        <li><button className="w-full rounded-b-md px-5 flex bg-gray-300" onClick={handleLogout}>Log Out</button></li>
                     </ul>
                     </div>
                 </ul>
