@@ -30,7 +30,7 @@ const Navbar = () =>{
     if(currentUser)
     {
         return(
-            <div className="p-5 bg-[#015668] shadow flex md:items-center md:justify-between w-screen fixed z-10 top-0 shrink-0 h-20">
+            <div className="p-5 bg-[#015668] shadow flex md:items-center md:justify-between w-screen fixed z-10 top-0 h-20 min-w-max">
                 <span className="text-2xl font-[Poppins]">
                     <a href="/"><img className="h-10 inline object-cover" src ={Logo} alt="fitcheck logo"></img></a>
                     
@@ -45,7 +45,7 @@ const Navbar = () =>{
                     <div className={`z-10 right-6 top-16 ${isOpen ? "fixed" : "hidden"}`}>
                     <ul>
                         <li><a className="rounded-t-md px-5 flex bg-slate-300 border-b-2" href="/Profile">Edit Profile</a></li>
-                        <li><a className="rounded-b-md px-5 flex bg-slate-300" onClick={handleLogout}  href="/">Log Out</a></li>
+                        <li><button className="w-full rounded-b-md px-5 flex bg-slate-300" onClick={handleLogout}>Log Out</button></li>
                     </ul>
                     </div>
                 </ul>
@@ -53,7 +53,7 @@ const Navbar = () =>{
         )
     }
         return(
-            <div className="p-5 bg-[#015668] shadow md:flex md:items-center md:justify-between w-screen fixed z-10 top-0">
+            <div className="p-5 bg-[#015668] shadow flex md:items-center md:justify-between w-screen fixed z-10 top-0 h-20 min-w-max">
                 <span className="text-2xl font-[Poppins]">
                     <a href="/"><img className="h-10 inline" src ={Logo} alt="fitcheck logo"></img></a>
                     
