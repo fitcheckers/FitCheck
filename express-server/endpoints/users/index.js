@@ -79,3 +79,16 @@ app.post('/users/unfollow', async (req, res) => {
     await db.collection('users').doc(follower).set(follower_data);
     res.json({ "success": true });
 });
+
+app.post('/users/followers', async (req, res) => {
+    let { id, followers = true, following = true } = req.body;
+    if (!id) {
+        res.status(400).send('missing id from json');
+        return;
+    }
+    const returning = {};
+    const data = await (await db.collection('users').doc(id).get()).data();
+    if (followers) returning.followers = data.followers;
+    if (following) returning.following = data.following;
+    res.json(returning);
+});
