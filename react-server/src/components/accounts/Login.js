@@ -25,7 +25,7 @@ export default function Login() {
       setError("")
       setLoading(true);
       await login(email, password);
-      navigate("/profile");
+      navigate("/");
     } catch (e) {
       if(e.message === "Firebase: Error (auth/user-not-found).")
       {
