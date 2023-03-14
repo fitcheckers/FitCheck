@@ -31,23 +31,21 @@ const Navbar = () =>{
     if(currentUser)
     {
         return(
-            <div className="p-5 bg-[#015668] shadow flex md:items-center md:justify-between w-screen fixed z-10 top-0 h-20 min-w-max shrink"> {/*nav bar */}
-                <span className="text-2xl font-[Poppins]">
+            <div className="p-5 bg-[#015668] shadow items-center justify-between w-screen fixed z-10 top-0 h-20 flex"> {/*nav bar */}
+                <span className="text-2xl font-[Poppins] flex-none">
                     <a href="/"><img className="h-10 inline object-cover" src ={Logo} alt="fitcheck logo"></img></a>
                     
                 </span>
-                <div className="">
-                    <SearchBar/>
-                </div>
-                <ul className="md:items-center z-[-1] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7">
+                <SearchBar/>
+                <ul className="flex-none z-[-1] md:z-auto static w-full md:w-auto md:py-0 py-4 md:pl-0 pl-11 sm:place-items-end">
                     <button type="button" onClick={handleDropDown}>
                         <img className="w-16 h-16 rounded-full object-cover mt-2" alt="profile" src={currentUser.photoURL || picture}></img>
                     </button>
                     <div className={`z-10 right-6 top-16 ${isOpen ? "fixed" : "hidden"}`}>
-                    <ul>
-                        <li><a className="rounded-t-md px-5 bg-gray-300 border-b-2" href="/Profile">Edit Profile</a></li>
-                        <li><button className="w-full rounded-b-md px-5 bg-gray-300" onClick={handleLogout}>Log Out</button></li>
-                    </ul>
+                        <ul>
+                            <li><a className="rounded-t-md px-5 bg-gray-300 border-b-2" href="/Profile">Edit Profile</a></li>
+                            <li><button className="w-full rounded-b-md px-5 bg-gray-300" onClick={handleLogout}>Log Out</button></li>
+                        </ul>
                     </div>
                 </ul>
             </div>
