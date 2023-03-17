@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import picture from './profile.webp'
 import React from "react";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 export default function Profile(){
     const navigate = useNavigate();
 
@@ -19,10 +21,21 @@ export default function Profile(){
       if (!file) {
         return;
       }
-      const imageUrl = URL.createObjectURL(file);
-      setDisplayPictureUrl(imageUrl);
+      var storage = getStorage();
+      var storageRef = ref(storage, 'profileImages/' + file.name);
+      uploadBytes(storageRef, file).then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+        getDownloadURL(ref(storage, 'profileImages/' + file.name))
+        .then((url) => {
+          setDisplayPictureUrl(url)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      });
     };
     const handleSaveImage = async (e) =>{
+
       e.preventDefault();
       try {
         setError("");
@@ -68,8 +81,9 @@ export default function Profile(){
                 accept="image/*"
                 onChange={handleImageUpload}
                 ref={imageUploader}
+                id="upload_img"
               />
-              <div class="h-60 w-60 cursor-pointer"
+              <div className="h-60 w-60 cursor-pointer"
                 onClick={() => imageUploader.current.click()}
               >
                 <img className="shadow-lg rounded-full max-w-full h-60 w-60 items-stretch border-none object-cover"
@@ -99,7 +113,7 @@ export default function Profile(){
               </form>
             </div>
             <div className="flex flex-col w-96">
-              <h1 class="text-3xl">Hello {currentUser.displayName}</h1>
+              <h1 className="text-3xl">Hello {currentUser.displayName}</h1>
               <form className="space-y-6" onSubmit={handleFormSubmit}>
                 <div className="rounded-md shadow-sm -space-y-px">
                   <input

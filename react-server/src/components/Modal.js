@@ -48,10 +48,10 @@ function upload_img(
 
   var file = document.getElementById('upload_img').files[0];
   var storage = getStorage();
-  var storageRef = ref(storage, 'images/' + file.name);
+  var storageRef = ref(storage, 'postImages/' + file.name);
   uploadBytes(storageRef, file).then((snapshot) => {
     console.log('Uploaded a blob or file!');
-    getDownloadURL(ref(storage, 'images/' + file.name))
+    getDownloadURL(ref(storage, 'postImages/' + file.name))
     .then((url) => {
       imageUrl = url;
     })
