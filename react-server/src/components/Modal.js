@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import "../styles/modal_styles.css";
 
@@ -16,6 +16,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import NativeSelect from "@mui/material/NativeSelect";
+import axios from "axios";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useAuth } from "../contexts/AuthContext";
+
+let imageUrl = "";
 
 function upload_img(
   event,
@@ -40,6 +45,21 @@ function upload_img(
       reader.readAsDataURL(event.target.files[0]);
     }
   }
+
+  var file = document.getElementById('upload_img').files[0];
+  var storage = getStorage();
+  var storageRef = ref(storage, 'images/' + file.name);
+  uploadBytes(storageRef, file).then((snapshot) => {
+    console.log('Uploaded a blob or file!');
+    getDownloadURL(ref(storage, 'images/' + file.name))
+    .then((url) => {
+      imageUrl = url;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  });
+
 }
 
 function check_size(event) {
@@ -60,7 +80,7 @@ function check_size(event) {
   image.style.opacity = 1;
 }
 
-function save_pin(pinDetails, add_pin) {
+function save_pin(pinDetails, add_pin, user) {
   const users_data = {
     ...pinDetails,
     author: "Jack",
@@ -70,6 +90,21 @@ function save_pin(pinDetails, add_pin) {
     destination: document.querySelector("#pin_destination").value,
     pin_size: document.querySelector("#pin_size").value,
   };
+
+  const post_data = {
+    image_url: imageUrl,
+    description: document.querySelector("#pin_description").value,
+    title: document.querySelector("#pin_title").value,
+    user_id: user
+  };
+
+  axios.post('http://localhost:80/post/new', post_data)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+  });
 
   add_pin(users_data);
 }
@@ -86,6 +121,7 @@ function Modal(props) {
   });
   const [showLabel, setShowLabel] = useState(true);
   const [showModalPin, setShowModalPin] = useState(false);
+  const { currentUser } = useAuth();
 
   return (
     <div className="add_pin_modal">
@@ -163,7 +199,7 @@ function Modal(props) {
                 <option value="large">large</option>
               </select>
               <div
-                onClick={() => save_pin(pinDetails, props.add_pin)}
+                onClick={() => save_pin(pinDetails, props.add_pin, currentUser.uid)}
                 className="save_pin"
               >
                 Save
