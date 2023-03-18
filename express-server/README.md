@@ -4,7 +4,7 @@
 
 ```sh
 cd FitCheck/express-server
-git install
+npm install
 node index
 ```
 
