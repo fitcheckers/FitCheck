@@ -70,16 +70,7 @@
   /* background-color: aquamarine; */
 }
 
-.section3 {
-  width: 100%;
-  height: 12%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* background-color: firebrick; */
-}
 
 #left_side .section1 .pint_mock_icon_container {
   width: 40px;

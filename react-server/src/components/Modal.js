@@ -186,9 +186,7 @@ function Modal(props) {
             </div>
           </div>
 
-          <div className="section3">
-            <div className="save_from_site">Save from site</div>
-          </div>
+         
         </div>
 
         <div className="side" id="right_side">
@@ -208,21 +206,7 @@ function Modal(props) {
           </div>
 
           <div className="section2">
-            <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-              <RadioGroup defaultValue="female" name="radio-buttons-group">
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-              </RadioGroup>
-            </FormControl>
+         
 
             <TextField
               className="new_pin_input"
@@ -243,6 +227,7 @@ function Modal(props) {
               label="Destination"
               variant="filled"
             />
+            
           </div>
         </div>
       </div>
