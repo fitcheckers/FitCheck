@@ -22,8 +22,14 @@ export function AuthProvider({children}) {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    function updateUserProfile(user, profile){
-        return updateProfile(user, profile);
+    const updateUserProfile = async (user, profile) => {
+        try {
+            await updateProfile(user, profile);
+        } catch (error) {
+            //console.error('Error updating user profile', error);
+            throw error;
+        }
+        //return updateProfile(user, profile);
     }
 
     function logout(){
