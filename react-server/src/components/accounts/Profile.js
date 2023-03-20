@@ -51,15 +51,21 @@ export default function Profile(){
       }
       else //If the input file is empty, then handleSave is most likely called to make the imageUrl as pfp;
       {
-        if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
+        if(currentUser.photoURL === null)
         {
-          var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
-          deleteObject(desertRef).then(() => {
-            console.log("Delete success");
-          })
-          .catch((error) => {
-            console.log("Delete fail");
-          })
+        }
+        else
+        {
+          if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
+          {
+            var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
+            deleteObject(desertRef).then(() => {
+              console.log("Delete success");
+            })
+            .catch((error) => {
+              console.log("Delete fail");
+            })
+          }
         }
         const myInput = document.getElementById("userInput").value;
         if(myInput)
@@ -83,15 +89,21 @@ export default function Profile(){
     }
 
     const uploadFile = async(file) => { //This function is responsible for deleteing the pfp and uploading the new one;
-      if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
+      if(currentUser.photoURL === null)
       {
-        var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
-        deleteObject(desertRef).then(() => {
-          console.log("Delete success");
-        })
-        .catch((error) => {
-          console.log("Delete fail");
-        })
+      }
+      else
+      {
+      if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
+        {
+          var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
+          deleteObject(desertRef).then(() => {
+            console.log("Delete success");
+          })
+          .catch((error) => {
+            console.log("Delete fail");
+          })
+        }
       }
 
       try{
