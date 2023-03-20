@@ -20,6 +20,8 @@ import axios from "axios";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuth } from "../contexts/AuthContext";
 
+import TopFitSelect from "./ModalComponents/TopFitSelect"
+
 let imageUrl = "";
 
 function upload_img(
@@ -46,20 +48,19 @@ function upload_img(
     }
   }
 
-  var file = document.getElementById('upload_img').files[0];
+  var file = document.getElementById("upload_img").files[0];
   var storage = getStorage();
-  var storageRef = ref(storage, 'postImages/' + file.name);
+  var storageRef = ref(storage, "postImages/" + file.name);
   uploadBytes(storageRef, file).then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-    getDownloadURL(ref(storage, 'postImages/' + file.name))
-    .then((url) => {
-      imageUrl = url;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    console.log("Uploaded a blob or file!");
+    getDownloadURL(ref(storage, "postImages/" + file.name))
+      .then((url) => {
+        imageUrl = url;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   });
-
 }
 
 function check_size(event) {
@@ -95,16 +96,17 @@ function save_pin(pinDetails, add_pin, user) {
     image_url: imageUrl,
     description: document.querySelector("#pin_description").value,
     title: document.querySelector("#pin_title").value,
-    user_id: user
+    user_id: user,
   };
 
-  axios.post('http://localhost:80/post/new', post_data)
-    .then(response => {
+  axios
+    .post("http://localhost:80/post/new", post_data)
+    .then((response) => {
       console.log(response);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
-  });
+    });
 
   add_pin(users_data);
 }
@@ -185,8 +187,6 @@ function Modal(props) {
               </div>
             </div>
           </div>
-
-         
         </div>
 
         <div className="side" id="right_side">
@@ -197,7 +197,9 @@ function Modal(props) {
                 <option value="large">large</option>
               </select>
               <div
-                onClick={() => save_pin(pinDetails, props.add_pin, currentUser.uid)}
+                onClick={() =>
+                  save_pin(pinDetails, props.add_pin, currentUser.uid)
+                }
                 className="save_pin"
               >
                 Save
@@ -206,28 +208,32 @@ function Modal(props) {
           </div>
 
           <div className="section2">
-         
-
             <TextField
+              margin="dense"
+              required
               className="new_pin_input"
               id="pin_title"
               label="Title"
-              variant="filled"
+              variant="standard"
+              size="small"
             />
             <TextField
+              required
+              margin="dense"
               className="new_pin_input"
               id="pin_description"
               label="Description"
-              variant="filled"
+              variant="standard"
             />
 
             <TextField
+              margin="dense"
               className="new_pin_input"
               id="pin_destination"
               label="Destination"
-              variant="filled"
+              variant="standard"
             />
-            
+            <TopFitSelect/>
           </div>
         </div>
       </div>
