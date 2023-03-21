@@ -6,12 +6,13 @@ const { get } = require('../../server');
 const { PostAddOutlined } = require('@mui/icons-material');
 
 app.post('/post/new', async (req, res) => {
-    const {image_url, user_id, description, title, clothes, tags} = req.body;
+    const {image_url, user_id, description, title, clothes, tags = []} = req.body;
     if (!image_url || !user_id || !description || !title) {
         res.status(400).send('missing data from json');
         return;
     }
     const postID = (Math.floor(Math.random() * 1000000)).toString();
+    const date = Date.now();
     const data = {
         image_url: image_url,
         description:description,
@@ -21,10 +22,15 @@ app.post('/post/new', async (req, res) => {
         comments: [],
         clothes:clothes || {},
         likes: [],
-        tags: [],
+        tags: tags,
+        created: date
     };
     await db.collection('posts').doc(postID).set(data);
-    res.json({"id":postID, "successful":true});
+    const user = await(await db.collection('users').doc(user_id).get()).data();
+    if (!user.posts) user.posts = [];
+    user.posts.push(postID);
+    await db.collection('users').doc(user_id).set(user, {merge:true});
+    res.send({"id":postID, "successful":true});
 });
 
 app.post('/post/delete', async (req, res) => {
