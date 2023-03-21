@@ -23,6 +23,7 @@ import { useAuth } from "../contexts/AuthContext";
 import TopFitSelect from "./ModalComponents/TopFitSelect"
 
 let imageUrl = "";
+let file;
 
 function upload_img(
   event,
@@ -48,19 +49,7 @@ function upload_img(
     }
   }
 
-  var file = document.getElementById("upload_img").files[0];
-  var storage = getStorage();
-  var storageRef = ref(storage, "postImages/" + file.name);
-  uploadBytes(storageRef, file).then((snapshot) => {
-    console.log("Uploaded a blob or file!");
-    getDownloadURL(ref(storage, "postImages/" + file.name))
-      .then((url) => {
-        imageUrl = url;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+  file = document.getElementById("upload_img").files[0];
 }
 
 function check_size(event) {
@@ -81,7 +70,15 @@ function check_size(event) {
   image.style.opacity = 1;
 }
 
-function save_pin(pinDetails, add_pin, user) {
+async function image_upload(file) {
+  var storage = getStorage();
+  const storageRef = ref(storage, "postImages/" + file.name); //Create a reference to our storage;
+  const snapshot = await uploadBytes(storageRef, file); //Upload the image to our storage;
+  const url = await getDownloadURL(snapshot.ref); //Gets the url for image in our storage;
+  return url;
+}
+
+async function save_pin(pinDetails, add_pin, user) {
   const users_data = {
     ...pinDetails,
     author: "Jack",
@@ -92,6 +89,8 @@ function save_pin(pinDetails, add_pin, user) {
     pin_size: document.querySelector("#pin_size").value,
   };
 
+  imageUrl = await image_upload(file);
+
   const post_data = {
     image_url: imageUrl,
     description: document.querySelector("#pin_description").value,
@@ -99,7 +98,7 @@ function save_pin(pinDetails, add_pin, user) {
     user_id: user,
   };
 
-  axios
+  await axios
     .post("http://localhost:80/post/new", post_data)
     .then((response) => {
       console.log(response);
@@ -156,6 +155,9 @@ function Modal(props) {
               </div>
 
               <input
+                type="file"
+                name="upload_img"
+                id="upload_img"
                 onChange={(event) =>
                   upload_img(
                     event,
@@ -165,9 +167,6 @@ function Modal(props) {
                     setShowModalPin
                   )
                 }
-                type="file"
-                name="upload_img"
-                id="upload_img"
                 value=""
               />
             </label>
