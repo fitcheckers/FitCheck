@@ -20,7 +20,10 @@ import axios from "axios";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuth } from "../contexts/AuthContext";
 
+import TopFitSelect from "./ModalComponents/TopFitSelect"
+
 let imageUrl = "";
+let file;
 
 function upload_img(
   event,
@@ -46,20 +49,7 @@ function upload_img(
     }
   }
 
-  var file = document.getElementById('upload_img').files[0];
-  var storage = getStorage();
-  var storageRef = ref(storage, 'postImages/' + file.name);
-  uploadBytes(storageRef, file).then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-    getDownloadURL(ref(storage, 'postImages/' + file.name))
-    .then((url) => {
-      imageUrl = url;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  });
-
+  file = document.getElementById("upload_img").files[0];
 }
 
 function check_size(event) {
@@ -80,7 +70,15 @@ function check_size(event) {
   image.style.opacity = 1;
 }
 
-function save_pin(pinDetails, add_pin, user) {
+async function image_upload(file) {
+  var storage = getStorage();
+  const storageRef = ref(storage, "postImages/" + file.name); //Create a reference to our storage;
+  const snapshot = await uploadBytes(storageRef, file); //Upload the image to our storage;
+  const url = await getDownloadURL(snapshot.ref); //Gets the url for image in our storage;
+  return url;
+}
+
+async function save_pin(pinDetails, add_pin, user) {
   const users_data = {
     ...pinDetails,
     author: "Jack",
@@ -91,20 +89,23 @@ function save_pin(pinDetails, add_pin, user) {
     pin_size: document.querySelector("#pin_size").value,
   };
 
+  imageUrl = await image_upload(file);
+
   const post_data = {
     image_url: imageUrl,
     description: document.querySelector("#pin_description").value,
     title: document.querySelector("#pin_title").value,
-    user_id: user
+    user_id: user,
   };
 
-  axios.post('http://localhost:80/post/new', post_data)
-    .then(response => {
+  await axios
+    .post("http://localhost:80/post/new", post_data)
+    .then((response) => {
       console.log(response);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
-  });
+    });
 
   add_pin(users_data);
 }
@@ -154,6 +155,9 @@ function Modal(props) {
               </div>
 
               <input
+                type="file"
+                name="upload_img"
+                id="upload_img"
                 onChange={(event) =>
                   upload_img(
                     event,
@@ -163,9 +167,6 @@ function Modal(props) {
                     setShowModalPin
                   )
                 }
-                type="file"
-                name="upload_img"
-                id="upload_img"
                 value=""
               />
             </label>
@@ -185,10 +186,6 @@ function Modal(props) {
               </div>
             </div>
           </div>
-
-          <div className="section3">
-            <div className="save_from_site">Save from site</div>
-          </div>
         </div>
 
         <div className="side" id="right_side">
@@ -199,7 +196,9 @@ function Modal(props) {
                 <option value="large">large</option>
               </select>
               <div
-                onClick={() => save_pin(pinDetails, props.add_pin, currentUser.uid)}
+                onClick={() =>
+                  save_pin(pinDetails, props.add_pin, currentUser.uid)
+                }
                 className="save_pin"
               >
                 Save
@@ -208,41 +207,32 @@ function Modal(props) {
           </div>
 
           <div className="section2">
-            <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-              <RadioGroup defaultValue="female" name="radio-buttons-group">
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-              </RadioGroup>
-            </FormControl>
-
             <TextField
+              margin="dense"
+              required
               className="new_pin_input"
               id="pin_title"
               label="Title"
-              variant="filled"
+              variant="standard"
+              size="small"
             />
             <TextField
+              required
+              margin="dense"
               className="new_pin_input"
               id="pin_description"
               label="Description"
-              variant="filled"
+              variant="standard"
             />
 
             <TextField
+              margin="dense"
               className="new_pin_input"
               id="pin_destination"
               label="Destination"
-              variant="filled"
+              variant="standard"
             />
+            <TopFitSelect/>
           </div>
         </div>
       </div>

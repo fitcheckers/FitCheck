@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import picture from './profile.webp'
 import React from "react";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 export default function Profile(){
     const navigate = useNavigate();
@@ -16,42 +16,116 @@ export default function Profile(){
     const imageUploader = React.useRef(null);
     const [displayPictureUrl, setDisplayPictureUrl] = useState(currentUser.photoURL);
 
-    const handleImageUpload = async e => {
+    let storage = getStorage();
+
+    function fileName(){ //This function looks for the index of the image name so that it can be used as reference to be deleted.
+      //console.log(currentUser.photoURL);
+      var searchTerm = 'profileImages';
+      var searchEnd = '?alt';
+      var indexOfFirst = currentUser.photoURL.indexOf(searchTerm) + 16;
+      var indexOfLast = currentUser.photoURL.indexOf(searchEnd) - 1;
+      return {indexOfFirst, indexOfLast};
+    }
+
+    const handleImageUpload = async e => { //This function previews the image to the user;
+
       const [file] = e.target.files;
       if (!file) {
         return;
       }
-      var storage = getStorage();
-      var storageRef = ref(storage, 'profileImages/' + file.name);
-      uploadBytes(storageRef, file).then((snapshot) => {
-        console.log('Uploaded a blob or file!');
-        getDownloadURL(ref(storage, 'profileImages/' + file.name))
-        .then((url) => {
-          setDisplayPictureUrl(url)
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      });
+      const imageUrl = URL.createObjectURL(file);
+      document.getElementById('profileImg').src = imageUrl; //Changes the image src so that img is previewed;
     };
-    const handleSaveImage = async (e) =>{
 
-      e.preventDefault();
-      try {
-        setError("");
-        setLoading(true);
+    function isValidFirebaseURL(url){ //Check to see if the current photoURL is a valid firebase in our storage.
+      const storageURL = "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/profileImages%2F";
+      return url.startsWith(storageURL);
+    }
+
+    const handleSave = async(event) => { //This function grabs the file and passes it to another function;
+      event.preventDefault();
+      var file = document.querySelector("input[type='file'][id='upload_img']").files[0];
+      if(file) //If the input file is not empty calls uploadFile;
+      {
+        await uploadFile(file);
+      }
+      else //If the input file is empty, then handleSave is most likely called to make the imageUrl as pfp;
+      {
+        if(currentUser.photoURL === null)
+        {
+        }
+        else
+        {
+          if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
+          {
+            var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
+            deleteObject(desertRef).then(() => {
+              console.log("Delete success");
+            })
+            .catch((error) => {
+              console.log("Delete fail");
+            })
+          }
+        }
+        const myInput = document.getElementById("userInput").value;
+        if(myInput)
+        {
+          setDisplayPictureUrl(myInput);
+          const user = currentUser;
+          const profile = {
+            photoURL: displayPictureUrl,
+          };
+          await updateUserProfile(user, profile);
+          navigate("/profile");
+        }
+      }
+      file = document.querySelector("input[type='file'][id='upload_img']");
+      file.value = "";
+      var myInput = document.getElementById("userInput").value;
+      if(myInput)
+      {
+        navigate("/profile");
+      }
+    }
+
+    const uploadFile = async(file) => { //This function is responsible for deleteing the pfp and uploading the new one;
+      if(currentUser.photoURL === null)
+      {
+      }
+      else
+      {
+      if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
+        {
+          var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
+          deleteObject(desertRef).then(() => {
+            console.log("Delete success");
+          })
+          .catch((error) => {
+            console.log("Delete fail");
+          })
+        }
+      }
+
+      try{
+        const storageRef = ref(storage, 'profileImages/' + file.name); //Create a reference to our storage;
+        const snapshot = await uploadBytes(storageRef, file); //Upload the image to our storage;
+        const url = await getDownloadURL(snapshot.ref); //Gets the url for image in our storage;
+        console.log('Uploaded file:', file.name, 'with URL:', url);
         const user = currentUser;
         const profile = {
-          photoURL: displayPictureUrl,
+          photoURL: url,
         };
+        console.log('Updating user profile with:', profile);
         await updateUserProfile(user, profile);
+        setDisplayPictureUrl(url);
+
         navigate("/profile");
-      } catch (e) {
-        setError("Failed to update picture");
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        return null;
       }
-      setLoading(false);
-      document.getElementById("username").value = "";     
     };
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
@@ -88,15 +162,17 @@ export default function Profile(){
               >
                 <img className="shadow-lg rounded-full max-w-full h-60 w-60 items-stretch border-none object-cover"
                   alt="profile"
+                  id="profileImg"
                   src={displayPictureUrl || currentUser.photoURL || picture}
                 />
               </div>
               Click to upload Image or enter an image Url below 
-              <form className="space-y-6" onSubmit={handleSaveImage}>
+              <form className="space-y-6" onSubmit={handleSave}>
                 <div className="rounded-md shadow-sm -space-y-px">
                   <input 
                     type="text" 
                     placeholder="Enter Image Url"
+                    id="userInput"
                     className="appearance-none rounded-none w-96 px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
                     onChange={(e) => setDisplayPictureUrl(e.target.value)}
                   />
