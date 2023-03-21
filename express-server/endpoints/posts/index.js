@@ -120,21 +120,18 @@ app.post('/post/unlike', async (req, res) => {
     res.json({"successful": true});
 });
 
-
-
-
-
-/* will come back to this, probably gonna refactor some stuff
 app.post('/posts/', async (req, res) => {
     const {user_id} = req.body;
     if (!user_id) {
         res.status(400).send('missing id from json');
         return;
     }
-    const data = await db.collection('posts').where('user_id', '==', user_id);
-    const posts = (await data.get()).data();
-    console.log(Object.keys(posts));
-    res.json();
+    let data = await db.collection('users').doc(user_id).get();
+    if (!data.exists) {
+        res.status(400).send('usser ID not found.');
+        return;
+    }
+    data = data.data();
+    if (!data.posts) data.posts = [];
+    res.json({"content":data.posts});
 });
- 
-*/
