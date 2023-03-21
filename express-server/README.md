@@ -14,9 +14,12 @@ node index
 
 | Endpoint     | Description                              | Required Content                                         | Optional Content | Return JSON Properties                                                                        |
 |--------------|------------------------------------------|----------------------------------------------------------|------------------|-----------------------------------------------------------------------------------------------|
-| ```/post/new```    | Create a new post                        | **image_url** (string), **description** (string), **title** (string) | **clothes** (Object) | **id** - post id, **successful** - Whether or not the post was made correctly                          |
+| ```/post/new```    | Create a new post                        | **image_url** (string), **description** (string), **title** (string), **user_id** (string) | **clothes** (Object) | **id** - post id, **successful** - Whether or not the post was made correctly                          |
 | ```/post/delete``` | Delete an existing post                  | **id** (string)                                              | **N/A**            | **successful** - Whether or not the post was deleted correctly                                    |
 | ```/post/get```    | Retrieve data regarding an existing post | **id** (string)                                              |**N/A**            | **successful** - Whether or not the post was successfully retrieved, **content** - data regarding post |
+| ```/post/like```    | like a post | **user_id** (string), **post_id** (string)                                              |**N/A**            | **successful** - Whether or not the post was successfully liked |
+| ```/post/unlike```    | unlike a post | **user_id** (string), **post_id** (string)                                              |**N/A**            | **successful** - Whether or not the post was successfully unliked |
+
 
 ### Users
 
