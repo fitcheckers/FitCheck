@@ -3,7 +3,6 @@
 const app = require('../../server');
 const db = require('../../firestore');
 const { get } = require('../../server');
-const { PostAddOutlined } = require('@mui/icons-material');
 
 app.post('/post/new', async (req, res) => {
     const {image_url, user_id, description, title, clothes, tags = []} = req.body;
