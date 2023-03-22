@@ -17,7 +17,7 @@ const UserProfile = ({ backImg, post }) => {
   return (
     <div>
       <img
-        className="left-12 -z-10 top-[80px] w-screen h-52 relative object-cover"
+        className="left-12 -z-10 top-[80px] w-screen h-52 relative object-cover bg-center"
         src={backImg}
         alt="background cover"
       ></img>

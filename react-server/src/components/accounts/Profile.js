@@ -4,6 +4,9 @@ import { useAuth } from "../../contexts/AuthContext";
 import picture from './profile.webp'
 import React from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import background from "../../img/backgrounds.jpeg";
+import {BsFillCameraFill} from "react-icons/bs";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 export default function Profile(){
     const navigate = useNavigate();
@@ -147,8 +150,15 @@ export default function Profile(){
     };
     return (
       <div>
-        <div className="min-h-full flex justify-center py-32 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center space-x-8">
+        <img className="fixed -z-20 w-screen h-96" src={background} alt="background cover"></img>
+        <form onSubmit={() => alert('Submitted')}>
+          <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" id="bg_img" type="file"></input>
+          <input className="fixed left-[130px] top-[340px] z-40 w-8 opacity-0" type="submit"></input>
+          <IoMdCheckmarkCircleOutline size="32" className="fixed left-32 top-[340px] z-30"/>
+        </form>  
+        <BsFillCameraFill size="32" className="relative left-24 top-[310px] z-30"/>
+          <div className="relative h-40 -z-20"></div>
+          <div className="flex items-center justify-center space-x-8 top-30 w-screen">
             <div className="flex flex-col items-center w-96">
               <input className="hidden"
                 type="file"
@@ -160,7 +170,7 @@ export default function Profile(){
               <div className="h-60 w-60 cursor-pointer"
                 onClick={() => imageUploader.current.click()}
               >
-                <img className="shadow-lg rounded-full max-w-full h-60 w-60 items-stretch border-none object-cover"
+                <img className="shadow-lg rounded-full max-w-full h-60 w-60 items-stretch border-none object-cover bg-center"
                   alt="profile"
                   id="profileImg"
                   src={displayPictureUrl || currentUser.photoURL || picture}
@@ -216,7 +226,6 @@ export default function Profile(){
               </form>
             </div>
           </div>
-        </div>
       </div>
     );
 }
