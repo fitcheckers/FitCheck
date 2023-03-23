@@ -13,6 +13,9 @@ import { useAuth } from "../contexts/AuthContext";
 import PostModal from "./posts/PostModal";
 import axios from "axios";
 
+
+//GET all post with userID
+
 async function getUser(user_id){
   try{
     const response = await axios.post("http://localhost:80/users/get", {id: user_id});

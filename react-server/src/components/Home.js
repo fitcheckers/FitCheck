@@ -1,39 +1,28 @@
-import * as React from "react";
+import React, { Component } from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { maxHeight, maxWidth } from "@mui/system";
 import Pin from "./Pin.js";
+import axios from "axios";
 
-class HomePage extends Component{
+class HomePage extends Component {
+  //get all posts in collection
+  // convert them into pins object and store them in pin array
+  // render them into pin container
 
-
-  //get all post id 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      pins: [],
-    };
-
-  }
   render() {
-  return (
-    <div className="pin_container">{this.state.pins}</div>
-  )
+    return;
   }
 }
-
 
 //fetch post title, desp img frm firstore post
 
 const itemData = [
   {
     title: "test1",
-   
-    description: "fit1",
 
-  
+    description: "fit1",
   },
   {
     img: "./fitpics/2.jfif",

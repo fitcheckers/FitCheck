@@ -4,6 +4,21 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { maxHeight, maxWidth } from "@mui/system";
 
+
+
+
+
+
+
+
+//Get all post LIKED by userID
+
+
+
+
+
+
+
 function LikePage() {
   return (
     <Box
