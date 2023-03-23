@@ -85,7 +85,7 @@ async function save_pin(pinDetails, add_pin, user) {
     board: "default",
     title: document.querySelector("#pin_title").value,
     description: document.querySelector("#pin_description").value,
-    destination: document.querySelector("#pin_destination").value,
+    
     pin_size: document.querySelector("#pin_size").value,
   };
 
@@ -116,7 +116,7 @@ function Modal(props) {
     board: "",
     title: "",
     description: "",
-    destination: "",
+  
     img_blob: "",
     pin_size: "",
   });
@@ -189,6 +189,7 @@ function Modal(props) {
         </div>
 
         <div className="side" id="right_side">
+
           <div className="section1">
             <div className="select_size">
               <select defaultValue="small" name="pin_size" id="pin_size">
@@ -207,6 +208,7 @@ function Modal(props) {
           </div>
 
           <div className="section2">
+
             <TextField
               margin="dense"
               required
@@ -225,14 +227,9 @@ function Modal(props) {
               variant="standard"
             />
 
-            <TextField
-              margin="dense"
-              className="new_pin_input"
-              id="pin_destination"
-              label="Destination"
-              variant="standard"
-            />
-            <TopFitSelect/>
+            
+
+          
           </div>
         </div>
       </div>

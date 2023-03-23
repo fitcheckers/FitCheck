@@ -23,6 +23,7 @@ async function getUser(user_id){
   }
 }
 
+
 const UserProfile = ({ backImg, post }) => {
   const { currentUser } = useAuth();
   const [ user, setUser ] = useState("");
@@ -78,6 +79,7 @@ class MyPost extends Component {
       pins: [],
       show_modal: false,
     };
+
   }
 
   add_pin = (pinDetails) => {

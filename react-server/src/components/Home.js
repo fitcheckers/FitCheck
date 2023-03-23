@@ -3,39 +3,37 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { maxHeight, maxWidth } from "@mui/system";
+import Pin from "./Pin.js";
 
-function HomePage() {
+class HomePage extends Component{
+
+
+  //get all post id 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pins: [],
+    };
+
+  }
+  render() {
   return (
-    <Box
-      sx={{
-        width: maxWidth,
-        height: maxHeight,
-        paddingLeft: 12,
-        paddingRight: 4,
-        paddingTop: 15,
-      }}
-    >
-      <ImageList variant="masonry" cols={5} gap={25}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-              style={{ borderRadius: 20 }}
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </Box>
-  );
+    <div className="pin_container">{this.state.pins}</div>
+  )
+  }
 }
+
+
+//fetch post title, desp img frm firstore post
 
 const itemData = [
   {
-    img: "./fitpics/1.jfif",
-    title: "fit1",
+    title: "test1",
+   
+    description: "fit1",
+
+  
   },
   {
     img: "./fitpics/2.jfif",
