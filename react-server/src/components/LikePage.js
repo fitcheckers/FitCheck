@@ -23,7 +23,7 @@ function LikePage() {
               srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
-              style={{borderRadius: 20}}
+              style={{ borderRadius: 20 }}
             />
           </ImageListItem>
         ))}

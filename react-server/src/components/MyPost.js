@@ -11,6 +11,7 @@ import background from "../img/backgrounds.jpeg";
 import { useAuth } from "../contexts/AuthContext";
 import PostModal from "./posts/PostModal";
 
+
 const UserProfile = ({ backImg, post }) => {
   const { currentUser } = useAuth();
 
@@ -53,6 +54,7 @@ class MyPost extends Component {
       pins: [],
       show_modal: false,
     };
+
   }
 
   add_pin = (pinDetails) => {

@@ -27,9 +27,9 @@
 }
 
 .side {
-  padding: 20px;
-  width: 50%;
-  height: 100%;
+    padding: 20px;
+    width: 50%;
+    height: 100%;
 }
 
 .pint_mock_icon_container {
@@ -58,7 +58,7 @@
 }
 
 .section2 {
-  padding: 0px 10px;
+padding: 0px 10px;
   width: 100%;
   height: 80%;
 
@@ -209,9 +209,10 @@
 }
 
 #right_side .section2 .new_pin_input {
+  
   margin-bottom: 10px;
   width: 100%;
-  height: 50px;
+  height: 30px;
 
   font-size: 12px;
 
