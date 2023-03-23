@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useState, useEffect } from "react";
 
 import "../styles/my_post.css";
 import Pin from "./Pin.js";
@@ -10,15 +11,39 @@ import picture from "./accounts/profile.webp";
 import background from "../img/backgrounds.jpeg";
 import { useAuth } from "../contexts/AuthContext";
 import PostModal from "./posts/PostModal";
+import axios from "axios";
+
+async function getUser(user_id){
+  try{
+    const response = await axios.post("http://localhost:80/users/get", {id: user_id});
+    console.log(response.data);
+    return response.data;
+  } catch(e){
+    console.log(e);
+  }
+}
 
 const UserProfile = ({ backImg, post }) => {
   const { currentUser } = useAuth();
+  const [ user, setUser ] = useState("");
+
+  useEffect(() => {
+    async function fetchData(){
+      const userData = await getUser(currentUser.uid);
+      setUser(userData);
+    }
+    fetchData();
+  }, [currentUser]);
+
+  if(!user){
+    return <div>Loading User Info...</div>;
+  }
 
   return (
     <div>
       <img
         className="left-12 -z-10 top-[80px] w-screen h-52 relative object-cover bg-center"
-        src={backImg}
+        src={user.profile_banner_url || backImg}
         alt="background cover"
       ></img>
       <img

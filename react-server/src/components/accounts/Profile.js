@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import picture from './profile.webp'
@@ -6,7 +6,7 @@ import React from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import background from "../../img/backgrounds.jpeg";
 import {BsFillCameraFill} from "react-icons/bs";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import axios from "axios";
 
 export default function Profile(){
     const navigate = useNavigate();
@@ -19,17 +19,99 @@ export default function Profile(){
     const imageUploader = React.useRef(null);
     const [displayPictureUrl, setDisplayPictureUrl] = useState(currentUser.photoURL);
 
-    let storage = getStorage();
 
-    function fileName(){ //This function looks for the index of the image name so that it can be used as reference to be deleted.
+
+
+    function fileName(folder){ //This function looks for the index of the image name so that it can be used as reference to be deleted.
       //console.log(currentUser.photoURL);
-      var searchTerm = 'profileImages';
+      var searchTerm;
+      switch(folder){
+        case 'profile':
+          searchTerm = 'profileImages';
+          break;
+        case 'banner':
+          searchTerm = 'bannerImages';
+          break;
+        default:
+          searchTerm = 'profileImages';
+      }
+
       var searchEnd = '?alt';
       var indexOfFirst = currentUser.photoURL.indexOf(searchTerm) + 16;
       var indexOfLast = currentUser.photoURL.indexOf(searchEnd) - 1;
       return {indexOfFirst, indexOfLast};
     }
 
+
+
+    //Get user banner from firestore
+    async function getUser(user_id){
+      try{
+        const response = await axios.post("http://localhost:80/users/get", {id: user_id});
+        //console.log(response.data);
+        return response.data;
+      } catch(e){
+        console.log(e);
+      }
+    }
+    const [ user, setUser ] = useState("");
+    useEffect(() => {
+      async function fetchData(){
+        const userData = await getUser(currentUser.uid);
+        setUser(userData);
+      }
+      fetchData();
+    }, [currentUser]);
+
+    if(!user){
+      return <div>Loading User Info...</div>;
+    }
+
+    const handleBannerUpload = async e => { //This function previews the banner image to the user;
+      const [file] = e.target.files;
+      const imageUrl = URL.createObjectURL(file);
+      document.getElementById('banner_img').src = imageUrl; //Changes the image src so that img is previewed;
+    };
+
+    const bannerUpload = async(event) => {
+      event.preventDefault();
+      var file = document.querySelector("input[type='file'][id='bg_img']").files[0];
+      //console.log(file.name);
+      var desertRef = ref(storage, user.profile_banner_url.slice(fileName('banner')));
+      deleteObject(desertRef).then(() => {
+        console.log("Delete success");
+      })
+      .catch((error) => {
+        console.log("Delete fail");
+      })
+
+      try{
+        const storageRef = ref(storage, 'bannerImages/' + file.name); //Create a reference to our storage;
+        const snapshot = await uploadBytes(storageRef, file); //Upload the image to our storage;
+        const url = await getDownloadURL(snapshot.ref); //Gets the url for image in our storage;
+        //console.log('Uploaded banner file:', file.name, 'with URL:', url);
+        const users_data = {
+          id: currentUser.uid,
+          profile_banner_url: url
+        }
+        try{
+          const response = await axios.post("http://localhost:80/users/update", users_data);
+          //console.log(response.data);
+          return response.data;
+        } catch(e){
+          console.log(e);
+        }
+      } catch (error) {
+        console.error('Error uploading banner file:', error);
+        return null;
+      }
+      navigate("/profile");
+    };
+
+
+
+
+    let storage = getStorage();
     const handleImageUpload = async e => { //This function previews the image to the user;
 
       const [file] = e.target.files;
@@ -61,7 +143,7 @@ export default function Profile(){
         {
           if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
           {
-            var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
+            var desertRef = ref(storage, currentUser.photoURL.slice(fileName('profile')));
             deleteObject(desertRef).then(() => {
               console.log("Delete success");
             })
@@ -99,7 +181,7 @@ export default function Profile(){
       {
       if(isValidFirebaseURL(currentUser.photoURL)) //If current picture is an image in our storage we need to delete it;
         {
-          var desertRef = ref(storage, currentUser.photoURL.slice(fileName()));
+          var desertRef = ref(storage, currentUser.photoURL.slice(fileName('profile')));
           deleteObject(desertRef).then(() => {
             console.log("Delete success");
           })
@@ -150,11 +232,10 @@ export default function Profile(){
     };
     return (
       <div>
-        <img className="fixed -z-20 w-screen h-96" src={background} alt="background cover"></img>
-        <form onSubmit={() => alert('Submitted')}>
-          <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" id="bg_img" type="file"></input>
-          <input className="fixed left-[130px] top-[340px] z-40 w-8 opacity-0" type="submit"></input>
-          <IoMdCheckmarkCircleOutline size="32" className="fixed left-32 top-[340px] z-30"/>
+        <img className="fixed -z-20 w-screen h-96 border-b-2 border-gray-200" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
+        <form onSubmit={bannerUpload}>
+          <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" id="bg_img" accept="image/*" type="file" onChange={handleBannerUpload}></input>
+          <input className="fixed left-[140px] top-[345px] z-40 w-20 opacity-100 cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white rounded-lg" type="submit"></input>
         </form>  
         <BsFillCameraFill size="32" className="relative left-24 top-[310px] z-30"/>
           <div className="relative h-40 -z-20"></div>
