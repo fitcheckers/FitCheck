@@ -11,7 +11,7 @@ import axios from "axios";
 export default function Profile(){
     const navigate = useNavigate();
 
-    console.log(picture);
+    //console.log(picture);
 
     const [ username, setUsername ] = useState("");
     const [ loading, setLoading ] = useState(false);
@@ -77,13 +77,16 @@ export default function Profile(){
       event.preventDefault();
       var file = document.querySelector("input[type='file'][id='bg_img']").files[0];
       //console.log(file.name);
-      var desertRef = ref(storage, user.profile_banner_url.slice(fileName('banner')));
-      deleteObject(desertRef).then(() => {
-        console.log("Delete success");
-      })
-      .catch((error) => {
-        console.log("Delete fail");
-      })
+      if(user.profile_banner_url !== "")
+      {
+        var desertRef = ref(storage, user.profile_banner_url.slice(fileName('banner')));
+        deleteObject(desertRef).then(() => {
+          console.log("Delete success");
+        })
+        .catch((error) => {
+          console.log("Delete fail");
+        })
+      }
 
       try{
         const storageRef = ref(storage, 'bannerImages/' + file.name); //Create a reference to our storage;
