@@ -235,12 +235,13 @@ export default function Profile(){
     };
     return (
       <div>
-        <img className="fixed border-b-2 border-gray-200 object-cover object-center -z-20 w-screen h-96" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
+        <img className="fixed border-b-2 border-gray-200 object-cover object-center -z-20 w-screen h-[375px]" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
         <form onSubmit={bannerUpload}>
-          <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" id="bg_img" accept="image/*" type="file" onChange={handleBannerUpload}></input>
+          <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" ref={imageUploader} id="bg_img" accept="image/*" type="file" onChange={handleBannerUpload}></input>
+          <div className="relative left-24 top-[310px] z-40 w-8 h-8 cursor-pointer" onClick={() => imageUploader.current.click()}></div>
           <input className="fixed left-[140px] top-[345px] z-40 w-20 opacity-100 cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white rounded-lg" type="submit"></input>
         </form>  
-        <BsFillCameraFill size="32" className="relative left-24 top-[310px] z-30"/>
+        <BsFillCameraFill size="32" className="relative left-24 top-[280px] z-30 cursor-pointer bg-white rounded-lg"/>
           <div className="relative h-40 -z-20"></div>
           <div className="flex items-center justify-center space-x-8 top-30 w-screen">
             <div className="flex flex-col items-center w-96">
