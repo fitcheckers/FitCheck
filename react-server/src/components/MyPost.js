@@ -13,33 +13,60 @@ import { useAuth } from "../contexts/AuthContext";
 import PostModal from "./posts/PostModal";
 import axios from "axios";
 
-
-//GET all post with userID
-
-async function getUser(user_id){
-  try{
-    const response = await axios.post("http://localhost:80/users/get", {id: user_id});
+async function getUserPostData(post_id) {
+  try {
+    const response = await axios.post("http://localhost:80/posts/get", {
+      id: post_id,
+    });
     console.log(response.data);
     return response.data;
-  } catch(e){
+  } catch (e) {
     console.log(e);
   }
 }
 
+const UserPost = () => {
+  const [postDetails, setPostDetails] = useState({
+    title: "",
+    description: "",
+    img_blob: "",
+    // pin_size: "",
+  });
+
+  useEffect(() => {
+    async function fetchPost() {
+      const userData = await getUserPostData("127215");
+      setPostDetails(postData);
+    }
+    fetchPost();
+  });
+};
+
+async function getUser(user_id) {
+  try {
+    const response = await axios.post("http://localhost:80/users/get", {
+      id: user_id,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 const UserProfile = ({ backImg, post }) => {
   const { currentUser } = useAuth();
-  const [ user, setUser ] = useState("");
+  const [user, setUser] = useState("");
 
   useEffect(() => {
-    async function fetchData(){
+    async function fetchData() {
       const userData = await getUser(currentUser.uid);
       setUser(userData);
     }
     fetchData();
   }, [currentUser]);
 
-  if(!user){
+  if (!user) {
     return <div>Loading User Info...</div>;
   }
 
@@ -82,7 +109,6 @@ class MyPost extends Component {
       pins: [],
       show_modal: false,
     };
-
   }
 
   add_pin = (pinDetails) => {
@@ -99,22 +125,23 @@ class MyPost extends Component {
   };
 
   //For clicking POST MODAL
-  state = { //For the post modal
-    postModalIsOpen: false
+  state = {
+    //For the post modal
+    postModalIsOpen: false,
   };
 
-  togglePostModal = () => { //Function to set postModalIsOpen to true or false
+  togglePostModal = () => {
+    //Function to set postModalIsOpen to true or false
     this.setState({ postModalIsOpen: !this.state.postModalIsOpen });
-  }
+  };
 
   post = {
     title: "test1",
-    url:"https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
-    description:"fit1",
+    url: "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
+    description: "fit1",
     user_name: "testUser",
-    user_pfp: "https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
-  }
-
+    user_pfp: "https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg",
+  };
 
   render() {
     return (
@@ -128,10 +155,14 @@ class MyPost extends Component {
         <button
           onClick={this.togglePostModal}
           className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500"
-          >
+        >
           Hide
         </button>
-        <PostModal post={this.post} isOpen={this.state.postModalIsOpen} toggleModal={this.togglePostModal} />
+        <PostModal
+          post={this.post}
+          isOpen={this.state.postModalIsOpen}
+          toggleModal={this.togglePostModal}
+        />
         <div>
           <div className="fixed bottom-0 right-0 z-1 ">
             <Fab

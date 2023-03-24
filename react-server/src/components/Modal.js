@@ -112,13 +112,11 @@ async function save_pin(pinDetails, add_pin, user) {
 
 function Modal(props) {
   const [pinDetails, setPinDetails] = useState({
-    author: "",
-    board: "",
+    
     title: "",
     description: "",
-  
     img_blob: "",
-    pin_size: "",
+   // pin_size: "",
   });
   const [showLabel, setShowLabel] = useState(true);
   const [showModalPin, setShowModalPin] = useState(false);

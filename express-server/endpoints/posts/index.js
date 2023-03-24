@@ -134,3 +134,4 @@ app.post('/posts/', async (req, res) => {
     if (!data.posts) data.posts = [];
     res.json({"content":data.posts});
 });
+

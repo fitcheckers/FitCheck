@@ -24,9 +24,6 @@ function check_size(event) {
 }
 
 function Pin(props) {
- 
-
-
   return (
     <div className={`card card_${props.pinDetails.pin_size}`}>
       <div className="pin_modal">

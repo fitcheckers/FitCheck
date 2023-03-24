@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -6,110 +7,60 @@ import { maxHeight, maxWidth } from "@mui/system";
 import Pin from "./Pin.js";
 import axios from "axios";
 
-class HomePage extends Component {
-  //get all posts in collection
-  // convert them into pins object and store them in pin array
-  // render them into pin container
+// step 1: get all post from firebase with axios saved in  PinDatas (on mount will keep pulling from firestore)
+// step 2: take the data and fill create Pin ojects
+// step 3: render out the Pins in HomePage
 
-  render() {
-    return;
+const Home = () => {
+  const [data, setData] = useState([]);
+
+  const listItems = data.map((e) => (
+    <div className="cards">
+      <img src={e.img_blob}></img>
+      <div className="card-text-title">{e.title}</div>
+      <div className="card-text-description">{e.description}</div>
+    </div>
+  ));
+
+  async function getData() {
+    //axios data call
+    //const res = await axios.get("/route")
+    //const dummyData = res.data -> will look like that:
+    const dummyData: Pin[] = [
+      {
+        title: "test1",
+        description: "fit1",
+        img_blob:
+          "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
+      },
+      {
+        title: "test2",
+        description: "fit2",
+        img_blob:
+          "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
+      },
+      {
+        title: "test3",
+        description: "fit3",
+        img_blob:
+          "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
+      },
+      {
+        title: "test4",
+        description: "fit4",
+        img_blob:
+          "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
+      },
+    ];
+    setData(dummyData);
   }
-}
 
-//fetch post title, desp img frm firstore post
+  return (
+    <div className="Blank snap">
+      {listItems}
 
-const itemData = [
-  {
-    title: "test1",
-
-    description: "fit1",
-  },
-  {
-    img: "./fitpics/2.jfif",
-    title: "fit2",
-  },
-
-  {
-    img: "./fitpics/4.jfif",
-    title: "fit4",
-  },
-  {
-    img: "./fitpics/5.jfif",
-    title: "fit5",
-  },
-  {
-    img: "./fitpics/6.jfif",
-    title: "fit6",
-  },
-  {
-    img: "./fitpics/7.jfif",
-    title: "fit7",
-  },
-  {
-    img: "./fitpics/8.jfif",
-    title: "fit8",
-  },
-  {
-    img: "./fitpics/9.jfif",
-    title: "fit9",
-  },
-  {
-    img: "./fitpics/10.jfif",
-    title: "fit10",
-  },
-  {
-    img: "./fitpics/11.jfif",
-    title: "fit11",
-  },
-  {
-    img: "./fitpics/12.jfif",
-    title: "fit12",
-  },
-  {
-    img: "./fitpics/1.jfif",
-    title: "fit1",
-  },
-  {
-    img: "./fitpics/2.jfif",
-    title: "fit2",
-  },
-
-  {
-    img: "./fitpics/4.jfif",
-    title: "fit4",
-  },
-  {
-    img: "./fitpics/5.jfif",
-    title: "fit5",
-  },
-  {
-    img: "./fitpics/6.jfif",
-    title: "fit6",
-  },
-  {
-    img: "./fitpics/7.jfif",
-    title: "fit7",
-  },
-  {
-    img: "./fitpics/8.jfif",
-    title: "fit8",
-  },
-  {
-    img: "./fitpics/9.jfif",
-    title: "fit9",
-  },
-  {
-    img: "./fitpics/10.jfif",
-    title: "fit10",
-  },
-  {
-    img: "./fitpics/11.jfif",
-    title: "fit11",
-  },
-  {
-    img: "./fitpics/12.jfif",
-    title: "fit12",
-  },
-];
-
-export default HomePage;
+      <button onClick={getData}>API CALL</button>
+    </div>
+  );
+};
+export default Home;
