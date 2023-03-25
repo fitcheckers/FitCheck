@@ -26,15 +26,24 @@ async function getUser(user_id){
   }
 }
 
+async function getUserPostData(post_ids){
+  const requests = post_ids.map(post_id => axios.post("http://localhost:80/post/get", {id: post_id}));
+  const responses = await Promise.all(requests);
+  console.log(responses.map(response => response.data))
+  return responses.map(response => response.data);
+}
 
 const UserProfile = ({ backImg, post }) => {
   const { currentUser } = useAuth();
   const [ user, setUser ] = useState("");
+  const [postDetails, setPostDetails] = useState([]);
 
   useEffect(() => {
     async function fetchData(){
       const userData = await getUser(currentUser.uid);
       setUser(userData);
+      const postData = await getUserPostData(userData.posts);
+      setPostDetails(postData);
     }
     fetchData();
   }, [currentUser]);
@@ -42,6 +51,7 @@ const UserProfile = ({ backImg, post }) => {
   if(!user){
     return <div>Loading User Info...</div>;
   }
+
 
   return (
     <div>
