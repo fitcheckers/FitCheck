@@ -24,18 +24,15 @@ function check_size(event) {
 }
 
 function Pin(props) {
- 
-
-
   return (
-    <div className={`card card_${props.pinDetails.pin_size}`}>
+    <div className="card_large">
       <div className="pin_modal">
         <div className="modal_foot">
           <div className="title">
             <div className="pint_mock_icon_container">
               <MdTitle />
             </div>
-            <span>{props.pinDetails.title}</span>
+            <span>{props.title}</span>
           </div>
 
           <div className="pint_mock_icon_container">
@@ -49,11 +46,7 @@ function Pin(props) {
       </div>
 
       <div className="pin_image">
-        <img
-          onLoad={check_size}
-          src={props.pinDetails.img_blob}
-          alt="pin_image"
-        />
+        <img onLoad={check_size} src={props.image_url} alt="pin_image" />
       </div>
     </div>
   );

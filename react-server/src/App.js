@@ -25,10 +25,42 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/LikePage" element={<Private><LikePage /></Private>} />
-          <Route exact path="/MyPost" element={<Private><MyPost /></Private>} />
-          <Route exact path="/ShoppingCart" element={<Private><ShoppingCart /></Private>} />
-          <Route exact path="/Wardrobe" element={<Private><Wardrobe /></Private>} />
+          <Route
+            exact
+            path="/LikePage"
+            element={
+              <Private>
+                <LikePage />
+              </Private>
+            }
+          />
+          <Route
+            exact
+            path="/MyPost"
+            element={
+              <Private>
+                <MyPost />
+              </Private>
+            }
+          />
+          <Route
+            exact
+            path="/ShoppingCart"
+            element={
+              <Private>
+                <ShoppingCart />
+              </Private>
+            }
+          />
+          <Route
+            exact
+            path="/Wardrobe"
+            element={
+              <Private>
+                <Wardrobe />
+              </Private>
+            }
+          />
           <Route
             exact
             path="/profile"

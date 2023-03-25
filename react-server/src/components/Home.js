@@ -5,14 +5,18 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { maxHeight, maxWidth } from "@mui/system";
 import Pin from "./Pin.js";
 import axios from "axios";
-
+import { FetchPost } from "./MyPost.js";
 class HomePage extends Component {
   //get all posts in collection
   // convert them into pins object and store them in pin array
   // render them into pin container
 
   render() {
-    return;
+    return (
+      <div>
+        <FetchPost />
+      </div>
+    );
   }
 }
 

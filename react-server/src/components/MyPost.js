@@ -10,121 +10,123 @@ import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import picture from "./accounts/profile.webp";
 import background from "../img/backgrounds.jpeg";
 import { useAuth } from "../contexts/AuthContext";
-import PostModal from "./posts/PostModal";
+
 import axios from "axios";
 
-
 //GET all post with userID
+import { UserProfile } from "./UserProfile";
+import PostModal from "./posts/PostModal";
 
-async function getUser(user_id){
-  try{
-    const response = await axios.post("http://localhost:80/users/get", {id: user_id});
-    console.log(response.data);
+async function getUser(user_id) {
+  try {
+    const response = await axios.post("http://localhost:80/users/get", {
+      id: user_id,
+    });
+    //console.log(response.data);
     return response.data;
-  } catch(e){
+  } catch (e) {
     console.log(e);
   }
 }
 
-async function getUserPostData(post_ids){
-  const requests = post_ids.map(post_id => axios.post("http://localhost:80/post/get", {id: post_id}));
+async function getUserPostData(post_ids) {
+  const requests = post_ids.map((post_id) =>
+    axios.post("http://localhost:80/post/get", { id: post_id })
+  );
   const responses = await Promise.all(requests);
-  console.log(responses.map(response => response.data))
-  return responses.map(response => response.data);
+  console.log(responses.map((response) => response.data.content.id));
+  return responses.map((response) => response.data);
 }
 
-const UserProfile = ({ backImg, post }) => {
+const FetchPost = (props) => {
+  const [pin, addPin] = useState([]);
+
   const { currentUser } = useAuth();
-  const [ user, setUser ] = useState("");
-  const [postDetails, setPostDetails] = useState([]);
+  const [data, setData] = useState([]);
+  const [user, setUser] = useState("");
 
-  useEffect(() => {
-    async function fetchData(){
-      const userData = await getUser(currentUser.uid);
-      setUser(userData);
-      const postData = await getUserPostData(userData.posts);
-      setPostDetails(postData);
-    }
-    fetchData();
-  }, [currentUser]);
-
-  if(!user){
-    return <div>Loading User Info...</div>;
+  async function fetchData() {
+    const userData = await getUser(currentUser.uid);
+    setUser(userData);
+    const postData = await getUserPostData(userData.posts);
+    setData(postData);
   }
 
+  // <div key={e.content.id} className="flex flex-col">
+  //         <img className="w-96 h-auto" src={e.content.image_url}></img>
+  //         <div className="card-text">{e.content.title}</div>
+  //         <div className="card-text">{e.content.description}</div>
+  //       </div>
 
   return (
-    <div>
-      <img
-        className="left-12 -z-10 top-[80px] w-screen h-52 relative object-cover bg-center"
-        src={user.profile_banner_url || backImg}
-        alt="background cover"
-      ></img>
-      <img
-        className="w-48 h-48 rounded-full object-cover relative left-24"
-        src={currentUser.photoURL || picture}
-        alt="profile"
-      ></img>
-      <p className="relative left-80 text-lg font-bold -mt-28">
-        @{currentUser.displayName}
-      </p>
-      <p className="relative left-80 text-lg">{post} Post</p>
-      <a
-        href="/Profile"
-        className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500"
-      >
-        Edit Profile
-      </a>
-      <HiOutlineSquares2X2 size="32" className="relative left-24 top-16" />
-      <p className="relative left-32 top-9 font-extrabold text-xl -mb-10">
-        My Posts
-      </p>
+    <div className="pin_container">
+      {data.map((e) => (
+        <Pin
+          key={e.content.id}
+          title={e.content.title}
+          image_url={e.content.image_url}
+        />
+      ))}
+
+      <button className=" mt-36 w-96 h-auto" onClick={fetchData}>
+        FETCH DATA CALL
+      </button>
     </div>
   );
 };
-export { UserProfile };
+
+export { FetchPost };
 
 class MyPost extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      pins: [],
       show_modal: false,
+      pins: [],
     };
-
   }
 
-  add_pin = (pinDetails) => {
+  add_pin = () => {
     this.setState((_state) => {
-      const new_pins = [..._state.pins];
-
-      new_pins.push(<Pin pinDetails={pinDetails} key={_state.pins.length} />);
-
       return {
-        pins: new_pins,
         show_modal: false,
       };
     });
   };
 
-  //For clicking POST MODAL
-  state = { //For the post modal
-    postModalIsOpen: false
+  add_post = (postDetails) => {
+    this.setState((_state) => {
+      const new_pins = [..._state.pins];
+
+      new_pins.push(
+        <Pin pinDetails={this.postDetails} key={_state.pins.length} />
+      );
+
+      return {
+        pins: new_pins,
+      };
+    });
   };
 
-  togglePostModal = () => { //Function to set postModalIsOpen to true or false
+  //For clicking POST MODAL
+  state = {
+    //For the post modal
+    postModalIsOpen: false,
+  };
+
+  togglePostModal = () => {
+    //Function to set postModalIsOpen to true or false
     this.setState({ postModalIsOpen: !this.state.postModalIsOpen });
-  }
+  };
 
   post = {
     title: "test1",
-    url:"https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
-    description:"fit1",
+    url: "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/postImages%2F10.jfif?alt=media&token=4237b889-0abe-4bc7-9341-896c7d8d9e14",
+    description: "fit1",
     user_name: "testUser",
-    user_pfp: "https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
-  }
-
+    user_pfp: "https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg",
+  };
 
   render() {
     return (
@@ -135,13 +137,19 @@ class MyPost extends Component {
           username={"username"}
           post={"3"}
         />
+        <FetchPost />
+
         <button
           onClick={this.togglePostModal}
           className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500"
-          >
+        >
           Hide
         </button>
-        <PostModal post={this.post} isOpen={this.state.postModalIsOpen} toggleModal={this.togglePostModal} />
+        <PostModal
+          post={this.post}
+          isOpen={this.state.postModalIsOpen}
+          toggleModal={this.togglePostModal}
+        />
         <div>
           <div className="fixed bottom-0 right-0 z-1 ">
             <Fab

@@ -20,7 +20,7 @@ import axios from "axios";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuth } from "../contexts/AuthContext";
 
-import TopFitSelect from "./ModalComponents/TopFitSelect"
+import TopFitSelect from "./ModalComponents/TopFitSelect";
 
 let imageUrl = "";
 let file;
@@ -78,45 +78,35 @@ async function image_upload(file) {
   return url;
 }
 
-async function save_pin(pinDetails, add_pin, user) {
-  const users_data = {
-    ...pinDetails,
-    author: "Jack",
-    board: "default",
-    title: document.querySelector("#pin_title").value,
-    description: document.querySelector("#pin_description").value,
-    
-    pin_size: document.querySelector("#pin_size").value,
-  };
-
-  imageUrl = await image_upload(file);
-
-  const post_data = {
-    image_url: imageUrl,
-    description: document.querySelector("#pin_description").value,
-    title: document.querySelector("#pin_title").value,
-    user_id: user,
-  };
-
-  await axios
-    .post("http://localhost:80/post/new", post_data)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  add_pin(users_data);
-}
-
 function Modal(props) {
+  async function save_pin(pinDetails, user, add_pin) {
+    imageUrl = await image_upload(file);
+
+    const post_data = {
+      image_url: imageUrl,
+      description: document.querySelector("#pin_description").value,
+      title: document.querySelector("#pin_title").value,
+      user_id: user,
+    };
+
+    await axios
+      .post("http://localhost:80/post/new", post_data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    add_pin();
+  }
+
   const [pinDetails, setPinDetails] = useState({
     author: "",
     board: "",
     title: "",
     description: "",
-  
+
     img_blob: "",
     pin_size: "",
   });
@@ -189,7 +179,6 @@ function Modal(props) {
         </div>
 
         <div className="side" id="right_side">
-
           <div className="section1">
             <div className="select_size">
               <select defaultValue="small" name="pin_size" id="pin_size">
@@ -198,7 +187,7 @@ function Modal(props) {
               </select>
               <div
                 onClick={() =>
-                  save_pin(pinDetails, props.add_pin, currentUser.uid)
+                  save_pin(pinDetails, currentUser.uid, props.add_pin)
                 }
                 className="save_pin"
               >
@@ -208,7 +197,6 @@ function Modal(props) {
           </div>
 
           <div className="section2">
-
             <TextField
               margin="dense"
               required
@@ -226,10 +214,6 @@ function Modal(props) {
               label="Description"
               variant="standard"
             />
-
-            
-
-          
           </div>
         </div>
       </div>
