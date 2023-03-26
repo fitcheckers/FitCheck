@@ -30,7 +30,9 @@ async function getUser(user_id) {
 
 async function getUserPostData(post_ids) {
   const requests = post_ids.map((post_id) =>
-    axios.post("http://localhost:80/post/get", { id: post_id })
+    axios.post("http://localhost:80/post/get", { id: post_id }).catch((error) => {
+      console.log(`Error from fetching post ${post_id}: ${error}`);
+    })
   );
   const responses = await Promise.all(requests);
   console.log(responses.map((response) => response.data.content.id));
@@ -53,7 +55,7 @@ const FetchPost = (props) => {
     setData(postData);
   }
   fetchData();
-}, []);
+}, [currentUser.uid]);
 
   return (
     <div className="pin_container">
