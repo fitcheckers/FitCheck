@@ -34,8 +34,8 @@ const UserPrefModal = ({setShowModal}) =>
     if(page===0){
         return (
         <>
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
-                <div className="absolute bg-[#D9D9D9] my-10 pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl overflow-y-scroll">
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
+                <div className="absolute bg-[#D9D9D9] my-10 pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl overflow-y-scroll z-10">
                     <div onClick={closeModal} className="cursor-pointer block font-bold text-2xl hover:scale-y-110">
                         <span>&times;</span>
                     </div>
@@ -65,8 +65,8 @@ const UserPrefModal = ({setShowModal}) =>
     {
         return(
         <>
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
-            <div className="absolute bg-[#D9D9D9] pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl pr-[7px] my-10 overflow-y-scroll">
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
+            <div className="absolute bg-[#D9D9D9] pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl pr-[7px] my-10 overflow-y-scroll z-10">
                 <div onClick={closeModal} className="cursor-pointer">
                     <span>&times;</span>
                 </div>
