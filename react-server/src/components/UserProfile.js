@@ -15,10 +15,11 @@ async function getUser(user_id) {
     const response = await axios.post("http://localhost:80/users/get", {
       id: user_id,
     });
-    console.log(response.data);
+    console.log("Calling axios from getUser UserProfile");
     return response.data;
   } catch (e) {
     console.log(e);
+    console.log("Error from calling axios from getUser UserProfile");
   }
 }
 
@@ -28,6 +29,7 @@ async function getUserPostData(post_ids) {
   );
   const responses = await Promise.all(requests);
   console.log(responses.map((response) => response.data));
+  console.log("Calling axios from getUserPostData UserProfile");
   return responses.map((response) => response.data);
 }
 
