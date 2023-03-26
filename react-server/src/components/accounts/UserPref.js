@@ -94,11 +94,42 @@ const UserPrefModal = ({setShowModal}) =>
                     <form className="relative pb-4 mx-auto"> 
                         <input type="text" id="username" name="username" required placeholder="Enter a Display Name" className="text-center text-[10px] md:text-md lg:text-lg mx-auto"></input>
                     </form>
-                    <button onClick={() => closeModal()} className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Finish</button>
+                    <button onClick={() => setPage(page + 1)} className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Next</button>
                     <div className="flex bottom-3 top-10 gap-2 pt-3 mx-auto">
                         <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
                         <div className="relative h-3 w-3 bg-gray-400 rounded-full drop-shadow-xl"></div>
                         <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </>
+        )
+    }
+    else if(page === 2)
+    {
+        return(
+        <>
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
+            <div className="absolute bg-[#D9D9D9] pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl pr-[7px] my-10 overflow-y-scroll">
+                <div onClick={closeModal} className="cursor-pointer">
+                    <span>&times;</span>
+                </div>
+
+                <div className="flex h-[90%] justify-start items-start flex-col">
+                    <p className="text-4xl mx-auto font-bold text-[#015668] pb-4">
+                    What's your style?
+                    </p>
+                    <p className="text-xs mx-auto font-bold text-[#015668]">
+                    This will help us customize your feed.
+                    </p>
+                    <p className="text-xs mx-auto font-bold text-[#015668]">
+                    Pick at least 3.
+                    </p>
+                    <button onClick={() => closeModal()} className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Finish</button>
+                    <div className="flex bottom-3 top-10 gap-2 pt-3 mx-auto">
+                        <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
+                        <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
+                        <div className="relative h-3 w-3 bg-gray-400 rounded-full drop-shadow-xl"></div>
                     </div>
                 </div>
             </div>
