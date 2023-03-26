@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
+import artsy from "../../img/artsy.jpg";
+import athleisure from "../../img/athleisure.jpg";
+import bcasual from "../../img/bcasual.jpg";
+import biker from "../../img/biker.jpg";
+import casual from "../../img/casual.jpg";
+import classic from "../../img/classic.jpg";
+import hipster from "../../img/hipster.jpg";
+import kawaii from "../../img/kawaii.jpg";
+import korean from "../../img/korean.jpg";
+import minimalist from "../../img/minimalist.jpg";
+import sporty from "../../img/sporty.jpg";
+import street from "../../img/street.jpg";
 
 const UserPrefModal = ({setShowModal}) =>
 {
@@ -12,7 +24,24 @@ const UserPrefModal = ({setShowModal}) =>
         setPage(0)
     }
     const [page, setPage] = useState(0);
-    console.log("pageNum:",page);
+    const [userPref, setUserPref] = useState([]);
+    //console.log(userPref);
+
+    function addTo(styles)
+    {
+        if(userPref.includes(styles))
+        {
+            setUserPref(userPref.filter(style => style !== styles));
+            const element = document.getElementById(styles);
+            element.classList.remove("border-blue-500", "border-8");
+        }
+        else
+        {
+            setUserPref([...userPref, styles]);
+            const element = document.getElementById(styles);
+            element.classList.add("border-blue-500", "border-8");
+        }
+    }
 
     async function createUserObject(){
         //var file = document.querySelector("input[type='file'][id='bg_img']").files[0]; gonna need this to get the input from user
@@ -36,9 +65,10 @@ const UserPrefModal = ({setShowModal}) =>
         <>
             <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
                 <div className="absolute bg-[#D9D9D9] my-10 pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl overflow-y-scroll z-10">
-                    <div onClick={closeModal} className="cursor-pointer block font-bold text-2xl hover:scale-y-110">
+                    {/* <div onClick={closeModal} className="cursor-pointer block font-bold text-2xl hover:scale-y-110">
                         <span>&times;</span>
-                    </div>
+                    </div> */}
+                    <div className="h-4 sm:h-10"></div>
                     <div className="flex justify-center">
                     <div className="">
                         <p className="text-xl md:text-2xl lg:text-4xl font-bold text-[#015668] text-center pt-10 pb-10">
@@ -67,10 +97,10 @@ const UserPrefModal = ({setShowModal}) =>
         <>
             <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
             <div className="absolute bg-[#D9D9D9] pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl pr-[7px] my-10 overflow-y-scroll z-10">
-                <div onClick={closeModal} className="cursor-pointer">
+                {/* <div onClick={closeModal} className="cursor-pointer">
                     <span>&times;</span>
-                </div>
-
+                </div> */}
+                <div className="h-4 sm:h-10"></div>
                 <div className="flex h-[90%] justify-start items-start flex-col">
                     <p className="text-4xl mx-auto font-bold text-[#015668] pb-4">
                     What is your fit?
@@ -80,13 +110,13 @@ const UserPrefModal = ({setShowModal}) =>
                     </p>
                     <form className="font-bold pl-[27%] pt-2 text-[#015668] sm:pb-10 pb-4 text-sm md:text-md lg:text-xl">
                         <input type="radio" id="male" name="gender" value="MALE"></input>
-                        <label for="male" className="">Male</label>
+                        <label htmlFor="male" className="">Male</label>
                         <br></br> 
                         <input type="radio" id="female" name="gender" value="FEMALE"></input>
-                        <label for="female">Female</label>
+                        <label htmlFor="female">Female</label>
                         <br></br>
                         <input type="radio" id="other" name="gender" value="OTHER"></input>
-                        <label for="other">Other</label>
+                        <label htmlFor="other">Other</label>
                     </form>
                     <p className="mx-auto font-bold text-[#015668] sm:pb-4 pb-0 text-md md:text-xl lg:text-2xl">
                     What is your display name?
@@ -109,11 +139,11 @@ const UserPrefModal = ({setShowModal}) =>
     {
         return(
         <>
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
-            <div className="absolute bg-[#D9D9D9] pt-1 pl-2 top-[15%] left-[38%] w-[30%] h-[70%] rounded-3xl pr-[7px] my-10 overflow-y-scroll">
-                <div onClick={closeModal} className="cursor-pointer">
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
+            <div className="absolute bg-[#D9D9D9] pt-1 pl-2 top-[11%] left-[28%] w-[50%] h-[76%] rounded-3xl pr-[7px] my-10 overflow-y-scroll z-10">
+                {/* <div onClick={closeModal} className="cursor-pointer">
                     <span>&times;</span>
-                </div>
+                </div> */}
 
                 <div className="flex h-[90%] justify-start items-start flex-col">
                     <p className="text-4xl mx-auto font-bold text-[#015668] pb-4">
@@ -125,7 +155,32 @@ const UserPrefModal = ({setShowModal}) =>
                     <p className="text-xs mx-auto font-bold text-[#015668]">
                     Pick at least 3.
                     </p>
-                    <button onClick={() => closeModal()} className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Finish</button>
+                    <div className="overflow-scroll bg-gray-400 w-full text-center mt-2 mb-2">
+                        <div className="inline-flex gap-2">
+                            <div className="text-center font-medium text-[#015668]">Artsy<img id="artsy" className="w-48 h-60 object-cover rounded-3xl" alt="artsy" onClick={() => addTo("artsy")} src={artsy}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Athleisure<img id="athleisure" className="w-48 h-60 object-cover rounded-3xl" alt="athleisure" onClick={() => addTo("athleisure")} src={athleisure}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Business<img id="bcasual" className="w-48 h-60 object-cover rounded-3xl" alt="business casual" onClick={() => addTo("bcasual")} src={bcasual}></img></div>
+                        </div>
+                        <div className="inline-flex gap-2 mt-3">
+                            <div className="text-center font-medium text-[#015668]">Biker<img className="w-48 h-60 object-cover rounded-3xl" alt="biker" onClick={() => addTo("biker")} id="biker" src={biker}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Casual<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("casual")} id="casual" alt="casual" src={casual}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Classic<img className="w-48 h-60 object-cover rounded-3xl" alt="classic" onClick={() => addTo("classic")} id="classic" src={classic}></img></div>
+                        </div>
+                        <div className="inline-flex gap-2 mt-3">
+                            <div className="text-center font-medium text-[#015668]">Hipster<img className="w-48 h-60 object-cover rounded-3xl" alt="hipster" onClick={() => addTo("hipster")} id="hipster" src={hipster}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Kawaii<img className="w-48 h-60 object-cover rounded-3xl" alt="kawaii" onClick={() => addTo("kawaii")} id="kawaii" src={kawaii}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Korean<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("korean")} id="korean" alt="korean" src={korean}></img></div>
+                        </div>
+                        <div className="inline-flex gap-2 mt-3">
+                            <div className="text-center font-medium text-[#015668]">Minimalist<img className="w-48 h-60 object-cover rounded-3xl" alt="minimalist" onClick={() => addTo("minimalist")} id="minimalist" src={minimalist}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Sporty<img className="w-48 h-60 object-cover rounded-3xl" alt="sporty" onClick={() => addTo("sporty")} id="sporty" src={sporty}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Street<img className="w-48 h-60 object-cover rounded-3xl" alt="street" onClick={() => addTo("street")} id="street" src={street}></img></div>
+                        </div>
+                    </div>
+                    <div className="mx-auto mt-1">
+                        <button onClick={() => setPage(page - 1)} className="text-center border-2 border-[#015668] rounded-md py-2 w-20 mr-1 text-[#015668] hover:bg-[#015668] hover:text-white">Previous</button>
+                        <button onClick={() => closeModal()} className="text-center border-2 border-[#015668] rounded-md py-2 w-20 ml-1 text-[#015668] hover:bg-[#015668] hover:text-white">Finish</button>
+                    </div>
                     <div className="flex bottom-3 top-10 gap-2 pt-3 mx-auto">
                         <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
                         <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
