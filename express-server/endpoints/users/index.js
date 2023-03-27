@@ -17,7 +17,7 @@ app.post('/users/get', async (req, res) => {
 });
 
 app.post('/users/update', async (req, res) => {
-    const { id, profile_pic_url, profile_banner_url, display_name, username } = req.body;
+    const { id, profile_pic_url, profile_banner_url, display_name, username, styles } = req.body;
     if (!id) {
         res.status(400).send('missing id from json');
         return;
@@ -27,6 +27,7 @@ app.post('/users/update', async (req, res) => {
     if (profile_banner_url) data.profile_banner_url = profile_banner_url;
     if (display_name) data.display_name = display_name;
     if (username) data.username = username;
+    if (styles) data.styles = styles;
     await db.collection('users').doc(id).set(data, { merge: true });
     res.json({ "success": true });
 });

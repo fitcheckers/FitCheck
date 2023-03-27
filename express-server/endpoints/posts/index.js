@@ -127,10 +127,18 @@ app.post('/posts/', async (req, res) => {
     }
     let data = await db.collection('users').doc(user_id).get();
     if (!data.exists) {
-        res.status(400).send('usser ID not found.');
+        res.status(400).send('user ID not found.');
         return;
     }
     data = data.data();
     if (!data.posts) data.posts = [];
     res.json({"content":data.posts});
+});
+
+app.post('/posts/query', async (req, res) => {
+    let {limit} = req.body;
+    if (!limit) limit = 50;
+    let data = await db.collection('posts').get();
+    data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
+    res.json(data);
 });
