@@ -43,11 +43,10 @@ const UserPrefModal = ({setShowModal}) =>
     async function createUserObject(){
         const userObject = {
             id: currentUser.uid,
-            profile_banner_url: "",
+            profile_banner_url: "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/bannerImages%2FblueNwhite.avif?alt=media&token=5f9fff41-ef1c-449e-942b-596d81e3ac84",
         }
         try{
-            const response = await axios.post("http://localhost:80/users/get", userObject);
-            console.log(response.data);
+            const response = await axios.post("http://localhost:80/users/update", userObject);
             return response.data;
         } catch (e){
             console.log(e);
@@ -66,7 +65,7 @@ const UserPrefModal = ({setShowModal}) =>
             displayName: username,
           };
           await updateUserProfile(user, profile);
-          console.log(currentUser.displayName);
+          //console.log(currentUser.displayName);
           //navigate("/profile");
         } catch (e) {
           setError("Failed to update profile");
@@ -76,12 +75,14 @@ const UserPrefModal = ({setShowModal}) =>
     //handle close modal
     const closeModal = async () =>{
         setShowModal(false);
-        // try{
-        //     const response = await createUserObject();
-        // } catch(e){
-        //     console.log(e);
-        // }
+        try{
+            const response = await createUserObject();
+            console.log(response.data);
+        } catch(e){
+            console.log(e);
+        }
         handleFormSubmit();
+        navigate("/profile");
     }
 
 

@@ -19,7 +19,7 @@ import NativeSelect from "@mui/material/NativeSelect";
 import axios from "axios";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuth } from "../contexts/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 import TopFitSelect from "./ModalComponents/TopFitSelect";
 
 let imageUrl = "";
@@ -79,6 +79,8 @@ async function image_upload(file) {
 }
 
 function Modal(props) {
+  const navigate = useNavigate();
+
   async function save_pin(pinDetails, user, add_pin) {
     imageUrl = await image_upload(file);
 
@@ -97,7 +99,7 @@ function Modal(props) {
       .catch((error) => {
         console.log(error);
       });
-
+    window.location.reload();
     add_pin();
   }
 
