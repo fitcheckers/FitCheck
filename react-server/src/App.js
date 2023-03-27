@@ -13,6 +13,7 @@ import Sidebar from "./components/utils/Sidebar";
 import MyPost from "./components/MyPost";
 import Wardrobe from "./components/Wardrobe";
 import ShoppingCart from "./components/ShoppingCart";
+import Preference from "./components/Preference";
 
 function App() {
   return (
@@ -49,6 +50,15 @@ function App() {
             element={
               <Private>
                 <ShoppingCart />
+              </Private>
+            }
+          />
+          <Route
+            exact
+            path="/Preference"
+            element={
+              <Private>
+                <Preference />
               </Private>
             }
           />

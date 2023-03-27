@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import artsy from "../../img/artsy.jpg";
 import athleisure from "../../img/athleisure.jpg";
 import bcasual from "../../img/bcasual.jpg";
@@ -16,15 +17,11 @@ import street from "../../img/street.jpg";
 
 const UserPrefModal = ({setShowModal}) =>
 {
-    const { currentUser } = useAuth();
-
-    //handle close modal
-    const closeModal = () =>{
-        setShowModal(false)
-        setPage(0)
-    }
+    const { currentUser, updateUserProfile, setError  } = useAuth();
     const [page, setPage] = useState(0);
     const [userPref, setUserPref] = useState([]);
+    const [ username, setUsername ] = useState("");
+    const navigate = useNavigate();
     //console.log(userPref);
 
     function addTo(styles)
@@ -44,8 +41,6 @@ const UserPrefModal = ({setShowModal}) =>
     }
 
     async function createUserObject(){
-        //var file = document.querySelector("input[type='file'][id='bg_img']").files[0]; gonna need this to get the input from user
-
         const userObject = {
             id: currentUser.uid,
             profile_banner_url: "",
@@ -57,6 +52,36 @@ const UserPrefModal = ({setShowModal}) =>
         } catch (e){
             console.log(e);
         }
+    }
+
+    function saveName(){
+        const name = document.getElementById("username").value;
+        setUsername(name);
+    }
+
+    async function handleFormSubmit() {
+        try {
+          const user = currentUser;
+          const profile = {
+            displayName: username,
+          };
+          await updateUserProfile(user, profile);
+          console.log(currentUser.displayName);
+          //navigate("/profile");
+        } catch (e) {
+          setError("Failed to update profile");
+        }
+    };
+
+    //handle close modal
+    const closeModal = async () =>{
+        setShowModal(false);
+        // try{
+        //     const response = await createUserObject();
+        // } catch(e){
+        //     console.log(e);
+        // }
+        handleFormSubmit();
     }
 
 
@@ -124,7 +149,7 @@ const UserPrefModal = ({setShowModal}) =>
                     <form className="relative pb-4 mx-auto"> 
                         <input type="text" id="username" name="username" required placeholder="Enter a Display Name" className="text-center text-[10px] md:text-md lg:text-lg mx-auto"></input>
                     </form>
-                    <button onClick={() => setPage(page + 1)} className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Next</button>
+                    <button onClick={() => {setPage(page + 1); saveName()} } className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Next</button>
                     <div className="flex bottom-3 top-10 gap-2 pt-3 mx-auto">
                         <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
                         <div className="relative h-3 w-3 bg-gray-400 rounded-full drop-shadow-xl"></div>

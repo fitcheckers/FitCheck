@@ -36,7 +36,7 @@ export default function Register() {
         setError("");
         setLoading(true);
         await register(email, password);
-        navigate("/profile");
+        navigate("/Preference");
       } catch (e) {
         if(e.message === "Firebase: Error (auth/email-already-in-use).")
         {
