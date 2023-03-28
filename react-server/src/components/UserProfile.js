@@ -67,7 +67,7 @@ const UserProfile = ({ backImg, post }) => {
       <p className="relative left-80 text-lg font-bold -mt-28">
         @{currentUser.displayName}
       </p>
-      <p className="relative left-80 text-lg">{post} Post</p>
+      <p className="relative left-80 text-lg">{user.posts.length || post} Post</p>
       <a
         href="/Profile"
         className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500"

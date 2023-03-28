@@ -78,7 +78,7 @@ export default function Profile(){
       event.preventDefault();
       var file = document.querySelector("input[type='file'][id='bg_img']").files[0];
       //console.log(file.name);
-      if(user.profile_banner_url !== "")
+      if(user.profile_banner_url !== "" && user.profile_banner_url !== "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/bannerImages%2FblueNwhite.avif?alt=media&token=5f9fff41-ef1c-449e-942b-596d81e3ac84")
       {
         var desertRef = ref(storage, user.profile_banner_url.slice(fileName('banner')));
         deleteObject(desertRef).then(() => {
