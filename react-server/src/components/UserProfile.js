@@ -42,8 +42,8 @@ const UserProfile = ({ backImg, post }) => {
     async function fetchData() {
       const userData = await getUser(currentUser.uid);
       setUser(userData);
-      const postData = await getUserPostData(userData.posts);
-      setPostDetails(postData);
+      const postDetails = await getUserPostData(userData.posts);
+      setPostDetails(postDetails);
     }
     fetchData();
   }, [currentUser]);
