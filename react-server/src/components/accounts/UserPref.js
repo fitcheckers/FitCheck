@@ -38,12 +38,15 @@ const UserPrefModal = ({setShowModal}) =>
             const element = document.getElementById(styles);
             element.classList.add("border-blue-500", "border-8");
         }
+        console.log(userPref);
     }
 
     async function createUserObject(){
         const userObject = {
             id: currentUser.uid,
             profile_banner_url: "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/bannerImages%2FblueNwhite.avif?alt=media&token=5f9fff41-ef1c-449e-942b-596d81e3ac84",
+            posts: [],
+            styles: userPref,
         }
         try{
             const response = await axios.post("http://localhost:80/users/update", userObject);
@@ -56,6 +59,31 @@ const UserPrefModal = ({setShowModal}) =>
     function saveName(){
         const name = document.getElementById("username").value;
         setUsername(name);
+    }
+
+    function checkRequire(){
+        let radio1 = document.getElementById("male");
+        let radio2 = document.getElementById("female");
+        let radio3 = document.getElementById("other");
+        let name = document.getElementById("username").value;
+        if((radio1.checked || radio2.checked || radio3.checked) && name)
+        {
+            if (radio1.checked) {
+                setUserPref([...userPref,'male']);
+            }
+            else if (radio2.checked) {
+                setUserPref([...userPref,'female']);
+            }
+            else{
+                setUserPref([...userPref, 'other']);
+            }
+            saveName();
+            setPage(page + 1);
+        }
+        else
+        {
+            setError("Please select your fit and enter a display name!");
+        }
     }
 
     async function handleFormSubmit() {
@@ -77,12 +105,24 @@ const UserPrefModal = ({setShowModal}) =>
         setShowModal(false);
         try{
             const response = await createUserObject();
-            console.log(response.data);
+            //console.log(response.data);
         } catch(e){
             console.log(e);
         }
         handleFormSubmit();
         navigate("/profile");
+    }
+
+    function checkUserStyle(){
+        if(userPref.length >= 4)
+        {
+            console.log(userPref.length);
+            closeModal();
+        }
+        else
+        {
+            setError("Please select at least 3 styles you are interested.");
+        }
     }
 
 
@@ -150,7 +190,7 @@ const UserPrefModal = ({setShowModal}) =>
                     <form className="relative pb-4 mx-auto"> 
                         <input type="text" id="username" name="username" required placeholder="Enter a Display Name" className="text-center text-[10px] md:text-md lg:text-lg mx-auto"></input>
                     </form>
-                    <button onClick={() => {setPage(page + 1); saveName()} } className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Next</button>
+                    <button onClick={() => checkRequire() } className="flex mt-4 mx-auto border-2 border-[#015668] rounded-md py-2 px-4 justify-center w-1/2 text-[#015668] hover:bg-[#015668] hover:text-white">Next</button>
                     <div className="flex bottom-3 top-10 gap-2 pt-3 mx-auto">
                         <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>
                         <div className="relative h-3 w-3 bg-gray-400 rounded-full drop-shadow-xl"></div>
@@ -205,7 +245,7 @@ const UserPrefModal = ({setShowModal}) =>
                     </div>
                     <div className="mx-auto mt-1">
                         <button onClick={() => setPage(page - 1)} className="text-center border-2 border-[#015668] rounded-md py-2 w-20 mr-1 text-[#015668] hover:bg-[#015668] hover:text-white">Previous</button>
-                        <button onClick={() => closeModal()} className="text-center border-2 border-[#015668] rounded-md py-2 w-20 ml-1 text-[#015668] hover:bg-[#015668] hover:text-white">Finish</button>
+                        <button onClick={() => checkUserStyle()} className="text-center border-2 border-[#015668] rounded-md py-2 w-20 ml-1 text-[#015668] hover:bg-[#015668] hover:text-white">Finish</button>
                     </div>
                     <div className="flex bottom-3 top-10 gap-2 pt-3 mx-auto">
                         <div className="relative h-3 w-3 bg-white rounded-full drop-shadow-xl"></div>

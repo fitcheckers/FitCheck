@@ -42,8 +42,8 @@ const UserProfile = ({ backImg, post }) => {
     async function fetchData() {
       const userData = await getUser(currentUser.uid);
       setUser(userData);
-      const postData = await getUserPostData(userData.posts);
-      setPostDetails(postData);
+      const postDetails = await getUserPostData(userData.posts);
+      setPostDetails(postDetails);
     }
     fetchData();
   }, [currentUser]);
@@ -67,7 +67,10 @@ const UserProfile = ({ backImg, post }) => {
       <p className="relative left-80 text-lg font-bold -mt-28">
         @{currentUser.displayName}
       </p>
-      <p className="relative left-80 text-lg">{post} Post</p>
+      <p className="relative inline left-80 text-lg">{user.posts.length || post} Post</p>
+      <p className="relative inline ml-6 left-80 text-lg">{0} Followers</p>
+      <p className="relative inline ml-6 left-80 text-lg">{0} Followings</p>
+      <br></br>
       <a
         href="/Profile"
         className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500"

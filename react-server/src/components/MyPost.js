@@ -114,7 +114,7 @@ class MyPost extends Component {
           backImg={background}
           profImg={picture}
           username={"username"}
-          post={"3"}
+          post={"0"}
         />
         <FetchPost />
         <div>
