@@ -5,10 +5,6 @@ function PinDetails() {
   <div>
 
 
-
-
-
-
   </div>
   );
 }

@@ -142,3 +142,4 @@ app.post('/posts/query', async (req, res) => {
     data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
     res.json(data);
 });
+

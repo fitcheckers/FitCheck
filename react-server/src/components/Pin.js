@@ -28,13 +28,49 @@ function check_size(event) {
 function Pin(props) {
   const [showModal, setShowModal] = useState(false);
 
-  function handlePinClick() {
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDisLikes] = useState(0);
+  const [LikeClicked, setLikeClicked] = useState(false);
+  const [dislikeClicked, setDisklikeClicked] = useState(false);
+
+  const handleLikeClick = (e) => {
+    e.stopPropagation();
+
+    if (dislikes > 0 && dislikeClicked) {
+      setLikeClicked(true);
+      setDisklikeClicked(false);
+      setLikes(likes + 1);
+      setDisLikes(dislikes - 1);
+    } else {
+      if (!LikeClicked) {
+        setLikeClicked(true);
+        setLikes(likes + 1);
+      }
+    }
+  };
+
+  const handleDislikeClick = (e) => {
+    e.stopPropagation();
+    if (likes > 0 && LikeClicked) {
+      setDisklikeClicked(true);
+      setLikeClicked(false);
+      setLikes(likes - 1);
+      setDisLikes(dislikes + 1);
+    } else {
+      if (!dislikeClicked) {
+        setDisklikeClicked(true);
+        setDisLikes(dislikes + 1);
+      }
+    }
+  };
+
+  const handlePinClick = () => {
     setShowModal(true);
-  }
+  };
 
   return (
     <div className="card card_large bg-neutral-300">
-      <div className="pin_modal" onClick={handlePinClick}> 
+      <div className="pin_modal " onClick={handlePinClick}>
         <div className="modal_foot">
           <div className="title">
             <div className="pint_mock_icon_container">
@@ -43,23 +79,43 @@ function Pin(props) {
             <span>{props.title}</span>
           </div>
 
-          <div className="pint_mock_icon_container">
+          <button
+            style={{
+              backgroundColor: LikeClicked ? "green" : "",
+            }}
+            className="pint_mock_icon_container"
+            onClick={handleLikeClick}
+          >
             <AiFillLike />
-          </div>
+            {likes}
+          </button>
 
-          <div className="pint_mock_icon_container">
+          <button
+            style={{
+              backgroundColor: dislikeClicked ? "red" : "white",
+            }}
+            className="pint_mock_icon_container"
+            onClick={handleDislikeClick}
+          >
             <AiFillDislike />
-          </div>
+            {dislikes}
+          </button>
         </div>
       </div>
 
       <div className="pin_image">
         <img onLoad={check_size} src={props.image_url} alt="pin_image" />
       </div>
-      {showModal && <PostModal post={props} isOpen={showModal} toggleModal={() => setShowModal(false)}
-      user_pfp = {props.user_pfp}
-      user_name = {props.user_name}
-      post_description = {props.description} /> }
+      {showModal && (
+        <PostModal
+          post={props}
+          isOpen={showModal}
+          toggleModal={() => setShowModal(false)}
+          user_pfp={props.user_pfp}
+          user_name={props.user_name}
+          post_description={props.description}
+        />
+      )}
     </div>
   );
 }

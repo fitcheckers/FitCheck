@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { useState, useEffect } from "react";
 
-import "../styles/my_post.css";
 import Pin from "./Pin.js";
 import Modal from "./Modal";
 import Fab from "@mui/material/Fab";
@@ -9,11 +8,10 @@ import AddIcon from "@mui/icons-material/Add";
 import picture from "./accounts/profile.webp";
 import background from "../img/backgrounds.jpeg";
 import { useAuth } from "../contexts/AuthContext";
-
 import axios from "axios";
-
-//GET all post with userID
 import { UserProfile } from "./UserProfile";
+
+import "../styles/my_post.css";
 
 async function getUser(user_id) {
   try {
@@ -30,9 +28,11 @@ async function getUser(user_id) {
 
 async function getUserPostData(post_ids) {
   const requests = post_ids.map((post_id) =>
-    axios.post("http://localhost:80/post/get", { id: post_id }).catch((error) => {
-      console.log(`Error from fetching post ${post_id}: ${error}`);
-    })
+    axios
+      .post("http://localhost:80/post/get", { id: post_id })
+      .catch((error) => {
+        console.log(`Error from fetching post ${post_id}: ${error}`);
+      })
   );
   const responses = await Promise.all(requests);
   console.log(responses.map((response) => response.data.content.id));
@@ -48,14 +48,14 @@ const FetchPost = (props) => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-  async function fetchData() {
-    const userData = await getUser(currentUser.uid);
-    setUser(userData);
-    const postData = await getUserPostData(userData.posts);
-    setData(postData);
-  }
-  fetchData();
-}, [currentUser.uid]);
+    async function fetchData() {
+      const userData = await getUser(currentUser.uid);
+      setUser(userData);
+      const postData = await getUserPostData(userData.posts);
+      setData(postData);
+    }
+    fetchData();
+  }, [currentUser.uid]);
 
   return (
     <div className="pin_container">
