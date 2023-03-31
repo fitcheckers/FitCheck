@@ -37,7 +37,7 @@ const Navbar = () =>{
                     
                 </span>
                 <SearchBar/>
-                <ul className="flex-none z-[-1] md:z-auto static w-full md:w-auto md:py-0 py-4 md:pl-0 pl-11 sm:place-items-end">
+                <ul className="flex-none static py-4 pl-11 place-items-end">
                     <button type="button" onClick={handleDropDown}>
                         <img className="w-16 h-16 rounded-full object-cover mt-2" alt="profile" src={currentUser.photoURL || picture}></img>
                     </button>
