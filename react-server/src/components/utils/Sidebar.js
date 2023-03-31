@@ -11,17 +11,20 @@ const Sidebar = () => {
                   flex flex-col
                   bg-gray-900 text-white shadow fixed overflow-x-hidden"
     >
-      <SideBarIcon href={"/"} icon={<AiFillHome size="32" />} />{" "}
-      <SideBarIcon href={"/MyPost"} icon={<CgProfile size="32" />} />{" "}
-      <SideBarIcon href={"/Wardrobe"} icon={<BiCloset size="32" />} />{" "}
-      <SideBarIcon href={"/LikePage"} icon={<FaHandHoldingHeart size="32" />} />{" "}
-      <SideBarIcon href={"/ShoppingCart"} icon={<MdShoppingCart size="32" />} />
+      <SideBarIcon href={"/"} icon={<AiFillHome size="32" />} text="Home"/>{" "}
+      <SideBarIcon href={"/MyPost"} icon={<CgProfile size="32" />} text="Profile"/>{" "}
+      <SideBarIcon href={"/Wardrobe"} icon={<BiCloset size="32" />} text="Closet"/>{" "}
+      <SideBarIcon href={"/LikePage"} icon={<FaHandHoldingHeart size="32" />} text="Likes"/>{" "}
+      <SideBarIcon href={"/ShoppingCart"} icon={<MdShoppingCart size="32" />} text="Cart"/>
     </div>
   );
 };
-const SideBarIcon = ({ icon, href }) => (
-  <div className="sidebar-icon top-24 overflow-y-hidden">
+const SideBarIcon = ({ icon, href, text = "tooltip"}) => (
+  <div className="sidebar-icon top-24 overflow-y-hidden group">
     <a href={href}>{icon}</a>
+    <span className = "sidebar-tooltip group-hover:scale-100">
+      {text}
+    </span>
   </div>
 );
 
