@@ -10,6 +10,6 @@
     }
 
     .sidebar-tooltip {
-        @apply absolute w-auto p-2 m-2 text-white bg-cyan-400 text-xs font-bold transition-all duration-100 scale-0;
+        @apply absolute w-auto mt-2 mb-2 h-auto text-white bg-cyan-400 text-sm font-bold transition-all duration-100 scale-0;
     }
 }
