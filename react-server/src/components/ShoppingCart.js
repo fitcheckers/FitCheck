@@ -1,10 +1,13 @@
 import React from "react";
-import UserPrefModal from "./accounts/UserPref.js"
 import { useState } from 'react'
+import Followers from "./accounts/Followers.js";
+
 function ShoppingCart() {
+  const [showModal, setShowModal] = useState(true);
+
   return(
     <div>
-
+      <Followers isOpen={showModal} toggleModal={() => setShowModal(false)}/>
     </div>
   );
 }

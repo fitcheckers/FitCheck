@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import side from "../../img/design.avif"
+import Reset from "./Reset";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { currentUser, login, setError } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if(currentUser){
@@ -47,10 +49,14 @@ export default function Login() {
     setLoading(false);
   }
 
+  const handleClick = () => {
+    setShowModal(true);
+  };
+
   return (
     <div className="flex justify-center items-center pt-40 ml-4">
-      <img className="w-auto h-[441px] rounded-l-2xl" src={side} alt="side" />
-      <div className="py-12 px-4 sm:px-6 lg:px-8 bg-neutral-300 rounded-r-2xl flex-shrink-0">
+      <img className="w-auto h-[461px] rounded-l-2xl" src={side} alt="side" />
+      <div className="h-[461px] py-12 px-4 sm:px-6 lg:px-8 bg-neutral-300 rounded-r-2xl flex-shrink-0">
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-24 text-3xl text-center tracking-tight font-light">
@@ -101,9 +107,17 @@ export default function Login() {
                 >
                   Don't have an account? Register
                 </Link>
+                <br></br>
+                <div
+                  className="text-blue-600 hover:underline dark:text-blue-500 hover:cursor-pointer"
+                  onClick={() => handleClick()}
+                >
+                  Forgot your password?
+                </div>
               </div>
             </div>
           </form>
+          <Reset isOpen={showModal} toggleModal={() => setShowModal(false)}/>
         </div>
       </div>
     </div>
