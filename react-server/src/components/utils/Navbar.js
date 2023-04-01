@@ -57,9 +57,7 @@ const Navbar = () =>{
                     <a href="/"><img className="h-10 inline object-cover" src ={Logo} alt="fitcheck logo"></img></a>
                     
                 </span>
-                <div>
-                    <SearchBar/>
-                </div>
+                <SearchBar/>
                 <ul className="flex items-center z-[-1] md:z-auto static w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7">
                     <li className="mx-4 my-6 md:my-0">
                     <a href="/login" className="text-xl text-white hover:text-cyan-400 duration-500 static">Login</a>
