@@ -52,18 +52,18 @@ const Navbar = () =>{
         )
     }
         return(
-            <div className="p-5 bg-[#015668] shadow flex md:items-center md:justify-between w-screen fixed z-10 top-0 h-20 min-w-max">
+            <div className="p-5 bg-[#015668] shadow flex items-center justify-between w-screen fixed z-10 top-0 h-20">
                 <span className="text-2xl font-[Poppins] flex-none">
                     <a href="/"><img className="h-10 inline object-cover" src ={Logo} alt="fitcheck logo"></img></a>
                     
                 </span>
                 <SearchBar/>
-                <ul className="flex items-center z-[-1] md:z-auto static w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7">
-                    <li className="mx-4 my-6 md:my-0">
-                    <a href="/login" className="text-xl text-white hover:text-cyan-400 duration-500 static">Login</a>
+                <ul className="flex items-center static py-4 place-items-end whitespace-nowrap w-[148px]">
+                    <li className="mx-4">
+                        <a href="/login" className="text-xl text-white hover:text-cyan-400 duration-500 static">Login</a>
                     </li>
                     <li>
-                    <a href="/register" className="text-xl text-white hover:text-cyan-400 duration-500 static" >Sign Up</a>
+                        <a href="/register" className="text-xl text-white hover:text-cyan-400 duration-500 static" >Sign Up</a>
                     </li>
                 </ul>
             </div>
