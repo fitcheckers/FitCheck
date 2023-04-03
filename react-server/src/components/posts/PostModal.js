@@ -31,7 +31,14 @@ function PostModal(props) {
                             <div className='relative left-10 sm:left-12 top-36 font-light'>{description}</div>
                             <input className='relative left-10 top-[79%] w-[50%] h-[8%] min-h-[50px] bg-gray-50 border-inherit pl-2' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
                             <img className='relative cursor-pointer w-[3%] min-w-[20px] top-[73.5%] left-[50%]' src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
-                            {showPicker && <Picker onEmojiClick={onEmojiClick} />}
+                            <div className='relative left-[30%] top-[8%]'>
+                                {showPicker && (
+                                <Picker
+                                    onEmojiClick={onEmojiClick}
+                                    height={400} width={300}
+                                />
+                                )}
+                            </div>
                          
                         </div>
                     </div>
