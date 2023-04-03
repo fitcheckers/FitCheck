@@ -4,7 +4,7 @@ import { TbUserSearch } from "react-icons/tb";
 import { useState } from 'react';
 import profile from "./profile.webp"
 
-function Followers({isOpen = false, toggleModal}){
+function Followings({isOpen = false, toggleModal}){
 
     const [hideIcon, setHideIcon] = useState(true);
 
@@ -98,4 +98,4 @@ function Followers({isOpen = false, toggleModal}){
         </div>
     );
 }
-export default Followers;
+export default Followings;
