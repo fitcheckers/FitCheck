@@ -38,59 +38,59 @@ function Followers({isOpen = false, toggleModal}){
                     <div className='w-full h-[80%] overflow-y-scroll'>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                         <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
                             <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3'>Jason Wong</div>
+                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
                         </div>
                     </div>
                 </div>
