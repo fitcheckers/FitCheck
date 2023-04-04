@@ -23,7 +23,7 @@ const SideBarIcon = ({ icon, href, text = "tooltip"}) => (
   <div className="sidebar-icon top-24 group">
     {icon}
     <span className = "sidebar-tooltip group-hover:scale-90">
-      <a href={href}>{text}</a>
+      <a className="px-[9px] py-[19px]" href={href}>{text}</a>
     </span>
   </div>
 );
