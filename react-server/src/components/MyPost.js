@@ -75,6 +75,21 @@ const FetchPost = (props) => {
 
 export { FetchPost };
 
+function scrollTop(){
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+function disableScroll(){
+  var xPos = 0;
+  var yPos = 0;
+  window.onscroll = function(){window.scrollTo(xPos, yPos)};
+}
+
+function enableScroll(){
+  window.onscroll = function(){};
+}
+
 class MyPost extends Component {
   constructor(props) {
     super(props);
@@ -120,7 +135,7 @@ class MyPost extends Component {
         <div>
           <div className="fixed bottom-0 right-0 z-1 ">
             <Fab
-              onClick={() => this.setState({ show_modal: true })}
+              onClick={() => {this.setState({ show_modal: true }); scrollTop(); disableScroll()}}
               color="primary"
               aria-label="add"
               size="large"
@@ -132,11 +147,12 @@ class MyPost extends Component {
           <div className="pin_container">{this.state.pins}</div>
 
           <div
-            onClick={(event) =>
+            onClick={(event) => {
               event.target.className === "add_pin_modal"
                 ? this.setState({ show_modal: false })
-                : null
-            }
+                : enableScroll();
+                enableScroll();
+            }}  
             className="add_pin_modal_container"
           >
             {this.state.show_modal ? <Modal add_pin={this.add_pin} /> : null}
