@@ -34,6 +34,7 @@ function PostModal(props) {
                             <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={user_pfp || profile} alt="user's pfp"></img>
                             <div className='relative left-[5%] font-bold text-xl'>{user_name}</div>
                         </div>
+                    
                         {/* Content of Post (Title, Description, Comments and Comment Bar) */}
                         <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover'> {/*  */}
                             <div className='relative flex items-center left-[6%] top-[8%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
