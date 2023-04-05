@@ -27,11 +27,14 @@ function PostModal(props) {
                             <div className='relative pl-24 top-[32%] font-bold text-xl'>{user_name}</div>
                         </div>
                         <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover'>
-                            <div className='relative left-[6%] top-[8%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
-                            <div className='relative left-[6%] top-[13%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
+                            <div className='relative flex items-center left-[6%] top-[8%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
+                            <div className='relative flex items-center left-[6%] top-[13%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
                             <div className='relative left-[6%] top-[21%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
-                            <input className='relative left-[6%] top-[25%] w-[90%] h-[8%] min-h-[50px] bg-gray-200 border-inherit pl-2' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
-                            <img className='relative cursor-pointer w-[3%] min-w-[20px] top-[16.5%] left-[90%] z-20' src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
+                            <div className='relative flex items-center top-[30%] w-[90%] left-[6%] bg-gray-200 '>
+                                <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
+                                <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
+                                <button className='text-blue-600 font-bold pr-2'>Post</button>
+                            </div>
                             <div className='fixed left-[70%] top-[13%] z-10'>
                                 {showPicker && (
                                 <Picker
