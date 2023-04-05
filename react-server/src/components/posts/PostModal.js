@@ -51,7 +51,7 @@ function PostModal(props) {
                 </div>
 
                 {/* Emoji Picker Modal */}
-                <div className='fixed left-[46%] top-[38%] z-10 h-[40%] w-[15%]'>
+                <div className='fixed left-[44%] top-[29%] z-10 h-[50%] w-[20%]'>
                     {showPicker && (
                     <Picker
                         onEmojiClick={onEmojiClick}
