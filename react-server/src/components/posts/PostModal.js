@@ -36,7 +36,7 @@ function PostModal(props) {
                     </div>
                 
                     {/* Content of Post (Title, Description, Comments and Comment Bar) */}
-                    <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover'> {/*  */}
+                    <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover pb-2'> {/*  */}
                         <div className='relative flex items-center left-[6%] top-[8%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
                         <div className='relative flex items-center left-[6%] top-[13%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
                         <div className='relative left-[6%] top-[21%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
@@ -49,13 +49,14 @@ function PostModal(props) {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Emoji Picker Modal */}
-                <div className='fixed left-[45%] top-[35%] z-10'>
+                <div className='fixed left-[46%] top-[38%] z-10 h-[40%] w-[15%]'>
                     {showPicker && (
                     <Picker
                         onEmojiClick={onEmojiClick}
-                        height={400} width={300}
+                        height="100%"
+                        width="100%"
                     />
                     )}
                 </div>
