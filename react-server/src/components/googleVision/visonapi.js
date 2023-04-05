@@ -1,0 +1,61 @@
+// Imports the Google Cloud client library
+const vision = require("@google-cloud/vision");
+const CREDENTIALS = JSON.parse(
+  JSON.stringify({
+    type: "service_account",
+    project_id: "fitcheck-b023b",
+    private_key_id: "0088501a7a67b146f93befea98874484e7ab0e4f",
+    private_key:
+      "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDJhDuPijEEwNSp\np30LtJrmQ8hGffmSbwwDnnts8Gph2/2ICyBIwlAAQvTQGtZp2fhLc8mtPF1J8iCI\n8B8afsXYIqYjx6oWJamEEU7HK34swV/tHBNm4VRV8w5B7G507QN2PI1Q/p0UsRsQ\nf8TuUlEjNw5k1/G9BmpiWkkoGzspKajZVKWms73oekFFInlkUSC3A8mJ7rgzc+Sn\nFZsxa5+QJCzPn2cG1EaCwWw+0wKl3VgqAzd7Tc7CHR98CkPq0x1w4u/CF90JHP4L\n5Yd9es5m6ogOmsxtrfTHPqTn4frkRdszcUADOnjZ3bZXTN7I2qRl6PulBGZN0b1N\n0+WN6EgvAgMBAAECggEAVLMpvald9Rt/x1dIrdTZjpNK6KYmcjAOoq7IPf/HFx66\nL6ZNiYdyzMlX0OiW2qLtQ/mE+TV4GI6WsjgLOr2yNqhJoJxZlzl5SLNloz1aqUEW\nKrk0RnfLVNz2TysrOiYs4FOPKk36hCn0sDij82/R/rUzbZt+Ve8OZAyC10Kq2R+T\ndffC1aW7Ln4DEqqezOvk5mfyhtk23QfAOyh6EBjzINzrB5WNDpc0z5aZtfM91GZn\nTxDc4rcvB/ENl0B74I+hG23WObH6T9h8d3/grXQ3psU8hAW4RMG01d5CscqwRhax\n/zlx5v1nDiSi+rzSN/PK2gnSxJC9uwB6E6x52YzwUQKBgQD9DP+EKFgE3lMz6HDf\n7tZWSIql2TPKVYfPmnV46IVb8UZ2cs+IaAHgvBRMIs6+sOtgQiQY62/MUW4xklNp\nMRezjLPod12tcaeH59crKillwHdwVq7Ju6XnxQnDxtTDdOym5XwmcpjSDoC4zkhM\n53sbIaWW950qjsve6ev2G/kGZQKBgQDL3XohWbMEx6yMeQ984E/RrX6AnlATHPbC\nEW7ZI6Q7PVIRi9A3gKcO2v9Xt4an6+jhysM4ee8OZlkd+fCrGH5gcHOi+1JD8jZR\nd/k+exYIBnsXe9PhvHDBdL+lOPEX+na9CCsHdQR6ivF44o3AlSD7sLsyuvBwxwz1\nfhvQ+waRAwKBgFIZuIEZUc1qkJYj0RNmexYNfSZn/RyleWXK2Fg9IJ9+/XyKrXi1\nPf67Jt644FkQL53Qd8O6B1DEDrt4nSVg7y6q9Of0amlOmatHdhEkIcBInLfO9/Ct\nuBslW5CwXvF3axyPEiOrRJfKassK6nxBEjjwRrhfaBeZst2FCbCUzMvdAoGAI9XK\nohIiZbSzn/2nu0uyvCjDE9jAOpvcxEBMO98H/2HIC02ITDlRJEtalxCrmtjdFtON\nfV/xpZZYE+zbYTfs/wbFTODglRD+e1ObfGAmf0KkYHxjwkpdh6P+DAz2VECynofR\nCH6JSwEhcR5hzHhqU9O9FC3IFgrnPD/uo818WgECgYBLtxcRKt4zzyLOhXlcP3iP\n2xFP4zCWUx6dmnAGws1Iy2txFASWUtpSbdOctugalu7Z6EsSDT/pMNh7ERSjpiTs\nQiiBMtAHh6J04vNyOpi2QstcxMkaygN/D5PdjY8ecCgiZ6BNNkYJCu3jTvYfdTw0\nyYxIX1fuiT0BWGV2wcghUA==\n-----END PRIVATE KEY-----\n",
+    client_email: "fitcheckimgcheck@fitcheck-b023b.iam.gserviceaccount.com",
+    client_id: "107063933968807386903",
+    auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    token_uri: "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+    client_x509_cert_url:
+      "https://www.googleapis.com/robot/v1/metadata/x509/fitcheckimgcheck%40fitcheck-b023b.iam.gserviceaccount.com",
+  })
+);
+
+const CONFIG = {
+  credential: {
+    private_key: CREDENTIALS.private_key,
+    client_email: CREDENTIALS.client_email,
+  },
+};
+// Creates a client
+const client = new vision.ImageAnnotatorClient(CONFIG);
+
+const img = "react-server/public/fitpics/2.jfif";
+
+// Performs label detection on the image file
+const detectLabelClothes = async (file_path) => {
+  const [result] = await client.labelDetection(file_path);
+  const labels = result.labelAnnotations;
+  console.log("Labels:");
+  labels.forEach((label) => console.log(label.description));
+};
+
+const detectObjectClothes = async (file_path) => {
+  const [result] = await client.objectLocalization(file_path);
+
+  const objects = result.localizedObjectAnnotations;
+  objects.forEach((object) => {
+    console.log(`Name: ${object.name}`);
+    console.log(`Confidence: ${object.score}`);
+  });
+};
+
+const detectExplicitContent = async (file_path) => {
+  const [result] = await client.safeSearchDetection(file_path);
+  const detections = result.safeSearchAnnotation;
+  console.log("Safe search:");
+  console.log(`Adult: ${detections.adult}`);
+  console.log(`Medical: ${detections.medical}`);
+  console.log(`Spoof: ${detections.spoof}`);
+  console.log(`Violence: ${detections.violence}`);
+  console.log(`Racy: ${detections.racy}`);
+};
+
+detectExplicitContent(img);
+detectObjectClothes(img);
