@@ -35,7 +35,7 @@ function PostModal(props) {
                                 <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
                                 <button className='text-blue-600 font-bold pr-2'>Post</button>
                             </div>
-                            <div className='fixed left-[70%] top-[13%] z-10'>
+                            <div className='fixed left-[45%] top-[35%] z-10'>
                                 {showPicker && (
                                 <Picker
                                     onEmojiClick={onEmojiClick}
