@@ -111,9 +111,9 @@ function Pin(props) {
           post={props}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)}
-          user_pfp={props.user_pfp}
-          user_name={props.user_name}
-          post_description={props.description}
+          // user_pfp={props.user_pfp}
+          // user_name={props.user_name}
+          // post_description={props.description}
         />
       )}
     </div>

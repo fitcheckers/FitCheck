@@ -43,7 +43,7 @@ function PostModal(props) {
                         
                         {/* Comment Bar */}
                         <div className='relative flex items-center top-[30%] w-[90%] left-[6%] bg-gray-200 '> 
-                            <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
+                            <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
                             <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
                             <button className='text-blue-600 font-bold pr-2'>Post</button>
                         </div>
