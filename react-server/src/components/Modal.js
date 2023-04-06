@@ -22,8 +22,15 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import TopFitSelect from "./ModalComponents/TopFitSelect";
 
+import { styled } from '@mui/material/styles';
+import Chip from '@mui/material/Chip';
+import Paper from '@mui/material/Paper';
+
 let imageUrl = "";
 let file;
+const ListItem = styled('li')(({ theme }) => ({
+  margin: theme.spacing(0.5),
+}));
 
 function upload_img(
   event,
@@ -89,6 +96,7 @@ function Modal(props) {
       description: document.querySelector("#pin_description").value,
       title: document.querySelector("#pin_title").value,
       user_id: user,
+      tags: chipData.map(chip => chip.label),
     };
 
     await axios
@@ -114,7 +122,29 @@ function Modal(props) {
   });
   const [showLabel, setShowLabel] = useState(true);
   const [showModalPin, setShowModalPin] = useState(false);
-  const { currentUser } = useAuth();
+  const { currentUser, setError } = useAuth();
+
+  const [chipData, setChipData] = useState([]);
+  const [tags, setTags] = useState('');
+
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  };
+
+  function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (tags.trim() === '') return;
+      const label = tags.trim();
+      if (chipData.some(chip => chip.label === label))
+      { 
+        setError('The tag is already in the list.')
+        return;
+      }
+      setChipData((chips) => [...chipData, {key: chips.length, label: tags}]);
+      setTags('');
+    }
+  }
 
   return (
     <div className="add_pin_modal">
@@ -188,9 +218,13 @@ function Modal(props) {
                 <option value="large">large</option>
               </select>
               <div
-                onClick={() =>
-                  save_pin(pinDetails, currentUser.uid, props.add_pin)
-                }
+                onClick={() => {
+                  if(document.querySelector("#pin_description").value && document.querySelector("#pin_title").value && pinDetails.img_blob && chipData.length > 0) {
+                    save_pin(pinDetails, currentUser.uid, props.add_pin);
+                  } else {
+                    setError("Please fill out all the fields before making a post!");
+                  }
+                }}
                 className="save_pin"
               >
                 Save
@@ -216,6 +250,68 @@ function Modal(props) {
               label="Description"
               variant="standard"
             />
+            <TextField
+              required
+              margin="dense"
+              className="new_pin_input"
+              id="pin_tags"
+              label="Tags"
+              variant="standard"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              onKeyDown={handleKeyDown}
+              inputProps={{
+                list: "style",
+              }}
+            />
+            <datalist id="style">
+              <option value="Artsy"/>
+              <option value="Athleisure"/>
+              <option value="Business"/>
+              <option value="Biker"/>
+              <option value="Casual"/>
+              <option value="Classic"/>
+              <option value="Hipster"/>
+              <option value="Kawaii"/>
+              <option value="Korean"/>
+              <option value="Minimalist"/>
+              <option value="Sporty"/>
+              <option value="Street"/>
+            </datalist>
+            {chipData.length > 0 ? (
+              <Paper
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                  listStyle: 'none',
+                  p: 1,
+                  mt: 2,
+                }}
+                component="ul"
+              >
+                {chipData.map((data) => {
+                  let icon;
+
+                  return (
+                    <ListItem key={data.key}>
+                      <Chip
+                        icon={icon}
+                        label={data.label}
+                        onDelete={handleDelete(data)}
+                      />
+                    </ListItem>
+                  );
+                })}
+            </Paper>
+            ) : (
+              <Paper
+                sx={{
+                  display: 'none',
+                }}
+                component="ul"
+              />
+            )}
           </div>
         </div>
       </div>
