@@ -1,18 +1,9 @@
-// Imports the Google Cloud client library
 const vision = require("@google-cloud/vision");
 
-const CONFIG = {
-  credential: {
-    credentials: require("./APIkey.json"),
-    client_email: "fitcheck-b023b",
-  },
-};
-// Creates a client
-const client = new vision.ImageAnnotatorClient();
+const client = new vision.ImageAnnotatorClient({
+  keyFilename: "APIkey.json",
+});
 
-const img = "react-server/public/fitpics/1.jfif";
-
-// Performs label detection on the image file
 const detectLabelClothes = async (file_path) => {
   const [result] = await client.labelDetection(file_path);
   const labels = result.labelAnnotations;
@@ -50,6 +41,3 @@ const detectExplicitContent = async (file_path) => {
   console.log(`Racy: ${detections.racy}`);
 };
 
-detectExplicitContent(img);
-
-export {detectLabelClothes,detectObjectClothes};
