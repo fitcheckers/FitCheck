@@ -8,6 +8,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import PostModal from "./posts/PostModal.js";
+import { useAuth } from "../contexts/AuthContext.js";
 
 import Pin from "./Pin.js";
 import axios from "axios";
@@ -23,10 +24,18 @@ function HomePage(){
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const { currentUser, setError } = useAuth();
 
   const handlePinClick = (item) => {
-    setShowModal(true);
-    setSelectedItem(item)
+    if(currentUser)
+    {
+      setShowModal(true);
+      setSelectedItem(item)
+    }
+    else
+    {
+      setError("Must be logged in to access");
+    }
   };
 
   //get all posts in collection
