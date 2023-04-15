@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
@@ -6,21 +6,12 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { maxHeight, maxWidth } from "@mui/system";
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import PostModal from "./posts/PostModal.js";
 import { useAuth } from "../contexts/AuthContext.js";
 
-import Pin from "./Pin.js";
-import axios from "axios";
-import { FetchPost } from "./MyPost.js";
-
-
-function printName(title){
-  console.log(title);
-}
-
 function HomePage(){
-  const [show, setShow] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -37,6 +28,15 @@ function HomePage(){
       setError("Must be logged in to access");
     }
   };
+
+  function likeButton(){
+    console.log('like');
+  }
+
+  function dislikeButton()
+  {
+    console.log('dislike');
+  }
 
   //get all posts in collection
   // convert them into pins object and store them in pin array
@@ -74,12 +74,14 @@ function HomePage(){
                   title={item.title}
                   subtitle={item.author}
                   actionIcon={
-                    <IconButton
-                      sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                      aria-label={`info about ${item.title}`}
-                    >
-                      <InfoIcon />
-                    </IconButton>
+                    <>
+                      <IconButton onClick={likeButton}>
+                        <ThumbUpIcon className="text-white" sx={{'&:hover': {cursor: 'pointer'}}}/>
+                      </IconButton>
+                      <IconButton onClick={dislikeButton}>
+                        <ThumbDownIcon className="text-white" sx={{'&:hover': {cursor: 'pointer'}}}/>
+                      </IconButton>
+                    </>
                   }
                 />)}
             </ImageListItem>
