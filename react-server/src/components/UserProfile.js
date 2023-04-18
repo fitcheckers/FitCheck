@@ -72,8 +72,8 @@ const UserProfile = ({ backImg, post }) => {
         @{currentUser.displayName}
       </p>
       <p className="relative inline left-80 text-lg">{user.posts.length || post} Post</p>
-      <p className="relative inline ml-6 left-80 text-lg cursor-pointer" onClick={() => setShowFollowerModal(true)}>{0} Followers</p>
-      <p className="relative inline ml-6 left-80 text-lg cursor-pointer" onClick={() => setShowFollowingModal(true)}>{0} Followings</p>
+      <p className="relative inline ml-6 left-80 text-lg cursor-pointer" onClick={() => setShowFollowerModal(true)}>{user.followers.length} Followers</p>
+      <p className="relative inline ml-6 left-80 text-lg cursor-pointer" onClick={() => setShowFollowingModal(true)}>{user.following.length} Followings</p>
       <br></br>
       <a
         href="/Profile"
@@ -85,8 +85,8 @@ const UserProfile = ({ backImg, post }) => {
       <p className="relative left-32 top-9 font-extrabold text-xl -mb-10">
         My Posts
       </p>
-      <Followers isOpen={showFollowerModal} toggleModal={() => setShowFollowerModal(false)}/>
-      <Followings isOpen={showFollowingModal} toggleModal={() => setShowFollowingModal(false)}/>
+      <Followers isOpen={showFollowerModal} followerData={user.followers} toggleModal={() => setShowFollowerModal(false)}/>
+      <Followings isOpen={showFollowingModal} followingsData={user.following} toggleModal={() => setShowFollowingModal(false)}/>
     </div>
   );
 };
