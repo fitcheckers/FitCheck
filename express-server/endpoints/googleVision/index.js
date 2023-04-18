@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 const app = require("../../server");
 const vision = require("@google-cloud/vision");
-const multer = require("serve-static");
+const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
 const client = new vision.ImageAnnotatorClient({

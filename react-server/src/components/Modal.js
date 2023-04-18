@@ -60,11 +60,14 @@ function upload_img(
   file = document.getElementById("upload_img").files[0];
 
   const data = new FormData();
-  data.append("upload_img", document.getElementById("upload_img").files[0]);
+  data.append("file", document.getElementById("upload_img").files[0]);
+
   axios
-    .post("/label", data)
+    .post("http://localhost:80/label", data)
     .then(function (result) {
-      console.log(result.data);
+      // console.log(result.data);
+      const labels = result.data[0].labelAnnotations;
+      
     })
     .catch(function (err) {
       console.log(err);
