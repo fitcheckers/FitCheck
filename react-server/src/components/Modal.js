@@ -22,13 +22,14 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import TopFitSelect from "./ModalComponents/TopFitSelect";
 
-import { styled } from '@mui/material/styles';
-import Chip from '@mui/material/Chip';
-import Paper from '@mui/material/Paper';
+import { styled } from "@mui/material/styles";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
 
 let imageUrl = "";
 let file;
-const ListItem = styled('li')(({ theme }) => ({
+
+const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
@@ -57,6 +58,17 @@ function upload_img(
   }
 
   file = document.getElementById("upload_img").files[0];
+
+  const data = new FormData();
+  data.append("upload_img", document.getElementById("upload_img").files[0]);
+  axios
+    .post("/label", data)
+    .then(function (result) {
+      console.log(result.data);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 }
 
 function check_size(event) {
@@ -96,7 +108,7 @@ function Modal(props) {
       description: document.querySelector("#pin_description").value,
       title: document.querySelector("#pin_title").value,
       user_id: user,
-      tags: chipData.map(chip => chip.label),
+      tags: chipData.map((chip) => chip.label),
     };
 
     await axios
@@ -125,24 +137,25 @@ function Modal(props) {
   const { currentUser, setError } = useAuth();
 
   const [chipData, setChipData] = useState([]);
-  const [tags, setTags] = useState('');
+  const [tags, setTags] = useState("");
 
   const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    setChipData((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key)
+    );
   };
 
   function handleKeyDown(event) {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
-      if (tags.trim() === '') return;
+      if (tags.trim() === "") return;
       const label = tags.trim();
-      if (chipData.some(chip => chip.label === label))
-      { 
-        setError('The tag is already in the list.')
+      if (chipData.some((chip) => chip.label === label)) {
+        setError("The tag is already in the list.");
         return;
       }
-      setChipData((chips) => [...chipData, {key: chips.length, label: tags}]);
-      setTags('');
+      setChipData((chips) => [...chipData, { key: chips.length, label: tags }]);
+      setTags("");
     }
   }
 
@@ -219,10 +232,17 @@ function Modal(props) {
               </select>
               <div
                 onClick={() => {
-                  if(document.querySelector("#pin_description").value && document.querySelector("#pin_title").value && pinDetails.img_blob && chipData.length > 0) {
+                  if (
+                    document.querySelector("#pin_description").value &&
+                    document.querySelector("#pin_title").value &&
+                    pinDetails.img_blob &&
+                    chipData.length > 0
+                  ) {
                     save_pin(pinDetails, currentUser.uid, props.add_pin);
                   } else {
-                    setError("Please fill out all the fields before making a post!");
+                    setError(
+                      "Please fill out all the fields before making a post!"
+                    );
                   }
                 }}
                 className="save_pin"
@@ -265,26 +285,26 @@ function Modal(props) {
               }}
             />
             <datalist id="style">
-              <option value="Artsy"/>
-              <option value="Athleisure"/>
-              <option value="Business"/>
-              <option value="Biker"/>
-              <option value="Casual"/>
-              <option value="Classic"/>
-              <option value="Hipster"/>
-              <option value="Kawaii"/>
-              <option value="Korean"/>
-              <option value="Minimalist"/>
-              <option value="Sporty"/>
-              <option value="Street"/>
+              <option value="Artsy" />
+              <option value="Athleisure" />
+              <option value="Business" />
+              <option value="Biker" />
+              <option value="Casual" />
+              <option value="Classic" />
+              <option value="Hipster" />
+              <option value="Kawaii" />
+              <option value="Korean" />
+              <option value="Minimalist" />
+              <option value="Sporty" />
+              <option value="Street" />
             </datalist>
             {chipData.length > 0 ? (
               <Paper
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  listStyle: 'none',
+                  display: "flex",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  listStyle: "none",
                   p: 1,
                   mt: 2,
                 }}
@@ -303,11 +323,11 @@ function Modal(props) {
                     </ListItem>
                   );
                 })}
-            </Paper>
+              </Paper>
             ) : (
               <Paper
                 sx={{
-                  display: 'none',
+                  display: "none",
                 }}
                 component="ul"
               />
