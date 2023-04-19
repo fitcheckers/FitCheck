@@ -9,9 +9,21 @@ const client = new vision.ImageAnnotatorClient({
   keyFilename: "APIkey.json",
 });
 
-app.post("/label", upload.single("file"), function (req, res, next) {
+app.post("/vision/label", upload.single("file"), function (req, res, next) {
   client
     .labelDetection(req.file.path)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+});
+
+
+app.post("/vision/object", upload.single("file"), function (req, res, next) {
+  client
+    .objectLocalization(req.file.path)
     .then((results) => {
       res.send(results);
     })

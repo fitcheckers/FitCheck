@@ -38,7 +38,9 @@ function upload_img(
   pinDetails,
   setPinDetails,
   setShowLabel,
-  setShowModalPin
+  setShowModalPin,
+  setContainOuterwearLabel,
+  setContainOuterwearObject
 ) {
   if (event.target.files && event.target.files[0]) {
     if (/image\/*/.test(event.target.files[0].type)) {
@@ -63,11 +65,28 @@ function upload_img(
   data.append("file", document.getElementById("upload_img").files[0]);
 
   axios
-    .post("http://localhost:80/label", data)
+    .post("http://localhost:80/vision/label", data)
     .then(function (result) {
-      // console.log(result.data);
       const labels = result.data[0].labelAnnotations;
-      
+      labels.forEach((object) => {
+        if (object.description === "Outerwear" && object.score > 0.8) {
+          setContainOuterwearLabel(true);
+        }
+      });
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+
+  axios
+    .post("http://localhost:80/vision/object", data)
+    .then(function (result) {
+      const labels = result.data[0].localizedObjectAnnotations;
+      labels.forEach((object) => {
+        if (object.name === "Outerwear" && object.score > 0.85) {
+          setContainOuterwearObject(true);
+        }
+      });
     })
     .catch(function (err) {
       console.log(err);
@@ -104,6 +123,19 @@ function Modal(props) {
   const navigate = useNavigate();
 
   async function save_pin(pinDetails, user, add_pin) {
+    if (!containOuterwearLabel && !containOuterwearObject) {
+      // if img is not clothes, it wont upload
+      // console.log(containOuterwearLabel);
+      // console.log(containOuterwearObject);
+      // console.log("DOES NOT CONTAIN CLOTHES");
+      setError("Please use an appropriate image for Fitcheck Please!");
+      window.location.reload(false);
+
+      return;
+    }
+    console.log(containOuterwearLabel);
+    console.log(containOuterwearObject);
+    console.log("CONTAINS CLOTHES");
     imageUrl = await image_upload(file);
 
     const post_data = {
@@ -137,6 +169,8 @@ function Modal(props) {
   });
   const [showLabel, setShowLabel] = useState(true);
   const [showModalPin, setShowModalPin] = useState(false);
+  const [containOuterwearLabel, setContainOuterwearLabel] = useState(false);
+  const [containOuterwearObject, setContainOuterwearObject] = useState(false);
   const { currentUser, setError } = useAuth();
 
   const [chipData, setChipData] = useState([]);
@@ -202,7 +236,9 @@ function Modal(props) {
                     pinDetails,
                     setPinDetails,
                     setShowLabel,
-                    setShowModalPin
+                    setShowModalPin,
+                    setContainOuterwearLabel,
+                    setContainOuterwearObject
                   )
                 }
                 value=""
@@ -235,18 +271,20 @@ function Modal(props) {
               </select>
               <div
                 onClick={() => {
-                  if (
-                    document.querySelector("#pin_description").value &&
+                   if (
+                     document.querySelector("#pin_description").value &&
                     document.querySelector("#pin_title").value &&
-                    pinDetails.img_blob &&
-                    chipData.length > 0
-                  ) {
-                    save_pin(pinDetails, currentUser.uid, props.add_pin);
-                  } else {
-                    setError(
-                      "Please fill out all the fields before making a post!"
-                    );
-                  }
+                   pinDetails.img_blob &&
+                     chipData.length > 0
+                   ) {
+
+                  save_pin(pinDetails, currentUser.uid, props.add_pin);
+
+                   } else {
+                     setError(
+                       "Please fill out all the fields before making a post!"
+                     );
+                   }
                 }}
                 className="save_pin"
               >
