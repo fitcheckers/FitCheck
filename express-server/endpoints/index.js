@@ -1,4 +1,5 @@
-'use strict';
+"use strict";
 
-require('./posts/');
-require('./users/');
+require("./posts/");
+require("./users/");
+require("./googleVision/");
