@@ -4,7 +4,7 @@ import { TbUserSearch } from "react-icons/tb";
 import { useState } from 'react';
 import profile from "./profile.webp"
 
-function Followings({isOpen = false, toggleModal}){
+function Followings({isOpen = false, toggleModal, followingsData}){
 
     const [hideIcon, setHideIcon] = useState(true);
 
@@ -36,50 +36,12 @@ function Followings({isOpen = false, toggleModal}){
                         <input id="searchbar" className='bg-[#F9FAFA] w-full h-[100%] mt-1 text-center' onChange={(e) => textEntered(e)} type="text" placeholder='Search...'></input>
                     </div>
                     <div className='w-full h-[80%] overflow-y-scroll'>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
-                        <div className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
-                            <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
-                            <div className='pt-3 text-[1.3vw]'>Steven Wong</div>
-                        </div>
+                        {followingsData.map((e, index) => (
+                            <div key={index} className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
+                                <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
+                                <div className='pt-3 text-[1.3vw]'>{e}</div>
+                            </div> 
+                        ))}
                     </div>
                 </div>
             </div>

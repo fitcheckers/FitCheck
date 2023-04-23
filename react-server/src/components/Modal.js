@@ -271,6 +271,7 @@ function Modal(props) {
               </select>
               <div
                 onClick={() => {
+
                    if (
                      document.querySelector("#pin_description").value &&
                     document.querySelector("#pin_title").value &&
@@ -285,6 +286,17 @@ function Modal(props) {
                        "Please fill out all the fields before making a post!"
                      );
                    }
+
+                  if(document.querySelector("#pin_description").value && document.querySelector("#pin_title").value && pinDetails.img_blob && chipData.length > 0) {
+                    save_pin(pinDetails, currentUser.uid, props.add_pin);
+                  } else if(document.querySelector("#pin_description").value && document.querySelector("#pin_title").value && pinDetails.img_blob && chipData.length === 0)
+                  {
+                    setError("Please press enter in the tags field to confirm!");
+                  } 
+                  else {
+                    setError("Please fill out all the fields before making a post!");
+                  }
+
                 }}
                 className="save_pin"
               >
