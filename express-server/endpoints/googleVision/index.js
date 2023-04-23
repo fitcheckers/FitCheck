@@ -9,6 +9,7 @@ const client = new vision.ImageAnnotatorClient({
   keyFilename: "APIkey.json",
 });
 
+
 app.post("/vision/label", upload.single("file"), function (req, res, next) {
   client
     .labelDetection(req.file.path)
