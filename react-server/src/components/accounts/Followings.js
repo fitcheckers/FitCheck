@@ -2,10 +2,13 @@ import * as React from 'react';
 import { ImCross } from "react-icons/im"
 import { TbUserSearch } from "react-icons/tb";
 import { useState } from 'react';
-import profile from "./profile.webp"
+import profile from "./profile.webp";
+import { useNavigate } from 'react-router-dom';
+
 
 function Followings({isOpen = false, toggleModal, followingsData}){
 
+    const navigate = useNavigate();
     const [hideIcon, setHideIcon] = useState(true);
 
     function textEntered(e){
@@ -17,11 +20,6 @@ function Followings({isOpen = false, toggleModal, followingsData}){
         {
             setHideIcon(true);
         }
-    }
-
-    function test()
-    {
-        return alert("hello");
     }
     
     return(
@@ -37,7 +35,7 @@ function Followings({isOpen = false, toggleModal, followingsData}){
                     </div>
                     <div className='w-full h-[80%] overflow-y-scroll'>
                         {followingsData.map((e, index) => (
-                            <div key={index} className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
+                            <div key={index} className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => navigate(`/user/${e}`)}>
                                 <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
                                 <div className='pt-3 text-[1.3vw]'>{e}</div>
                             </div> 

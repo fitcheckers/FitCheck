@@ -7,7 +7,7 @@ function ShoppingCart() {
 
   return(
     <div>
-      <Followers isOpen={showModal} toggleModal={() => setShowModal(false)}/>
+      
     </div>
   );
 }

@@ -14,6 +14,7 @@ import MyPost from "./components/MyPost";
 import Wardrobe from "./components/Wardrobe";
 import ShoppingCart from "./components/ShoppingCart";
 import Preference from "./components/Preference";
+import ViewProfile from "./components/ViewProfile";
 
 function App() {
   return (
@@ -80,6 +81,7 @@ function App() {
               </Private>
             }
           />
+          <Route path="/user/:userId" element={<Private><ViewProfile/></Private>} />
         </Routes>
       </Router>
     </AuthProvider>
