@@ -5,6 +5,7 @@ import picture from "./accounts/profile.webp";
 import Followers from "./accounts/Followers";
 import Followings from "./accounts/Followings";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext.js";
 
 
 async function getUser(user_id) {
@@ -33,6 +34,7 @@ async function getUser(user_id) {
 function ViewProfile()
 {
     const { userId } = useParams();
+    const { currentUser } = useAuth();
   const [user, setUser] = useState("");
   const [postDetails, setPostDetails] = useState([]);
   const [showFollowerModal, setShowFollowerModal] = useState(false);
@@ -47,6 +49,22 @@ function ViewProfile()
   }
     fetchData();
 }, [userId]);
+
+    function isFollow(){
+        let follow = false;
+        if(user.followers.includes(currentUser.uid))
+        {
+          follow = true;
+        }
+        // for( let i in user.followers )
+        // {
+        //     if( i === currentUser.uid)
+        //     {
+        //         follow = true;
+        //     }
+        // }
+        return follow;
+    }
 
   if (!user) {
     return <div>Loading User Info...</div>;
@@ -78,6 +96,12 @@ function ViewProfile()
       <p className="relative left-32 top-9 font-extrabold text-xl -mb-10">
         My Posts
       </p>
+        <button className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500">
+            {
+                isFollow ? 'Unfollow' : 'Follow'
+            }
+        </button>
+
       <Followers isOpen={showFollowerModal} followerData={user.followers} toggleModal={() => setShowFollowerModal(false)}/>
       <Followings isOpen={showFollowingModal} followingsData={user.following} toggleModal={() => setShowFollowingModal(false)}/>
     </div>

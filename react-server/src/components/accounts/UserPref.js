@@ -44,6 +44,7 @@ const UserPrefModal = ({setShowModal}) =>
     async function createUserObject(){
         const userObject = {
             id: currentUser.uid,
+            display_name: username,
             profile_banner_url: "https://firebasestorage.googleapis.com/v0/b/fitcheck-b023b.appspot.com/o/bannerImages%2FblueNwhite.avif?alt=media&token=5f9fff41-ef1c-449e-942b-596d81e3ac84",
             posts: [],
             styles: userPref,
