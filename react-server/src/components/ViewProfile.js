@@ -7,7 +7,6 @@ import Followings from "./accounts/Followings";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext.js";
 
-
 async function getUser(user_id) {
     try {
       const response = await axios.post("http://localhost:80/users/get", {
@@ -39,6 +38,7 @@ function ViewProfile()
   const [postDetails, setPostDetails] = useState([]);
   const [showFollowerModal, setShowFollowerModal] = useState(false);
   const [showFollowingModal, setShowFollowingModal] = useState(false);
+  const [follow, setFollow] = useState(false);
   
   useEffect(() => {
   async function fetchData() {
@@ -46,24 +46,45 @@ function ViewProfile()
     setUser(userData);
     const postDetails = await getUserPostData(userData.posts);
     setPostDetails(postDetails);
+    if (userData.followers && userData.followers.includes(currentUser.uid)) {
+      setFollow(true);
+    }
   }
     fetchData();
-}, [userId]);
+}, [userId, follow]);
 
-    function isFollow(){
-        let follow = false;
-        if(user.followers.includes(currentUser.uid))
-        {
-          follow = true;
+    async function followButton(){
+      if(follow)
+      {
+        //unfollow
+        try{
+          const req = await axios.post("http://localhost:80/users/unfollow", {
+            follower: currentUser.uid,
+            followed: userId,
+          });
+          console.log("Success Unfollow");
+          setFollow(false);
+          return req.data;
+        } catch (e) {
+          console.log(e);
+          console.log("Failed Unfollow");
         }
-        // for( let i in user.followers )
-        // {
-        //     if( i === currentUser.uid)
-        //     {
-        //         follow = true;
-        //     }
-        // }
-        return follow;
+      }
+      else
+      {
+        //follow
+        try{
+          const req = await axios.post("http://localhost:80/users/follow", {
+            follower: currentUser.uid,
+            followed: userId,
+          });
+          console.log("Success Follow");
+          setFollow(true);
+          return req.data;
+        } catch (e) {
+          console.log("Failed Follow");
+        }
+      }
     }
 
   if (!user) {
@@ -96,9 +117,9 @@ function ViewProfile()
       <p className="relative left-32 top-9 font-extrabold text-xl -mb-10">
         My Posts
       </p>
-        <button className="relative left-80 bg-gray-300 pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500">
+        <button className="relative left-80 bg-gray-300 w-26 text-base pt-1 pb-1 pl-5 pr-5 rounded-full hover:bg-gray-500" onClick={() => followButton()}>
             {
-                isFollow ? 'Unfollow' : 'Follow'
+              follow ? 'Unfollow' : 'Follow'
             }
         </button>
 
