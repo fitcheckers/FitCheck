@@ -21,11 +21,16 @@ function PostModal(props) {
     const toggleDropMenu = () =>{
         setOpen(!isMenuOpen);
     }
+    const closeDropDownMenu = () =>{
+        if(isMenuOpen === true){
+            setOpen(false);
+        }
+    }
     return(
         <div className={`relative z-10 ${isOpen ? "" : "hidden"}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => toggleModal()}>
             </div>
-                <div className='fixed bg-[#D9D9D9] top-[5%] left-[18%] w-[68%] h-[88%] rounded-3xl inline-block items' onClick={() => closeEmojiPicker()}>
+                <div className='fixed bg-[#D9D9D9] top-[5%] left-[18%] w-[68%] h-[88%] rounded-3xl inline-block items' onClick={() => {closeEmojiPicker(); closeDropDownMenu()}}>
                     
                     {/* Exit Post Modal button */} 
                     <TfiArrowLeft onClick={() => toggleModal()} size={28} className="relative left-2 top-2 cursor-pointer"/>
@@ -68,7 +73,7 @@ function PostModal(props) {
                 </div>
                 <div className={`fixed left-[76%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
                         <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center'>
-                            <li><button className="border-b-2 border-white">Edit Post</button></li>
+                            <li><button className="border-b-2 border-">Edit Post</button></li>
                             <li><button className="">Delete Post</button></li>
                         </ul>
                 </div>
