@@ -6,6 +6,7 @@ import Followers from "./accounts/Followers";
 import Followings from "./accounts/Followings";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext.js";
+import Pin from "./Pin";
 
 async function getUser(user_id) {
     try {
@@ -51,6 +52,7 @@ function ViewProfile()
     }
   }
     fetchData();
+    // eslint-disable-next-line
 }, [userId, follow]);
 
     async function followButton(){
@@ -125,6 +127,18 @@ function ViewProfile()
 
       <Followers isOpen={showFollowerModal} followerData={user.followers} toggleModal={() => setShowFollowerModal(false)}/>
       <Followings isOpen={showFollowingModal} followingsData={user.following} toggleModal={() => setShowFollowingModal(false)}/>
+      <div className="pin_container">
+        {postDetails.map((e) => (
+          <Pin
+            key={e.content.id}
+            title={e.content.title}
+            image_url={e.content.image_url}
+            user_pfp={user.profile_pic_url || picture}
+            user_name={user.display_name}
+            description={e.content.description}
+          />
+        ))}
+      </div>
     </div>
   );
 };
