@@ -103,7 +103,7 @@ function ViewProfile()
       ></img>
       <img
         className="w-48 h-48 rounded-full object-cover relative left-24"
-        src={user.photoURL || picture}
+        src={user.profile_pic_url || picture}
         alt="profile"
       ></img>
       <p className="relative left-80 text-lg font-bold -mt-28">

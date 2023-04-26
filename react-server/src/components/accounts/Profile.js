@@ -138,7 +138,7 @@ export default function Profile(){
       {
         await uploadFile(file);
       }
-      else //If the input file is empty, then handleSave is most likely called to make the imageUrl as pfp;
+      else //If the input file is empty, then handleSave is called to make the imageUrl as pfp;
       {
         if(currentUser.photoURL === null)
         {
@@ -164,6 +164,19 @@ export default function Profile(){
           const profile = {
             photoURL: displayPictureUrl,
           };
+
+          const users_data = {
+            id: currentUser.uid,
+            profile_pic_url: displayPictureUrl,
+          }
+          try{
+            const response = await axios.post("http://localhost:80/users/update", users_data);
+            console.log("Changed profile pic url");
+            console.log(response.data);
+          } catch(e){
+            console.log(e);
+          }
+
           await updateUserProfile(user, profile);
           navigate("/profile");
         }
@@ -205,8 +218,22 @@ export default function Profile(){
           photoURL: url,
         };
         console.log('Updating user profile with:', profile);
+        setDisplayPictureUrl(url);
+        
         await updateUserProfile(user, profile);
         setDisplayPictureUrl(url);
+
+        const users_data = {
+          id: currentUser.uid,
+          profile_pic_url: url,
+        }
+        try{
+          const response = await axios.post("http://localhost:80/users/update", users_data);
+          console.log("Changed profile pic url");
+          console.log(response.data);
+        } catch(e){
+          console.log(e);
+        }
 
         navigate("/profile");
       } catch (error) {
@@ -226,6 +253,19 @@ export default function Profile(){
             displayName: username,
           };
           await updateUserProfile(user, profile);
+
+          const users_data = {
+            id: currentUser.uid,
+            display_name: username,
+          }
+          try{
+            const response = await axios.post("http://localhost:80/users/update", users_data);
+            console.log("Changed profile pic url");
+            console.log(response.data);
+          } catch(e){
+            console.log(e);
+          }
+
           navigate("/profile");
         } catch (e) {
           setError("Failed to update profile");
@@ -306,7 +346,7 @@ export default function Profile(){
                     disabled={loading}
                     className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    Update Profile
+                    Update Username
                   </button>
                 </div>
               </form>
