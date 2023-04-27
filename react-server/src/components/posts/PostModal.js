@@ -3,6 +3,8 @@ import { TfiArrowLeft } from "react-icons/tfi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import profile from "../accounts/profile.webp"
 import Picker from 'emoji-picker-react';
+import { useAuth } from "../../contexts/AuthContext";
+
 
 function PostModal(props) {
     const { isOpen = false, toggleModal } = props;
@@ -10,6 +12,9 @@ function PostModal(props) {
     const [inputStr, setInputStr] = useState('');
     const [showPicker, setShowPicker] = useState(false);
     const [isMenuOpen, setOpen] = useState(false);
+    const { currentUser, setError } = useAuth();
+
+
     const onEmojiClick = (emojiObject) => { 
         setInputStr(prevInput => prevInput + emojiObject.emoji);
     };
@@ -73,8 +78,8 @@ function PostModal(props) {
                 </div>
                 <div className={`fixed left-[76%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
                         <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center'>
-                            <li><button className="border-b-2 border-">Edit Post</button></li>
-                            <li><button className="">Delete Post</button></li>
+                            <li><button className="border-b-2 hover:text-sky-400/100">Edit Post</button></li>
+                            <li><button className="hover:text-red-400/100">Delete Post</button></li>
                         </ul>
                 </div>
         </div>
