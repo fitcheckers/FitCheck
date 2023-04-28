@@ -67,6 +67,7 @@ const FetchPost = (props) => {
           user_pfp={currentUser.photoURL}
           user_name={currentUser.displayName}
           description={e.content.description}
+          post_user_id={e.content.user_id}
         />
       ))}
     </div>
