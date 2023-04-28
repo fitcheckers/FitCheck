@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { TfiArrowLeft } from "react-icons/tfi";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsFillHeartFill } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 import profile from "../accounts/profile.webp"
 import Picker from 'emoji-picker-react';
 import { useAuth } from "../../contexts/AuthContext";
@@ -51,17 +53,20 @@ function PostModal(props) {
                             <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={user_pfp || profile} alt="user's pfp"></img>
                             <div className='relative left-[5%] font-bold text-xl w-[77%]'>{user_name}</div>
                             <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
-                            
                         </div>
                     
                         {/* Content of Post (Title, Description, Comments and Comment Bar) */}
                         <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover pb-2'> {/*  */}
-                            <div className='relative flex items-center left-[6%] top-[8%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
-                            <div className='relative flex items-center left-[6%] top-[13%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
-                            <div className='relative left-[6%] top-[21%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
+                            <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
+                            <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
+                            <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
+                            <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
+                                <button className=''><BsFillHeartFill/></button>
+                               <button className='pl-1'><BsFillCartFill /></button>
+                            </div>
                             
                             {/* Comment Bar */}
-                            <div className='relative flex items-center top-[30%] w-[90%] left-[6%] bg-gray-200 '> 
+                            <div className='relative flex items-center top-[22%] w-[90%] left-[6%] bg-gray-200 '> 
                                 <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
                                 <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
                                 <button className='text-blue-600 font-bold pr-2'>Post</button>
@@ -111,12 +116,15 @@ function PostModal(props) {
                     
                         {/* Content of Post (Title, Description, Comments and Comment Bar) */}
                         <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover pb-2'> {/*  */}
-                            <div className='relative flex items-center left-[6%] top-[8%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
-                            <div className='relative flex items-center left-[6%] top-[13%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
-                            <div className='relative left-[6%] top-[21%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
+                        <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
+                            <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
+                            <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
+                            <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
+                                <BsFillHeartFill/>
+                            </div>
                             
                             {/* Comment Bar */}
-                            <div className='relative flex items-center top-[30%] w-[90%] left-[6%] bg-gray-200 '> 
+                            <div className='relative flex items-center top-[22%] w-[90%] left-[6%] bg-gray-200 '> 
                                 <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
                                 <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
                                 <button className='text-blue-600 font-bold pr-2'>Post</button>
