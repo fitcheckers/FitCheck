@@ -50,6 +50,7 @@ const UserPrefModal = ({setShowModal}) =>
             styles: userPref,
             followers: [],
             following: [],
+            likes: [],
         }
         try{
             const response = await axios.post("http://localhost:80/users/update", userObject);
