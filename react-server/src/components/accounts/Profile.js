@@ -274,6 +274,10 @@ export default function Profile(){
         setLoading(false);
         document.getElementById("username").value = "";
     };
+
+    const HandleBioSubmit = async (e) =>{
+
+    };
     return (
       <div>
         <img className="fixed border-b-2 border-gray-200 object-cover object-center -z-20 w-screen h-[375px]" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
@@ -347,6 +351,29 @@ export default function Profile(){
                     className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     Update Username
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div className="flex flex-col relative w-96 h-16 top-32 end-[416px]">
+              <form className="space-y-6">
+                <div className="rounded-md shadow-sm -space-y-px">
+                  Click to update Bio
+                  <textarea
+                    id="bio"
+                    name="bio"
+                    maxlength="200"
+                    className="appearance-none rounded-none relative block w-full h-32 px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
+                    placeholder="Enter your bio"
+                  ></textarea>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Update Bio
                   </button>
                 </div>
               </form>

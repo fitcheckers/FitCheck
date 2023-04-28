@@ -13,3 +13,7 @@
         @apply absolute w-auto mt-2 mb-2 h-auto text-white text-sm font-bold transition-all duration-100 scale-0;
     }
 }
+
+textarea{
+    resize: none;
+}
