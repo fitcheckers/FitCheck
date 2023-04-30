@@ -57,13 +57,13 @@ function PostModal(props) {
                             </div>
                         
                             {/* Content of Post (Title, Description, Comments and Comment Bar) */}
-                            <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover pb-2'> {/*  */}
+                            <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
                                 <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
                                 <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
                                 <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
-                                <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
+                                <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 z-50'>
                                     <button className=''><BsFillHeartFill/></button>
-                                <button className='pl-1'><BsFillCartFill /></button>
+                                    <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 
                                 {/* Comment Bar */}
@@ -76,7 +76,8 @@ function PostModal(props) {
                         </div>
 
                         {/* Emoji Picker Modal */}
-                        <div className='fixed left-[44%] top-[29%] z-10 h-[50%] w-[20%]'>
+
+                        <div className='fixed left-[43%] top-[29%] z-10 h-[50%] w-[20%]'style={{ height: showPicker ? "50%" : "0", width: showPicker ? "20%" : "0" }}>
                             {showPicker && (
                             <Picker
                                 onEmojiClick={onEmojiClick}
@@ -122,7 +123,8 @@ function PostModal(props) {
                                 <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
                                 <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
                                 <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
-                                    <BsFillHeartFill/>
+                                    <button className=''><BsFillHeartFill/></button>
+                                    <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 
                                 {/* Comment Bar */}
@@ -135,7 +137,7 @@ function PostModal(props) {
                         </div>
     
                         {/* Emoji Picker Modal */}
-                        <div className='fixed left-[44%] top-[29%] z-10 h-[50%] w-[20%]'>
+                        <div className='fixed left-[43%] top-[29%] z-10 h-[50%] w-[20%]'style={{ height: showPicker ? "50%" : "0", width: showPicker ? "20%" : "0" }}>
                             {showPicker && (
                             <Picker
                                 onEmojiClick={onEmojiClick}
@@ -180,7 +182,8 @@ function PostModal(props) {
                             <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
                             <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
                             <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
-                                <BsFillHeartFill/>
+                                <button className=''><BsFillHeartFill/></button>
+                                <button className='relative left-[1%]'><BsFillCartFill /></button>
                             </div>
                             
                             {/* Comment Bar */}
@@ -193,7 +196,7 @@ function PostModal(props) {
                     </div>
 
                     {/* Emoji Picker Modal */}
-                    <div className='fixed left-[44%] top-[29%] z-10 h-[50%] w-[20%]'>
+                    <div className='fixed left-[43%] top-[29%] z-10 h-[50%] w-[20%]'style={{ height: showPicker ? "50%" : "0", width: showPicker ? "20%" : "0" }}>
                         {showPicker && (
                         <Picker
                             onEmojiClick={onEmojiClick}
