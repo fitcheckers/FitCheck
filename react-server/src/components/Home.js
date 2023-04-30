@@ -6,8 +6,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { maxHeight, maxWidth } from "@mui/system";
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { BsHeartFill } from "react-icons/bs";
 import PostModal from "./posts/PostModal.js";
 import { useAuth } from "../contexts/AuthContext.js";
 
@@ -33,10 +32,6 @@ function HomePage(){
     console.log('like');
   }
 
-  function dislikeButton()
-  {
-    console.log('dislike');
-  }
 
   //get all posts in collection
   // convert them into pins object and store them in pin array
@@ -76,10 +71,7 @@ function HomePage(){
                   actionIcon={
                     <>
                       <IconButton onClick={likeButton}>
-                        <ThumbUpIcon className="text-white" sx={{'&:hover': {cursor: 'pointer'}}}/>
-                      </IconButton>
-                      <IconButton onClick={dislikeButton}>
-                        <ThumbDownIcon className="text-white" sx={{'&:hover': {cursor: 'pointer'}}}/>
+                        <BsHeartFill className="text-white" sx={{'&:hover': {cursor: 'pointer'}}}/>
                       </IconButton>
                     </>
                   }
