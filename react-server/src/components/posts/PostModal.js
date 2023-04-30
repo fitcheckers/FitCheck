@@ -62,7 +62,7 @@ function PostModal(props) {
                             <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
                             <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
                                 <button className=''><BsFillHeartFill/></button>
-                               <button className='pl-1'><BsFillCartFill /></button>
+                                <button className='pl-1'><BsFillCartFill /></button>
                             </div>
                             
                             {/* Comment Bar */}
@@ -120,7 +120,8 @@ function PostModal(props) {
                             <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
                             <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
                             <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
-                                <BsFillHeartFill/>
+                                <button className=''><BsFillHeartFill/></button>
+                                <button className='pl-2'><BsFillCartFill /></button>
                             </div>
                             
                             {/* Comment Bar */}
