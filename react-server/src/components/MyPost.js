@@ -11,6 +11,9 @@ import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import { UserProfile } from "./UserProfile";
 
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+
 import "../styles/my_post.css";
 
 async function getUser(user_id) {
@@ -75,19 +78,21 @@ const FetchPost = (props) => {
 
 export { FetchPost };
 
-function scrollTop(){
+function scrollTop() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-function disableScroll(){
+function disableScroll() {
   var xPos = 0;
   var yPos = 0;
-  window.onscroll = function(){window.scrollTo(xPos, yPos)};
+  window.onscroll = function () {
+    window.scrollTo(xPos, yPos);
+  };
 }
 
-function enableScroll(){
-  window.onscroll = function(){};
+function enableScroll() {
+  window.onscroll = function () {};
 }
 
 class MyPost extends Component {
@@ -131,11 +136,17 @@ class MyPost extends Component {
           username={"username"}
           post={"0"}
         />
+
         <FetchPost />
+
         <div>
           <div className="fixed bottom-0 right-0 z-1 ">
             <Fab
-              onClick={() => {this.setState({ show_modal: true }); scrollTop(); disableScroll()}}
+              onClick={() => {
+                this.setState({ show_modal: true });
+                scrollTop();
+                disableScroll();
+              }}
               color="primary"
               aria-label="add"
               size="large"
@@ -151,8 +162,8 @@ class MyPost extends Component {
               event.target.className === "add_pin_modal"
                 ? this.setState({ show_modal: false })
                 : enableScroll();
-                enableScroll();
-            }}  
+              enableScroll();
+            }}
             className="add_pin_modal_container"
           >
             {this.state.show_modal ? <Modal add_pin={this.add_pin} /> : null}

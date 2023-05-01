@@ -67,9 +67,11 @@ function upload_img(
   axios
     .post("http://localhost:80/vision/label", data)
     .then(function (result) {
+      
       const labels = result.data[0].labelAnnotations;
+
       labels.forEach((object) => {
-        if (object.description === "Outerwear" && object.score > 0.8) {
+        if (object.description === "Outerwear" && object.score > 0.5) {
           setContainOuterwearLabel(true);
         }
       });
@@ -82,8 +84,9 @@ function upload_img(
     .post("http://localhost:80/vision/object", data)
     .then(function (result) {
       const labels = result.data[0].localizedObjectAnnotations;
+
       labels.forEach((object) => {
-        if (object.name === "Outerwear" && object.score > 0.85) {
+        if (object.name === "Outerwear" && object.score > 0.5) {
           setContainOuterwearObject(true);
         }
       });
@@ -125,17 +128,17 @@ function Modal(props) {
   async function save_pin(pinDetails, user, add_pin) {
     if (!containOuterwearLabel && !containOuterwearObject) {
       // if img is not clothes, it wont upload
-      // console.log(containOuterwearLabel);
-      // console.log(containOuterwearObject);
-      // console.log("DOES NOT CONTAIN CLOTHES");
+       console.log(containOuterwearLabel);
+       console.log(containOuterwearObject);
+       console.log("DOES NOT CONTAIN CLOTHES");
       setError("Please use an appropriate image for Fitcheck Please!");
-      window.location.reload(false);
+
+      // window.location.reload(false);
 
       return;
     }
-    console.log(containOuterwearLabel);
-    console.log(containOuterwearObject);
-    console.log("CONTAINS CLOTHES");
+    console.log(" Contain CLOTHES");
+
     imageUrl = await image_upload(file);
 
     const post_data = {
@@ -259,6 +262,15 @@ function Modal(props) {
                 />
               </div>
             </div>
+            <div>
+              <button
+                id="reupload_image"
+                type="submit"
+                className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Reupload
+              </button>
+            </div>
           </div>
         </div>
 
@@ -271,32 +283,40 @@ function Modal(props) {
               </select>
               <div
                 onClick={() => {
-
-                   if (
-                     document.querySelector("#pin_description").value &&
+                  if (
+                    document.querySelector("#pin_description").value &&
                     document.querySelector("#pin_title").value &&
-                   pinDetails.img_blob &&
-                     chipData.length > 0
-                   ) {
-
-                  save_pin(pinDetails, currentUser.uid, props.add_pin);
-
-                   } else {
-                     setError(
-                       "Please fill out all the fields before making a post!"
-                     );
-                   }
-
-                  if(document.querySelector("#pin_description").value && document.querySelector("#pin_title").value && pinDetails.img_blob && chipData.length > 0) {
+                    pinDetails.img_blob &&
+                    chipData.length > 0
+                  ) {
                     save_pin(pinDetails, currentUser.uid, props.add_pin);
-                  } else if(document.querySelector("#pin_description").value && document.querySelector("#pin_title").value && pinDetails.img_blob && chipData.length === 0)
-                  {
-                    setError("Please press enter in the tags field to confirm!");
-                  } 
-                  else {
-                    setError("Please fill out all the fields before making a post!");
+                  } else {
+                    setError(
+                      "Please fill out all the fields before making a post!"
+                    );
                   }
 
+                  if (
+                    document.querySelector("#pin_description").value &&
+                    document.querySelector("#pin_title").value &&
+                    pinDetails.img_blob &&
+                    chipData.length > 0
+                  ) {
+                    save_pin(pinDetails, currentUser.uid, props.add_pin);
+                  } else if (
+                    document.querySelector("#pin_description").value &&
+                    document.querySelector("#pin_title").value &&
+                    pinDetails.img_blob &&
+                    chipData.length === 0
+                  ) {
+                    setError(
+                      "Please press enter in the tags field to confirm!"
+                    );
+                  } else {
+                    setError(
+                      "Please fill out all the fields before making a post!"
+                    );
+                  }
                 }}
                 className="save_pin"
               >
