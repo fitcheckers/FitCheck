@@ -33,6 +33,7 @@ app.post("/vision/object", upload.single("file"), function (req, res, next) {
     });
 });
 
+
 /*
 const detectLabelClothes = async (file_path) => {
   const [result] = await client.labelDetection(file_path);

@@ -67,7 +67,6 @@ function upload_img(
   axios
     .post("http://localhost:80/vision/label", data)
     .then(function (result) {
-      
       const labels = result.data[0].labelAnnotations;
 
       labels.forEach((object) => {
@@ -86,7 +85,14 @@ function upload_img(
       const labels = result.data[0].localizedObjectAnnotations;
 
       labels.forEach((object) => {
-        if (object.name === "Outerwear" && object.score > 0.5) {
+        if (
+          (object.name === "Outerwear" ||
+            object.name === "Top" ||
+            object.name === "Shoe" ||
+            object.name === "Shorts" ||
+            object.name === "Pants") &&
+          object.score >= 0.5
+        ) {
           setContainOuterwearObject(true);
         }
       });
@@ -128,9 +134,9 @@ function Modal(props) {
   async function save_pin(pinDetails, user, add_pin) {
     if (!containOuterwearLabel && !containOuterwearObject) {
       // if img is not clothes, it wont upload
-       console.log(containOuterwearLabel);
-       console.log(containOuterwearObject);
-       console.log("DOES NOT CONTAIN CLOTHES");
+      console.log(containOuterwearLabel);
+      console.log(containOuterwearObject);
+      console.log("DOES NOT CONTAIN CLOTHES");
       setError("Please use an appropriate image for Fitcheck Please!");
 
       // window.location.reload(false);
@@ -222,9 +228,11 @@ function Modal(props) {
                   <div className="pint_mock_icon_container">
                     <AiOutlineUpload />
                   </div>
-                  <div>Click to upload</div>
-                  <div>
+                  <div className=" decoration-solid">Click to Upload</div>
+                  <div className="text-sm font-thin">
                     Recommendation: Use high-quality .jpg less than 20MB
+                    <br />
+                    Please Use Appropriate Images
                   </div>
                 </div>
               </div>
@@ -283,7 +291,12 @@ function Modal(props) {
               </select>
               <div
                 onClick={() => {
-                  if(document.querySelector("#pin_description").value && document.querySelector("#pin_title").value && pinDetails.img_blob && chipData.length > 0) {
+                  if (
+                    document.querySelector("#pin_description").value &&
+                    document.querySelector("#pin_title").value &&
+                    pinDetails.img_blob &&
+                    chipData.length > 0
+                  ) {
                     save_pin(pinDetails, currentUser.uid, props.add_pin);
                   } else if (
                     document.querySelector("#pin_description").value &&
