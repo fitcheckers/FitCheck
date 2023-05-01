@@ -13,6 +13,11 @@ const Navbar = () =>{
 
     const [isOpen, setOpen] = useState(false);
 
+    const closeDropDownMenu = () => {
+        if(isOpen === true){
+            setOpen(false);
+        }
+    }
     const handleDropDown = () => {
         setOpen(!isOpen);
     };
@@ -31,7 +36,7 @@ const Navbar = () =>{
     if(currentUser)
     {
         return(
-            <div className="p-5 bg-[#015668] shadow items-center justify-between w-screen fixed z-10 top-0 h-20 flex"> {/*nav bar */}
+            <div className="p-5 bg-[#015668] shadow items-center justify-between w-screen fixed z-10 top-0 h-20 flex" onClick={closeDropDownMenu}> {/*nav bar */}
                 <span className="text-2xl font-[Poppins] flex-none">
                     <a href="/"><img className="h-10 inline object-cover" src ={Logo} alt="fitcheck logo"></img></a>
                     
@@ -41,18 +46,20 @@ const Navbar = () =>{
                     <button type="button" onClick={handleDropDown}>
                         <img className="w-16 h-16 rounded-full object-cover mt-2" alt="profile" src={currentUser.photoURL || picture}></img>
                     </button>
-                    <div className={`z-10 right-6 top-16 ${isOpen ? "fixed" : "hidden"}`}>
-                        <ul>
-                            <li><a className="rounded-t-md px-5 bg-gray-300 border-b-2" href="/Profile">Edit Profile</a></li>
-                            <li><button className="w-full rounded-b-md px-5 bg-gray-300" onClick={handleLogout}>Log Out</button></li>
-                        </ul>
+                        <div className={`fixed inset-0 bg-inherit bg-opacity-70 transition-opacity z-0 ${isOpen ? "fixed" : "hidden"}`}>
+                        <div className={`z-10 right-6 top-16 ${isOpen ? "fixed" : "hidden"}`}>
+                            <ul>
+                                <li><a className="rounded-t-md px-5 bg-gray-300 border-b-2 hover:text-sky-400/100" href="/Profile">Edit Profile</a></li>
+                                <li><button className="w-full rounded-b-md px-5 bg-gray-300 hover:text-sky-400/100" onClick={handleLogout}>Log Out</button></li>
+                            </ul>
+                        </div>
                     </div>
                 </ul>
             </div>
         )
     }
         return(
-            <div className="p-5 bg-[#015668] shadow flex items-center justify-between w-screen fixed z-10 top-0 h-20">
+            <div className="p-5 bg-[#015668] shadow flex items-center justify-between w-screen fixed z-10 top-0 h-20" onClick={closeDropDownMenu}>
                 <span className="text-2xl font-[Poppins] flex-none">
                     <a href="/"><img className="h-10 inline object-cover" src ={Logo} alt="fitcheck logo"></img></a>
                     

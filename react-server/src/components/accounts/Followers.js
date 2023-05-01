@@ -2,10 +2,15 @@ import * as React from 'react';
 import { ImCross } from "react-icons/im"
 import { TbUserSearch } from "react-icons/tb";
 import { useState } from 'react';
-import profile from "./profile.webp"
+import profile from "./profile.webp";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+
 
 function Followers({isOpen = false, toggleModal, followerData}){
 
+    const { currentUser } = useAuth();
+    const navigate = useNavigate();
     const [hideIcon, setHideIcon] = useState(true);
 
     function textEntered(e){
@@ -19,11 +24,6 @@ function Followers({isOpen = false, toggleModal, followerData}){
         }
     }
 
-    function test()
-    {
-        return alert("hello");
-    }
-    
     return(
         <div className={`relative z-10 ${isOpen ? "" : "hidden"}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => toggleModal()}></div>
@@ -37,7 +37,7 @@ function Followers({isOpen = false, toggleModal, followerData}){
                     </div>
                     <div className='w-full h-[80%] overflow-y-scroll'>
                         {followerData.map((e, index) => (
-                            <div key={index} className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => test()}>
+                            <div key={index} className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => {if(e === currentUser.uid){navigate('MyPost')} else{navigate(`/user/${e}`)}}}>
                                 <img className='relative w-10 h-10 rounded-full top-1' src={profile} alt="profile"></img>
                                 <div className='pt-3 text-[1.3vw]'>{e}</div>
                             </div> 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { AiFillDislike } from "react-icons/ai";
-import { AiFillLike } from "react-icons/ai";
+import { BsHeartFill } from "react-icons/bs";
 import { MdTitle } from "react-icons/md";
 import PostModal from "./posts/PostModal";
+import axios from "axios";
 
 import "../styles/pin_styles.css";
 import "../styles/my_post.css";
@@ -27,41 +27,40 @@ function check_size(event) {
 
 function Pin(props) {
   const [showModal, setShowModal] = useState(false);
+  const [likes, setLikes] = useState(props.likes.length);
+  const [LikeClicked, setLikeClicked] = useState(props.likes.includes(props.user_id));
 
-  const [likes, setLikes] = useState(0);
-  const [dislikes, setDisLikes] = useState(0);
-  const [LikeClicked, setLikeClicked] = useState(false);
-  const [dislikeClicked, setDisklikeClicked] = useState(false);
-
-  const handleLikeClick = (e) => {
+  const handleLikeClick = async (e) => {
     e.stopPropagation();
 
-    if (dislikes > 0 && dislikeClicked) {
-      setLikeClicked(true);
-      setDisklikeClicked(false);
-      setLikes(likes + 1);
-      setDisLikes(dislikes - 1);
-    } else {
-      if (!LikeClicked) {
+      if (LikeClicked === false) {
         setLikeClicked(true);
         setLikes(likes + 1);
+        const userObject = {
+          user_id: props.user_id,
+          post_id: props.post_id,
+        }
+        try{
+          const response = await axios.post("http://localhost:80/post/like", userObject);
+          return response.data;
+        } catch (e){
+            console.log(e);
+        }
       }
-    }
-  };
-
-  const handleDislikeClick = (e) => {
-    e.stopPropagation();
-    if (likes > 0 && LikeClicked) {
-      setDisklikeClicked(true);
-      setLikeClicked(false);
-      setLikes(likes - 1);
-      setDisLikes(dislikes + 1);
-    } else {
-      if (!dislikeClicked) {
-        setDisklikeClicked(true);
-        setDisLikes(dislikes + 1);
+      else {
+        setLikeClicked(false);
+        setLikes(likes - 1);
+        const userObject = {
+          user_id: props.user_id,
+          post_id: props.post_id,
+        }
+        try{
+          const response = await axios.post("http://localhost:80/post/unlike", userObject);
+          return response.data;
+        } catch (e){
+            console.log(e);
+        }
       }
-    }
   };
 
   const handlePinClick = () => {
@@ -81,24 +80,13 @@ function Pin(props) {
 
           <button
             style={{
-              backgroundColor: LikeClicked ? "green" : "",
+              color: LikeClicked ? "red" : "",
             }}
             className="pint_mock_icon_container"
             onClick={handleLikeClick}
           >
-            <AiFillLike />
+            <BsHeartFill />
             {likes}
-          </button>
-
-          <button
-            style={{
-              backgroundColor: dislikeClicked ? "red" : "white",
-            }}
-            className="pint_mock_icon_container"
-            onClick={handleDislikeClick}
-          >
-            <AiFillDislike />
-            {dislikes}
           </button>
         </div>
       </div>
@@ -111,9 +99,6 @@ function Pin(props) {
           post={props}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)}
-          // user_pfp={props.user_pfp}
-          // user_name={props.user_name}
-          // post_description={props.description}
         />
       )}
     </div>

@@ -65,11 +65,15 @@ const FetchPost = (props) => {
       {data.map((e) => (
         <Pin
           key={e.content.id}
+          post_id={e.content.id}
           title={e.content.title}
           image_url={e.content.image_url}
           user_pfp={currentUser.photoURL}
           user_name={currentUser.displayName}
+          user_id={currentUser.uid}
           description={e.content.description}
+          post_user_id={e.content.user_id}
+          likes={e.content.likes}
         />
       ))}
     </div>
