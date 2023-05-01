@@ -93,7 +93,7 @@ app.post('/users/followers', async (req, res) => {
     }
     const returning = {};
     const data = await (await db.collection('users').doc(id).get()).data();
-    if (followers) returning.followers = data.followers;
-    if (following) returning.following = data.following;
+    if (followers) returning.followers = await (await db.collection('users').where('__name__', 'in', data.followers).get()).docs.map(doc => { return { ...doc.data()}});
+    if (following) returning.following = await (await db.collection('users').where('__name__', 'in', data.following).get()).docs.map(doc => { return { ...doc.data()}});
     res.json(returning);
 });

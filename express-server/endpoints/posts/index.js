@@ -119,6 +119,71 @@ app.post('/post/unlike', async (req, res) => {
     res.json({"successful": true});
 });
 
+app.post('/post/comments/add', async (req, res) => {
+    const {user_id, post_id, content} = req.body;
+    if (!user_id || !post_id || !content) {
+        res.status(400).send('missing user_id or post_id or content from json');
+        return;
+    }
+    let post = await db.collection('posts').doc(post_id).get();
+    if(!post.exists) {
+        res.status(400).send('post doesnt exist.');
+        return;
+    }
+    const user = await db.collection('users').doc(user_id).get();
+    if(!user.exists) {
+        res.status(400).send('post doesnt exist.');
+        return;
+    }
+    const comment_id = (Math.floor(Math.random() * 1000000)).toString();
+    post = post.data();
+    post.comments.push(comment_id);
+    await db.collection('posts').doc(post_id).set(post, {merge:true});
+    await db.collection('comments').doc(comment_id).set({user_id: user_id, comment_id:comment_id, post_id:post_id, content:content}, {merge:true});
+    res.json({"successful":true})
+});
+
+app.post('/post/comments/edit', async( req, res) => {
+    const {comment_id, content} = req.body;
+    if (!comment_id|| !content) {
+        res.status(400).send('missing user_id or post_id or content from json');
+        return;
+    }
+    const comment = await db.collection('comments').doc(comment_id).get();
+    if(!comment.exists) {
+        res.status(400).send('comment doesnt exist.');
+        return;
+    }
+    await db.collection('comments').doc(comment_id).set({content:content}, {merge:true});
+    res.json({"successful":true});
+});
+
+app.post('/post/comments/delete', async (req, res) => {
+    const {comment_id} = req.body;
+    if (!comment_id) {
+        res.status(400).send('missing user_id or post_id or content from json');
+        return;
+    }
+    const comment = await db.collection('comments').doc(comment_id).get();
+    if(!comment.exists) {
+        res.status(400).send('comment doesnt exist.');
+        return;
+    }
+    await db.collection('comments').doc(comment_id).delete();
+    res.json({"successful":true});
+});
+
+app.post('/post/comments/get', async (req, res) => {
+    const { post_id } = req.body;
+    if (!post_id) {
+        res.status(400).send('missing post_id');
+        return;
+    }
+    let posts = await db.collection('comments').where('post_id', '==', post_id).get();
+    posts = posts.docs.map(doc => { return { ...doc.data()}});
+    res.json(posts);
+});
+
 app.post('/posts/', async (req, res) => {
     const {user_id} = req.body;
     if (!user_id) {
@@ -142,4 +207,3 @@ app.post('/posts/query', async (req, res) => {
     data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
     res.json(data);
 });
-
