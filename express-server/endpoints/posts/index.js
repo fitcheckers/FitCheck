@@ -201,9 +201,12 @@ app.post('/posts/', async (req, res) => {
 });
 
 app.post('/posts/query', async (req, res) => {
-    let {limit} = req.body;
+    let {limit, styles} = req.body;
+    if (!styles) styles = [];
     if (!limit) limit = 50;
-    let data = await db.collection('posts').get();
+    let data = db.collection('posts');
+    if (styles.length > 0) data = data.where('tags', 'array-contains-any', styles);
+    data = await data.limit(limit).get();
     data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
     res.json(data);
 });
