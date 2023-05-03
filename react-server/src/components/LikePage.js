@@ -2,177 +2,149 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { BsHeartFill } from "react-icons/bs";
 import { maxHeight, maxWidth } from "@mui/system";
+import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext.js";
+import PostModal from "./posts/PostModal.js";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 //Get all post LIKED by userID
 
 function LikePage() {
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  const { currentUser, setError } = useAuth();
+  // eslint-disable-next-line
+  const [user, setUser] = useState("");
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
+  async function getUser(user_id) {
+    try {
+      const response = await axios.post("http://localhost:80/users/get", {
+        id: user_id,
+      });
+      console.log("Calling axios from getUser MyPost");
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      console.log("Error from calling axios from getUser MyPost");
+    }
+  }
+  
+  async function getUserPostData(post_ids) {
+    const requests = post_ids.map((post_id) =>
+      axios
+        .post("http://localhost:80/post/get", { id: post_id })
+        .catch((error) => {
+          console.log(`Error from fetching post ${post_id}: ${error}`);
+        })
+    );
+    const responses = await Promise.all(requests);
+    console.log(responses.map((response) => response.data.content.id));
+    console.log("Calling axios from Like Page");
+    return responses.map((response) => response.data);
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      const userData = await getUser(currentUser.uid);
+      setUser(userData);
+      const postData = await getUserPostData(userData.likes);
+      setData(postData);
+    }
+    fetchData();
+  }, [currentUser.uid]);
+
+  const handlePinClick = (item) => {
+    if(currentUser)
+    {
+      setShowModal(true);
+      setSelectedItem(item)
+    }
+    else
+    {
+      setError("Must be logged in to access");
+    }
+  };
+
+  const handleLikeClick = async (e) => {
+    console.log(e);
+    console.log(currentUser.uid);
+    const userObject = {
+      user_id: currentUser.uid,
+      post_id: e,
+    }
+    try{
+      const response = await axios.post("http://localhost:80/post/unlike", userObject);
+      console.log(response);
+    } catch (e){
+        console.log(e);
+    }
+    navigate(0);
+  }
+
+
+  //get all posts in collection
+  // convert them into pins object and store them in pin array
+  // render them into pin container
+
   return (
-    <Box
-      sx={{
-        width: maxWidth,
-        height: maxHeight,
-        paddingLeft: 12,
-        paddingRight: 4,
-        paddingTop: 15,
-      }}
-    >
-      <ImageList variant="masonry" cols={5} gap={25}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-              style={{ borderRadius: 20 }}
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </Box>
+    <div>
+      <PostModal post={selectedItem}
+          isOpen={showModal}
+          toggleModal={() => setShowModal(false)} />
+      <Box
+        sx={{
+          width: maxWidth,
+          height: maxHeight,
+          paddingLeft: 12,
+          paddingRight: 4,
+          paddingTop: 15,
+        }}
+      >
+        <ImageList variant="masonry" cols={5} gap={25}>
+          {data.map((item) => (
+            <ImageListItem key={item.content.id}
+            onMouseOver={() => setHoveredItem(item)}
+            onMouseOut={() => setHoveredItem(null)}>
+                <img
+                  src={`${item.content.image_url}?w=248&fit=crop&auto=format`}
+                  srcSet={`${item.content.image_url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.content.title}
+                  loading="lazy"
+                  style={{ borderRadius: 20 }}
+                  onClick={() => handlePinClick(item.content)} 
+                />
+                {hoveredItem === item && ( <ImageListItemBar
+                  className="rounded-b-2xl"
+                  title={item.content.title}
+                  subtitle={item.content.author}
+                  actionIcon={
+                    <>
+                      <button
+                        style={{
+                          color: "red",
+                        }}
+                        className="pint_mock_icon_container mr-2"
+                        onClick={() => handleLikeClick(item.content.id)}
+                      >
+                        <BsHeartFill />
+                        {item.content.likes.length}
+                      </button>
+                    </>
+                  }
+                />)}
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Box>
+    </div>
   );
 }
-
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1549388604-817d15aa0110",
-    title: "Bed",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1525097487452-6278ff080c31",
-    title: "Books",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6",
-    title: "Sink",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3",
-    title: "Kitchen",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3",
-    title: "Blinds",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1574180045827-681f8a1a9622",
-    title: "Chairs",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1530731141654-5993c3016c77",
-    title: "Laptop",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1481277542470-605612bd2d61",
-    title: "Doors",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee",
-    title: "Storage",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62",
-    title: "Candle",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
-    title: "Coffee table",
-  },
-
-  {
-    img: "https://images.unsplash.com/photo-1549388604-817d15aa0110",
-    title: "Bed",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1525097487452-6278ff080c31",
-    title: "Books",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6",
-    title: "Sink",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3",
-    title: "Kitchen",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3",
-    title: "Blinds",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1574180045827-681f8a1a9622",
-    title: "Chairs",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1530731141654-5993c3016c77",
-    title: "Laptop",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1481277542470-605612bd2d61",
-    title: "Doors",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee",
-    title: "Storage",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62",
-    title: "Candle",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
-    title: "Coffee table",
-  },
-
-  {
-    img: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6",
-    title: "Sink",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3",
-    title: "Kitchen",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3",
-    title: "Blinds",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1574180045827-681f8a1a9622",
-    title: "Chairs",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1530731141654-5993c3016c77",
-    title: "Laptop",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1481277542470-605612bd2d61",
-    title: "Doors",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee",
-    title: "Storage",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62",
-    title: "Candle",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
-    title: "Coffee table",
-  },
-];
 
 export default LikePage;
