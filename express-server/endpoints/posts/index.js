@@ -111,10 +111,10 @@ app.post('/post/unlike', async (req, res) => {
         res.status(400).send('user was not liking the post from the beginning.');
         return;
     }
-    likes.splice(likes.indexOf(user_id));
+    likes.splice(likes.indexOf(user_id), 1);
     await db.collection('posts').doc(post_id).set({likes:likes}, {merge:true});
     likes = user.likes ? user.likes : [];
-    likes.splice(likes.indexOf(post_id));
+    likes.splice(likes.indexOf(post_id), 1);
     await db.collection('users').doc(user_id).set({likes:likes}, {merge:true});
     res.json({"successful": true});
 });
