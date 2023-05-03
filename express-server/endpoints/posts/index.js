@@ -201,11 +201,18 @@ app.post('/posts/', async (req, res) => {
 });
 
 app.post('/posts/query', async (req, res) => {
-    let {limit, styles} = req.body;
-    if (!styles) styles = [];
+    let {limit, tags, user_id} = req.body;
+    if (!tags) tags = [];
     if (!limit) limit = 25;
     let data = db.collection('posts');
-    if (styles.length > 0) data = data.where('tags', 'array-contains-any', styles);
+    if (user_id) {
+        data = data.where('user_id', '==', user_id);
+        if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
+        data = await data.limit(limit).orderBy('likes', 'desc').get();
+        data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
+        return res.json(data);
+    };
+    if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
     data = await data.limit(limit).orderBy('likes', 'desc').get();
     data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
     res.json(data);
