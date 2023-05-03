@@ -48,13 +48,15 @@ app.post('/post/get', async (req, res) => {
         res.status(400).send('missing id from json');
         return;
     }
-    const doc = await db.collection('posts').doc(id).get();
+    let doc = await db.collection('posts').doc(id).get();
 
     if (!doc.exists) {
         res.status(400).send('No post was found with that ID.');
         return;
     }
-    res.json({"successful": true, content: doc.data()});
+    doc = doc.data();
+    let user = (await db.collection('users').doc(doc.user_id).get()).data();
+    res.json({"successful": true, content: doc, user:user});
 });
 
 app.post('/post/like', async (req, res) => {
