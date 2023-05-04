@@ -1,20 +1,43 @@
 import React from "react";
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { maxHeight, maxWidth } from "@mui/system";
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
-import { BsHeartFill } from "react-icons/bs";
 import PostModal from "./posts/PostModal.js";
+import axios from "axios";
+import { BsHeartFill } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext.js";
+import { useState, useEffect } from "react";
+import { maxHeight, maxWidth } from "@mui/system";
+
 
 function HomePage(){
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const [postData, setPostData] = useState([]);
   const { currentUser, setError } = useAuth();
+
+
+  async function getPost() {
+    try {
+      const response = await axios.post("http://localhost:80/posts/query");
+      console.log(response.data);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      console.log("Error from calling axios from Home");
+    }
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getPost();
+      setPostData(data);
+    }
+    fetchData();
+  }, []);
 
   const handlePinClick = (item) => {
     if(currentUser)
@@ -53,8 +76,8 @@ function HomePage(){
         }}
       >
         <ImageList variant="masonry" cols={5} gap={25}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.title}
+          {postData.map((item) => (
+            <ImageListItem key={item.id}
             onMouseOver={() => setHoveredItem(item)}
             onMouseOut={() => setHoveredItem(null)}>
                 <img
@@ -84,160 +107,5 @@ function HomePage(){
     </div>
   );
 }
-
-//fetch post title, desp img frm firstore post
-
-const itemData = [
-  {
-    image_url: "./fitpics/2.jfif",
-    title: "fit1",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-    post_user_id: "00ekjekje"
-  },
-
-  {
-    image_url: "./fitpics/4.jfif",
-    title: "fit2",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/5.jfif",
-    title: "fit3",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/6.jfif",
-    title: "fit4",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/7.jfif",
-    title: "fit5",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/8.jfif",
-    title: "fit6",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/9.jfif",
-    title: "fit7",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/10.jfif",
-    title: "fit8",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/11.jfif",
-    title: "fit9",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/12.jfif",
-    title: "fit10",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/1.jfif",
-    title: "fit11",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/2.jfif",
-    title: "fit12",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-
-  {
-    image_url: "./fitpics/4.jfif",
-    title: "fit13",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/5.jfif",
-    title: "fit14",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/6.jfif",
-    title: "fit15",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/7.jfif",
-    title: "fit16",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/8.jfif",
-    title: "fit17",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/9.jfif",
-    title: "fit18",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/10.jfif",
-    title: "fit19",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/11.jfif",
-    title: "fit20",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-  {
-    image_url: "./fitpics/12.jfif",
-    title: "fit21",
-    description: "homepage",
-    user_pfp: "https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg",
-    user_name: "Random",
-  },
-];
 
 export default HomePage;

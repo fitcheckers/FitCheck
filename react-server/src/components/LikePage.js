@@ -7,9 +7,9 @@ import { BsHeartFill } from "react-icons/bs";
 import { maxHeight, maxWidth } from "@mui/system";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext.js";
+import { useNavigate } from "react-router-dom";
 import PostModal from "./posts/PostModal.js";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 //Get all post LIKED by userID
 
