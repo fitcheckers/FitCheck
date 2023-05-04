@@ -68,8 +68,8 @@ const FetchPost = (props) => {
           post_id={e.content.id}
           title={e.content.title}
           image_url={e.content.image_url}
-          user_pfp={currentUser.photoURL}
-          user_name={currentUser.displayName}
+          profile_pic_url={e.user.profile_pic_url}
+          display_name={e.user.display_name}
           user_id={currentUser.uid}
           description={e.content.description}
           post_user_id={e.content.user_id}

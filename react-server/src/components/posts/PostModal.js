@@ -10,7 +10,8 @@ import { useAuth } from "../../contexts/AuthContext";
 
 function PostModal(props) {
     const { isOpen = false, toggleModal } = props;
-    const { title, image_url, user_pfp, user_name, description, post_user_id } = props.post;
+    const { title, image_url, description, post_user_id } = props.post;
+    const { profile_pic_url, display_name } = props.user;
     const [inputStr, setInputStr] = useState('');
     const [showPicker, setShowPicker] = useState(false);
     const [isMenuOpen, setOpen] = useState(false);
@@ -51,8 +52,8 @@ function PostModal(props) {
 
                             {/* User Info */}
                             <div className='flex fixed border-b-2 border-gray-200 bg-white h-[13%] w-[34%] top-[10%] left-[50%] rounded-tr-2xl z-0 items-center'>
-                                <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={user_pfp || profile} alt="user's pfp"></img>
-                                <div className='relative left-[5%] font-bold text-xl w-[77%]'>{user_name}</div>
+                                <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={profile_pic_url || profile} alt="user's pfp"></img>
+                                <div className='relative left-[5%] font-bold text-xl w-[77%]'>{display_name}</div>
                                 <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
                             </div>
                         
@@ -111,8 +112,8 @@ function PostModal(props) {
     
                             {/* User Info */}
                             <div className='flex fixed border-b-2 border-gray-200 bg-white h-[13%] w-[34%] top-[10%] left-[50%] rounded-tr-2xl z-0 items-center'>
-                                <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={user_pfp || profile} alt="user's pfp"></img>
-                                <div className='relative left-[5%] font-bold text-xl w-[77%]'>{user_name}</div>
+                                <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={profile_pic_url || profile} alt="user's pfp"></img>
+                                <div className='relative left-[5%] font-bold text-xl w-[77%]'>{display_name}</div>
                                 <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
                                 
                             </div>
@@ -170,8 +171,8 @@ function PostModal(props) {
 
                         {/* User Info */}
                         <div className='flex fixed border-b-2 border-gray-200 bg-white h-[13%] w-[34%] top-[10%] left-[50%] rounded-tr-2xl z-0 items-center'>
-                            <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={user_pfp || profile} alt="user's pfp"></img>
-                            <div className='relative left-[5%] font-bold text-xl w-[77%]'>{user_name}</div>
+                            <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={profile_pic_url || profile} alt="user's pfp"></img>
+                            <div className='relative left-[5%] font-bold text-xl w-[77%]'>{display_name}</div>
                             <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
                             
                         </div>

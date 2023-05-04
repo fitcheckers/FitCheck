@@ -17,6 +17,7 @@ function LikePage() {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItemProfile, setSelectedItemProfile] = useState("");
   const { currentUser, setError } = useAuth();
   // eslint-disable-next-line
   const [user, setUser] = useState("");
@@ -56,6 +57,7 @@ function LikePage() {
       setUser(userData);
       const postData = await getUserPostData(userData.likes);
       setData(postData);
+      console.log(postData);
     }
     fetchData();
   }, [currentUser.uid]);
@@ -64,7 +66,8 @@ function LikePage() {
     if(currentUser)
     {
       setShowModal(true);
-      setSelectedItem(item)
+      setSelectedItem(item.content);
+      setSelectedItemProfile(item.user);
     }
     else
     {
@@ -96,6 +99,7 @@ function LikePage() {
   return (
     <div>
       <PostModal post={selectedItem}
+          user={selectedItemProfile}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)} />
       <Box
@@ -118,7 +122,7 @@ function LikePage() {
                   alt={item.content.title}
                   loading="lazy"
                   style={{ borderRadius: 20 }}
-                  onClick={() => handlePinClick(item.content)} 
+                  onClick={() => handlePinClick(item)} 
                 />
                 {hoveredItem === item && ( <ImageListItemBar
                   className="rounded-b-2xl"

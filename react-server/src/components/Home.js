@@ -40,6 +40,7 @@ function HomePage(){
   return (
     <div>
       <PostModal post={selectedItem}
+          user={selectedItem}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)} />
       <Box

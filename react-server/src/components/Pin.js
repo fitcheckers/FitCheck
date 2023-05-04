@@ -97,6 +97,7 @@ function Pin(props) {
       {showModal && (
         <PostModal
           post={props}
+          user={props}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)}
         />
