@@ -40,7 +40,7 @@ function PostModal(props) {
         if(currentUser.uid === post_user_id){
             return(
                 <div className={`relative z-10 ${isOpen ? "" : "hidden"}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => toggleModal()}>
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => {toggleModal(); closeEmojiPicker(); closeDropDownMenu()}}>
                     </div>
                         <div className='fixed bg-[#D9D9D9] top-[5%] left-[18%] w-[68%] h-[88%] rounded-3xl inline-block items' onClick={() => {closeEmojiPicker(); closeDropDownMenu()}}>
                             
@@ -89,8 +89,8 @@ function PostModal(props) {
                         </div>
                         <div className={`fixed left-[74%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
                                 <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28'>
-                                    <li><button className="border-b-2 hover:text-sky-400/100">Edit</button></li>
-                                    <li><button className="hover:text-red-400/100">Delete</button></li>
+                                    <li><button className="rounded-xl border-b-2 hover:text-sky-400/100 hover:bg-gray-100 w-full">Edit</button></li>
+                                    <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full">Delete</button></li>
                                 </ul>
                         </div>
                 </div>
@@ -100,7 +100,7 @@ function PostModal(props) {
         {
             return(
                 <div className={`relative z-10 ${isOpen ? "" : "hidden"}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => toggleModal()}>
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => {toggleModal();closeEmojiPicker(); closeDropDownMenu()}}>
                     </div>
                         <div className='fixed bg-[#D9D9D9] top-[5%] left-[18%] w-[68%] h-[88%] rounded-3xl inline-block items' onClick={() => {closeEmojiPicker(); closeDropDownMenu()}}>
                             
@@ -148,8 +148,8 @@ function PostModal(props) {
                             )}
                         </div>
                         <div className={`fixed left-[74%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
-                                <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28'>
-                                    <li><button className="border-b-2 hover:text-red-400/100">Report</button></li>
+                                <ul className='rounded-xl bg-gray-200 text-center w-28'>
+                                    <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full">Report</button></li>
                                 </ul>
                         </div>
                 </div>
@@ -159,7 +159,7 @@ function PostModal(props) {
     else{
         return(
             <div className={`relative z-10 ${isOpen ? "" : "hidden"}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => toggleModal()}>
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => {toggleModal();closeEmojiPicker(); closeDropDownMenu()}}>
                 </div>
                     <div className='fixed bg-[#D9D9D9] top-[5%] left-[18%] w-[68%] h-[88%] rounded-3xl inline-block items' onClick={() => {closeEmojiPicker(); closeDropDownMenu()}}>
                         
@@ -208,7 +208,7 @@ function PostModal(props) {
                     </div>
                     <div className={`fixed left-[74%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
                             <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28'>
-                                <li><button className="border-b-2 hover:text-red-400/100">Report</button></li>
+                                <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full">Report</button></li>
                             </ul>
                     </div>
             </div>
