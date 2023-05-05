@@ -49,7 +49,7 @@ const Navbar = () =>{
                         <div className={`fixed inset-0 bg-inherit bg-opacity-70 transition-opacity z-0 ${isOpen ? "fixed" : "hidden"}`}>
                         <div className={`z-10 right-6 top-16 ${isOpen ? "fixed" : "hidden"}`}>
                             <ul className="rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28">
-                                <li><button className="rounded-xl border-b-2 hover:text-sky-400/100 hover:bg-gray-100 w-full"><a href={"/Profile"}>Edit Profile</a></button></li>
+                                <li><a href={"/Profile"}><button className="rounded-xl border-b-2 hover:text-sky-400/100 hover:bg-gray-100 w-full">Edit Profile</button></a></li>
                                 <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full" onClick={handleLogout}>Log Out</button></li>
                             </ul>
                         </div>
