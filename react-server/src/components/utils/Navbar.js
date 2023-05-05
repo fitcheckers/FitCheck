@@ -48,9 +48,9 @@ const Navbar = () =>{
                     </button>
                         <div className={`fixed inset-0 bg-inherit bg-opacity-70 transition-opacity z-0 ${isOpen ? "fixed" : "hidden"}`}>
                         <div className={`z-10 right-6 top-16 ${isOpen ? "fixed" : "hidden"}`}>
-                            <ul>
-                                <li><a className="rounded-t-md px-5 bg-gray-300 border-b-2 hover:text-sky-400/100" href="/Profile">Edit Profile</a></li>
-                                <li><button className="w-full rounded-b-md px-5 bg-gray-300 hover:text-sky-400/100" onClick={handleLogout}>Log Out</button></li>
+                            <ul className="rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28">
+                                <li><button className="rounded-xl border-b-2 hover:text-sky-400/100 hover:bg-gray-100 w-full" href="/Profile">Edit Profile</button></li>
+                                <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full" onClick={handleLogout}>Log Out</button></li>
                             </ul>
                         </div>
                     </div>
@@ -67,10 +67,10 @@ const Navbar = () =>{
                 <SearchBar/>
                 <ul className="flex items-center static py-4 place-items-end whitespace-nowrap w-[148px]">
                     <li className="mx-4">
-                        <a href="/login" className="text-xl text-white hover:text-cyan-400 duration-500 static">Login</a>
+                        <button href="/login" className="text-xl text-white hover:text-cyan-400 duration-500 static">Login</button>
                     </li>
                     <li>
-                        <a href="/register" className="text-xl text-white hover:text-cyan-400 duration-500 static" >Sign Up</a>
+                        <button href="/register" className="text-xl text-white hover:text-cyan-400 duration-500 static" >Sign Up</button>
                     </li>
                 </ul>
             </div>

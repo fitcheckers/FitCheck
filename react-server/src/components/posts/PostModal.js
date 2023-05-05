@@ -148,7 +148,7 @@ function PostModal(props) {
                             )}
                         </div>
                         <div className={`fixed left-[74%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
-                                <ul className='rounded-xl bg-gray-200 text-center w-28'>
+                                <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28'>
                                     <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full">Report</button></li>
                                 </ul>
                         </div>
