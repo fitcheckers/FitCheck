@@ -26,9 +26,9 @@ function HomePage(){
       const data = response.data.map((post) => {
         if(post.likes.includes(currentUser.uid))
         {
-          return {...post, isLiked: true};
+          return {...post, isLiked: true, numLikes: post.likes.length};
         } else {
-          return {...post, isLiked: false};
+          return {...post, isLiked: false, numLikes: post.likes.length};
         }
       })
       console.log(data);
@@ -82,6 +82,13 @@ function HomePage(){
       try{
         const response = await axios.post("http://localhost:80/post/unlike", userObject);
         console.log(response);
+        setPostData((data) =>
+          data.map((post) => {
+            if (post.id === e) {
+              return {...post, numLikes: post.numLikes-1};
+            }
+            return post;
+        }));
       } catch (e){
           console.log(e);
       }
@@ -92,6 +99,13 @@ function HomePage(){
       try{
         const response = await axios.post("http://localhost:80/post/like", userObject);
         console.log(response);
+        setPostData((data) =>
+          data.map((post) => {
+            if (post.id === e) {
+              return {...post, numLikes: post.numLikes+1};
+            }
+            return post;
+        }));
       } catch (e){
           console.log(e);
       }
@@ -136,9 +150,16 @@ function HomePage(){
                   subtitle={item.author}
                   actionIcon={
                     <>
-                      <IconButton onClick={() => handleLikeClick(item.id)}>
-                        <BsHeartFill className="text-white" sx={{'&:hover': {cursor: 'pointer'}}} color={item.isLiked ? 'red' : 'null'}/>
-                      </IconButton>
+                      <button
+                        style={{
+                          color: "red",
+                        }}
+                        className="pint_mock_icon_container mr-2"
+                        onClick={() => handleLikeClick(item.id)}
+                      >
+                        <BsHeartFill className="text-white" sx={{'&:hover': {cursor: 'pointer'}}} color={item.isLiked ? 'red' : 'grey'}/>
+                        {item.numLikes}
+                      </button>
                     </>
                   }
                 />)}
