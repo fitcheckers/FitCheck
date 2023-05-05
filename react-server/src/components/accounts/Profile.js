@@ -282,7 +282,7 @@ export default function Profile(){
       <div>
         <img className="fixed border-b-2 border-gray-200 object-cover object-center -z-20 w-screen h-[375px]" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
         <form onSubmit={bannerUpload}>
-          <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" ref={imageUploader2} id="bg_img" accept="image/*" type="file" onChange={handleBannerUpload}></input>
+          <input className="relative left-24 top-[340px] z-40 w-8 opacity-0 bg-black" ref={imageUploader2} id="bg_img" accept="image/*" type="file" onChange={handleBannerUpload}></input>
           <div className="relative left-24 top-[310px] z-40 w-8 h-8 cursor-pointer" onClick={() => imageUploader2.current.click()}></div>
           <input className="fixed left-[140px] top-[345px] z-40 w-20 opacity-100 cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white rounded-lg" type="submit"></input>
         </form>  
