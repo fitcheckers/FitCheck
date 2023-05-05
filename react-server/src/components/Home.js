@@ -16,15 +16,23 @@ function HomePage(){
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItemProfile, setSelectedItemProfile] = useState("");
   const [postData, setPostData] = useState([]);
   const { currentUser, setError } = useAuth();
-
-
+ 
   async function getPost() {
     try {
       const response = await axios.post("http://localhost:80/posts/query");
-      console.log(response.data);
-      return response.data;
+      const data = response.data.map((post) => {
+        if(post.likes.includes(currentUser.uid))
+        {
+          return {...post, isLiked: true};
+        } else {
+          return {...post, isLiked: false};
+        }
+      })
+      console.log(data);
+      return data;
     } catch (e) {
       console.log(e);
       console.log("Error from calling axios from Home");
@@ -43,7 +51,8 @@ function HomePage(){
     if(currentUser)
     {
       setShowModal(true);
-      setSelectedItem(item)
+      setSelectedItem(item);
+      setSelectedItemProfile(item.user);
     }
     else
     {
@@ -51,10 +60,43 @@ function HomePage(){
     }
   };
 
-  function likeButton(){
-    console.log('like');
+  const handleLikeClick = async (e) => {
+    console.log(e);
+    console.log(currentUser.uid);
+    const userObject = {
+      user_id: currentUser.uid,
+      post_id: e,
+    }
+    let value;
+    setPostData((data) =>
+      data.map((post) => {
+        if (post.id === e) {
+          value = post.isLiked;
+          return {...post, isLiked: !post.isLiked};
+        }
+        return post;
+    }));
+    if(value)
+    {
+      console.log(value);
+      try{
+        const response = await axios.post("http://localhost:80/post/unlike", userObject);
+        console.log(response);
+      } catch (e){
+          console.log(e);
+      }
+    }
+    else
+    {
+      console.log(value);
+      try{
+        const response = await axios.post("http://localhost:80/post/like", userObject);
+        console.log(response);
+      } catch (e){
+          console.log(e);
+      }
+    }
   }
-
 
   //get all posts in collection
   // convert them into pins object and store them in pin array
@@ -63,7 +105,7 @@ function HomePage(){
   return (
     <div>
       <PostModal post={selectedItem}
-          user={selectedItem}
+          user={selectedItemProfile}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)} />
       <Box
@@ -75,7 +117,7 @@ function HomePage(){
           paddingTop: 15,
         }}
       >
-        <ImageList variant="masonry" cols={5} gap={25}>
+        <ImageList variant="woven" cols={5} gap={25}>
           {postData.map((item) => (
             <ImageListItem key={item.id}
             onMouseOver={() => setHoveredItem(item)}
@@ -94,8 +136,8 @@ function HomePage(){
                   subtitle={item.author}
                   actionIcon={
                     <>
-                      <IconButton onClick={likeButton}>
-                        <BsHeartFill className="text-white" sx={{'&:hover': {cursor: 'pointer'}}}/>
+                      <IconButton onClick={() => handleLikeClick(item.id)}>
+                        <BsHeartFill className="text-white" sx={{'&:hover': {cursor: 'pointer'}}} color={item.isLiked ? 'red' : 'null'}/>
                       </IconButton>
                     </>
                   }
