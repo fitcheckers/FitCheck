@@ -211,11 +211,29 @@ app.post('/posts/query', async (req, res) => {
         data = data.where('user_id', '==', user_id);
         if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
         data = await data.limit(limit).orderBy('likes', 'desc').get();
-        data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
+        data = await Promise.all(data.docs.map(async doc => { 
+            let docdata = doc.data();
+            let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
+            //console.log(userdata);
+            return {
+                id:doc.id,
+                user:userdata,
+                ...docdata,
+            }
+        }));
         return res.json(data);
     };
     if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
     data = await data.limit(limit).orderBy('likes', 'desc').get();
-    data = data.docs.map(doc => { return { id: doc.id, ...doc.data()}});
+    data = await Promise.all(data.docs.map(async doc => { 
+        let docdata = doc.data();
+        let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
+        //console.log(userdata);
+        return {
+            id:doc.id,
+            user:userdata,
+            ...docdata,
+        }
+    }));
     res.json(data);
 });
