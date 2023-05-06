@@ -28,7 +28,7 @@ function check_size(event) {
 function Pin(props) {
   const [showModal, setShowModal] = useState(false);
   const [likes, setLikes] = useState(props.likes.length);
-  const [LikeClicked, setLikeClicked] = useState(props.likes.includes(props.user_id));
+  const [LikeClicked, setLikeClicked] = useState(props.likes.includes(props.cur_user_id));
 
   const handleLikeClick = async (e) => {
     e.stopPropagation();

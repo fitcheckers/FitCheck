@@ -10,7 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 function PostModal(props) {
     const { isOpen = false, toggleModal } = props;
-    const { title, image_url, description, post_user_id } = props.post;
+    const { title, image_url, description, user_id } = props.post;
     const { profile_pic_url, display_name } = props.user;
     const [inputStr, setInputStr] = useState('');
     const [showPicker, setShowPicker] = useState(false);
@@ -29,7 +29,7 @@ function PostModal(props) {
     const toggleDropMenu = () =>{
         setOpen(!isMenuOpen);
         console.log(currentUser.uid);
-        console.log(post_user_id);
+        console.log(user_id);
     }
     const closeDropDownMenu = () =>{
         if(isMenuOpen === true){
@@ -37,7 +37,7 @@ function PostModal(props) {
         }
     }
     if(currentUser && currentUser.uid){
-        if(currentUser.uid === post_user_id){
+        if(currentUser.uid === user_id){
             return(
                 <div className={`relative z-10 ${isOpen ? "" : "hidden"}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-70 transition-opacity -z-10" onClick={() => {toggleModal(); closeEmojiPicker(); closeDropDownMenu()}}>
@@ -89,7 +89,7 @@ function PostModal(props) {
                         </div>
                         <div className={`fixed left-[74%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
                                 <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28'>
-                                    <li><button className="rounded-xl border-b-2 hover:text-sky-400/100 hover:bg-gray-100 w-full">Edit</button></li>
+                                    {/* <li><button className="rounded-xl border-b-2 hover:text-sky-400/100 hover:bg-gray-100 w-full">Edit</button></li> */}
                                     <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full">Delete</button></li>
                                 </ul>
                         </div>

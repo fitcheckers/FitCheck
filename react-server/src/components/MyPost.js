@@ -70,9 +70,9 @@ const FetchPost = (props) => {
           image_url={e.content.image_url}
           profile_pic_url={e.user.profile_pic_url}
           display_name={e.user.display_name}
-          user_id={currentUser.uid}
+          cur_user_id={currentUser.uid}
           description={e.content.description}
-          post_user_id={e.content.user_id}
+          user_id={e.content.user_id}
           likes={e.content.likes}
         />
       ))}
