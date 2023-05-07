@@ -13,8 +13,8 @@ const Sidebar = () => {
                   bg-gray-900 text-white shadow fixed overflow-x-hidden"
     >
       <SideBarIcon href={"/"} icon={<AiFillHome size="32" />} text="Home"/>{" "}
-      <SideBarIcon href={"/MyPost"} icon={<CgProfile size="32" />} text="Profile"/>{" "}
       <SideBarIcon href={"/YourFit"} icon={<GiClothes size="32" />} text="YourFit"/>{" "}
+      <SideBarIcon href={"/MyPost"} icon={<CgProfile size="32" />} text="Profile"/>{" "}
       <SideBarIcon href={"/LikePage"} icon={<FaHandHoldingHeart size="32" />} text="Likes"/>{" "}
       <SideBarIcon href={"/ShoppingCart"} icon={<MdShoppingCart size="32" />} text="Cart"/>
     </div>
