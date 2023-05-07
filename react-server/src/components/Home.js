@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
 import PostModal from "./posts/PostModal.js";
 import axios from "axios";
 import { BsHeartFill } from "react-icons/bs";

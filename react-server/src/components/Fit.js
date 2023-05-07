@@ -1,6 +1,6 @@
 import React from "react";
 
-function Wardrobe() {
+function Fit() {
   return(
     <div className="pt-[90px] pl-[70px] pr-[10px] w-[100%] h-screen flex flex-col gap-3 -z-10">
       <div className="top-52 w-full h-[10%] break-words rounded-lg shadow-md shadow-gray-600 text-white pl-2 pt-2 text-4xl bg-gradient-to-r from-[#005668] to-[#101827]">Footwear</div>
@@ -17,4 +17,4 @@ function Wardrobe() {
   );
 }
 
-export default Wardrobe;
+export default Fit;
