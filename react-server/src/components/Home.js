@@ -23,11 +23,18 @@ function HomePage(){
     try {
       const response = await axios.post("http://localhost:80/posts/query");
       const data = response.data.map((post) => {
-        if(post.likes.includes(currentUser.uid))
+        if(currentUser && currentUser.uid)
         {
-          return {...post, isLiked: true, numLikes: post.likes.length};
-        } else {
-          return {...post, isLiked: false, numLikes: post.likes.length};
+          if(post.likes.includes(currentUser.uid))
+          {
+            return {...post, isLiked: true, numLikes: post.likes.length};
+          } else {
+            return {...post, isLiked: false, numLikes: post.likes.length};
+          }
+        }
+        else
+        {
+          return post;
         }
       })
       console.log(data);
