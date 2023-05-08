@@ -67,10 +67,10 @@ const Navbar = () =>{
                 <SearchBar/>
                 <ul className="flex items-center static py-4 place-items-end whitespace-nowrap w-[148px]">
                     <li className="mx-4">
-                        <button href="/login" className="text-xl text-white hover:text-cyan-400 duration-500 static">Login</button>
+                        <a href="/login" className="text-xl text-white hover:text-cyan-400 duration-500 static">Login</a>
                     </li>
                     <li>
-                        <button href="/register" className="text-xl text-white hover:text-cyan-400 duration-500 static" >Sign Up</button>
+                        <a href="/register" className="text-xl text-white hover:text-cyan-400 duration-500 static" >Sign Up</a>
                     </li>
                 </ul>
             </div>
