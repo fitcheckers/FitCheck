@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TfiArrowLeft } from "react-icons/tfi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsFillHeartFill } from "react-icons/bs";
@@ -6,17 +6,69 @@ import { BsFillCartFill } from "react-icons/bs";
 import profile from "../accounts/profile.webp"
 import Picker from 'emoji-picker-react';
 import { useAuth } from "../../contexts/AuthContext";
-
+import axios from 'axios';
+import {TiCancel} from "react-icons/ti";
 
 function PostModal(props) {
     const { isOpen = false, toggleModal } = props;
-    const { title, image_url, description, user_id } = props.post;
+    const { title, image_url, description, user_id, id } = props.post;
     const { profile_pic_url, display_name } = props.user;
     const [inputStr, setInputStr] = useState('');
     const [showPicker, setShowPicker] = useState(false);
     const [isMenuOpen, setOpen] = useState(false);
     const { currentUser, setError } = useAuth();
+    const [postComments, setPostComments] = useState([]);
+    const [commentUpdated, setCommentUpdated] = useState("");
 
+    async function getPostComments() {
+        try {
+          const response = await axios.post("http://localhost:80/post/comments/get", { post_id: id});
+          setPostComments(response.data);
+          console.log(response.data);
+          return response.data;
+        } catch (e) {
+          console.log(e);
+          console.log("Error from getting post comments");
+          setError("Failed to load comments");
+        }
+    }
+
+    async function newComments(user_id, post_id, comments) {
+        try {
+          const response = await axios.post("http://localhost:80/post/comments/add", {
+            user_id: user_id,
+            post_id: post_id,
+            content: comments,
+          });
+          setCommentUpdated(response);
+          console.log("commentUpdated set to true");
+          console.log("Calling axios from newComments");
+          console.log(response);
+          return response;
+        } catch (e) {
+          console.log(e);
+          console.log("Error from calling axios from newComments");
+        }
+    }
+
+    async function onPostClick()
+    {
+        if (inputStr.trim())
+        {
+            const comment = await newComments(currentUser.uid, id ,inputStr.trim());
+            setInputStr('');
+        }
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+        const data = await getPostComments();
+        }
+        if(id)
+        {
+            fetchData();
+        }
+      }, [id, commentUpdated]);
 
     const onEmojiClick = (emojiObject) => { 
         setInputStr(prevInput => prevInput + emojiObject.emoji);
@@ -36,6 +88,29 @@ function PostModal(props) {
             setOpen(false);
         }
     }
+
+    async function deleteComment(post, user)
+    {
+        if(currentUser.uid === user)
+        {
+            console.log(post);
+            console.log(user);
+            try {
+                const response = await axios.post("http://localhost:80/post/comments/delete", { comment_id: post});
+                setCommentUpdated(response);
+                console.log(response);
+                console.log("commentUpdated set to true");
+              } catch (e) {
+                console.log(e);
+                console.log("Error from delete post comments");
+            }
+        }
+        else
+        {
+            setError("You did not make the comments");
+        }
+    }
+
     if(currentUser && currentUser.uid){
         if(currentUser.uid === user_id){
             return(
@@ -61,17 +136,29 @@ function PostModal(props) {
                             <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
                                 <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
                                 <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
-                                <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
-                                <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 z-50'>
+                                <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[22%] pl-1 mb-1 bg-gray-300 z-0'>Comments</div>
+                                <div className='relative left-[6%] w-[90%] h-[50%] pl-1 bg-white z-0 overflow-y-scroll'>
+                                    {postComments.map((comment) => (
+                                    <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
+                                        <div className='break-words w-full'>
+                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={profile} alt="profile"></img>
+                                            <span className='ml-1 font-bold italic'>username</span>
+                                            <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
+                                            <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
+                                        </div>
+                                    </div>
+                                    ))}
+                                </div>
+                                <div className='relative items-center left-[6%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-50'>
                                     <button className=''><BsFillHeartFill/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 
                                 {/* Comment Bar */}
-                                <div className='relative flex items-center top-[22%] w-[90%] left-[6%] bg-gray-200 '> 
+                                <div className='relative flex items-center top-[0%] w-[90%] left-[6%] bg-gray-200 '> 
                                     <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
-                                    <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
-                                    <button className='text-blue-600 font-bold pr-2'>Post</button>
+                                    <input id="content" className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
+                                    <button className='text-blue-600 font-bold pr-2' onClick={() => onPostClick()}>Post</button>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +202,7 @@ function PostModal(props) {
                                 <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={profile_pic_url || profile} alt="user's pfp"></img>
                                 <div className='relative left-[5%] font-bold text-xl w-[77%]'>{display_name}</div>
                                 <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
-                                
+                                <div>delete</div>
                             </div>
                         
                             {/* Content of Post (Title, Description, Comments and Comment Bar) */}
