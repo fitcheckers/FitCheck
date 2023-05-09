@@ -6,7 +6,7 @@ export default function ErrorMessage() {
   
     return (
       error && (
-        <div className="flex justify-center">
+        <div className="fixed left-[30%] justify-center z-50">
           <div className="rounded-md max-w-md w-full bg-red-50 h-12 p-4 mt-24 -mb-48 z-20 ml-20">
             <div className="flex">
               <div className="flex-shrink-0">
