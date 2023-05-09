@@ -134,9 +134,9 @@ function PostModal(props) {
                         
                             {/* Content of Post (Title, Description, Comments and Comment Bar) */}
                             <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
-                                <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
-                                <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
-                                <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[22%] pl-1 mb-1 bg-gray-300 z-0'>Comments</div>
+                                <div className='relative flex items-center left-[6%] top-[3%] w-[90%] h-[7%] font-bold pl-1 text-base sm:text-2xl' >{title}</div>
+                                <div className='relative flex items-center left-[6%] top-[6%] font-light w-[90%] h-[5%] pl-1'>{description}</div>
+                                <div className='relative left-[6%] top-[10%] font-bold text-2xl w-[90%] h-[22%] pl-1 mb-1 bg-gray-300 z-0'>Comments</div>
                                 <div className='relative left-[6%] w-[90%] h-[50%] pl-1 bg-white z-0 overflow-y-scroll'>
                                     {postComments.map((comment) => (
                                     <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
