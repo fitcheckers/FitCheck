@@ -202,24 +202,35 @@ function PostModal(props) {
                                 <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={profile_pic_url || profile} alt="user's pfp"></img>
                                 <div className='relative left-[5%] font-bold text-xl w-[77%]'>{display_name}</div>
                                 <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
-                                <div>delete</div>
                             </div>
                         
                             {/* Content of Post (Title, Description, Comments and Comment Bar) */}
-                            <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover pb-2'> {/*  */}
-                            <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
+                            <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
+                                <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
                                 <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
-                                <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
-                                <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
+                                <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[22%] pl-1 mb-1 bg-gray-300 z-0'>Comments</div>
+                                <div className='relative left-[6%] w-[90%] h-[50%] pl-1 bg-white z-0 overflow-y-scroll'>
+                                    {postComments.map((comment) => (
+                                    <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
+                                        <div className='break-words w-full'>
+                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={profile} alt="profile"></img>
+                                            <span className='ml-1 font-bold italic'>username</span>
+                                            <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
+                                            <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
+                                        </div>
+                                    </div>
+                                    ))}
+                                </div>
+                                <div className='relative items-center left-[6%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-50'>
                                     <button className=''><BsFillHeartFill/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 
                                 {/* Comment Bar */}
-                                <div className='relative flex items-center top-[22%] w-[90%] left-[6%] bg-gray-200 '> 
+                                <div className='relative flex items-center top-[0%] w-[90%] left-[6%] bg-gray-200 '> 
                                     <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
-                                    <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
-                                    <button className='text-blue-600 font-bold pr-2'>Post</button>
+                                    <input id="content" className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
+                                    <button className='text-blue-600 font-bold pr-2' onClick={() => onPostClick()}>Post</button>
                                 </div>
                             </div>
                         </div>
@@ -265,20 +276,32 @@ function PostModal(props) {
                         </div>
                     
                         {/* Content of Post (Title, Description, Comments and Comment Bar) */}
-                        <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col object-cover pb-2'> {/*  */}
-                        <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
+                        <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
+                            <div className='relative flex items-center left-[6%] top-[5%] w-[90%] h-[7%] font-bold pl-1 bg-gray-300 text-base sm:text-2xl' >{title}</div>
                             <div className='relative flex items-center left-[6%] top-[10%] font-light w-[90%] h-[5%] pl-1 bg-gray-300'>{description}</div>
-                            <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[45%] pl-1 bg-gray-300 z-0'>Comments</div>
-                            <div className='relative flex items-center left-[6%] top-[19%] font-bold text-2xl w-[90%] h-[7%] pl-1 bg-inherit z-0'>
+                            <div className='relative left-[6%] top-[15%] font-bold text-2xl w-[90%] h-[22%] pl-1 mb-1 bg-gray-300 z-0'>Comments</div>
+                            <div className='relative left-[6%] w-[90%] h-[50%] pl-1 bg-white z-0 overflow-y-scroll'>
+                                {postComments.map((comment) => (
+                                <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
+                                    <div className='break-words w-full'>
+                                        <img className='w-8 h-8 float-left rounded-full object-cover' src={profile} alt="profile"></img>
+                                        <span className='ml-1 font-bold italic'>username</span>
+                                        <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
+                                        <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                            <div className='relative items-center left-[6%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-50'>
                                 <button className=''><BsFillHeartFill/></button>
                                 <button className='relative left-[1%]'><BsFillCartFill /></button>
                             </div>
                             
                             {/* Comment Bar */}
-                            <div className='relative flex items-center top-[22%] w-[90%] left-[6%] bg-gray-200 '> 
+                            <div className='relative flex items-center top-[0%] w-[90%] left-[6%] bg-gray-200 '> 
                                 <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
-                                <input className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
-                                <button className='text-blue-600 font-bold pr-2'>Post</button>
+                                <input id="content" className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
+                                <button className='text-blue-600 font-bold pr-2' onClick={() => onPostClick()}>Post</button>
                             </div>
                         </div>
                     </div>
