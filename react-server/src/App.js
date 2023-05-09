@@ -64,8 +64,7 @@ function App() {
             }
           />
           <Route
-            exact
-            path="/YourFit"
+            path="/YourFit/:tags?"
             element={
               <Private>
                 <Fit />

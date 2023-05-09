@@ -8,9 +8,11 @@ import axios from "axios";
 import { BsHeartFill } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext.js";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { maxHeight, maxWidth } from "@mui/system";
 
 function Fit() {
+  const { tags } = useParams();
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -55,10 +57,21 @@ function Fit() {
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedData = await getUser(currentUser.uid);
-      setUserData(fetchedData);
-      const data = await getPost(fetchedData.styles);
-      setPostData(data);
+      if( tags === undefined)
+      {
+        const fetchedData = await getUser(currentUser.uid);
+        setUserData(fetchedData);
+        const data = await getPost(fetchedData.styles);
+        setPostData(data);
+      }
+      else
+      {
+        const query = [];
+        query.push(tags);
+        console.log(query);
+        const data = await getPost(query);
+        setPostData(data);
+      }
     }
     fetchData();
   }, []);
