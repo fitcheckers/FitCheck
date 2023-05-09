@@ -288,7 +288,7 @@ export default function Profile(){
         </form>  
         <BsFillCameraFill size="32" className="relative left-24 top-[-42px] z-0 cursor-pointer bg-white rounded-lg"/>
           <div className="relative flex items-center justify-center w-[90%] left-[6%]">
-            <div className="relative z-[-10] flex flex-col items-center w-96">
+            <div className="relative flex flex-col items-center w-96">
               <input className="hidden"
                 type="file"
                 accept="image/*"
