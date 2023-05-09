@@ -10,13 +10,13 @@ import axios from 'axios';
 import {TiCancel} from "react-icons/ti";
 
 function PostModal(props) {
+    const { currentUser, setError } = useAuth();
     const { isOpen = false, toggleModal } = props;
-    const { title, image_url, description, user_id, id } = props.post;
+    const { title, image_url, description, user_id, id, likes } = props.post;
     const { profile_pic_url, display_name } = props.user;
     const [inputStr, setInputStr] = useState('');
     const [showPicker, setShowPicker] = useState(false);
     const [isMenuOpen, setOpen] = useState(false);
-    const { currentUser, setError } = useAuth();
     const [postComments, setPostComments] = useState([]);
     const [commentUpdated, setCommentUpdated] = useState("");
 
@@ -149,6 +149,7 @@ function PostModal(props) {
                                     ))}
                                 </div>
                                 <div className='relative items-center left-[3%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-30 top-[8%]'>
+                                    {likes && likes.length ? likes.length : "0"}
                                     <button className=''><BsFillHeartFill/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
@@ -220,6 +221,7 @@ function PostModal(props) {
                                     ))}
                                 </div>
                                 <div className='relative items-center left-[3%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-30 top-[8%]'>
+                                    {likes && likes.length ? likes.length : "0"}
                                     <button className=''><BsFillHeartFill/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
