@@ -82,7 +82,7 @@ const SearchBar = () => {
             >
               Search
             </button>
-            <datalist id="tags" className="w-full">
+            <datalist id="tags">
               <option value="Artsy" />
               <option value="Athleisure" />
               <option value="Business" />

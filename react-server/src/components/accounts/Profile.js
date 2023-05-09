@@ -288,7 +288,7 @@ export default function Profile(){
         </form>  
         <BsFillCameraFill size="32" className="relative left-24 top-[-42px] z-0 cursor-pointer bg-white rounded-lg"/>
           <div className="relative flex items-center justify-center w-[90%] left-[6%]">
-            <div className="relative z-[-10] flex flex-col items-center w-96">
+            <div className="relative flex flex-col items-center w-96">
               <input className="hidden"
                 type="file"
                 accept="image/*"
@@ -296,7 +296,7 @@ export default function Profile(){
                 ref={imageUploader}
                 id="upload_img"
               />
-              <div className="h-60 w-60 cursor-pointer top-[50%]"
+              <div className="h-60 w-60 cursor-pointer top-[50%] "
                 onClick={() => imageUploader.current.click()}
               >
                 <img className="shadow-lg rounded-full max-w-full h-60 w-60 items-stretch border-none object-cover bg-center"
@@ -312,7 +312,7 @@ export default function Profile(){
                     type="text" 
                     placeholder="Enter Image Url"
                     id="userInput"
-                    className="relative z-[-10] appearance-none rounded-none w-96 px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
+                    className="relative appearance-none rounded-none w-96 px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
                     onChange={(e) => setDisplayPictureUrl(e.target.value)}
                   />
                 </div>
@@ -320,7 +320,7 @@ export default function Profile(){
                   <button
                     type="submit"
                     disabled={loading}
-                    className="relative w-full z-[-10] py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="relative w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     Update Profile Picture
                   </button>
