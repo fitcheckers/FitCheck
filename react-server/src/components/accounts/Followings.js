@@ -60,7 +60,7 @@ function Followings({isOpen = false, toggleModal, followingsData}){
                     </div>
                     <div className='w-full h-[80%] overflow-y-scroll'>
                         {user && user.map((e, index) => (
-                            <div key={index} className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => {if(e.id === currentUser.uid){navigate('MyPost')} else{navigate(`/user/${e.id}`)}}}>
+                            <div key={index} className='flex bg-white w-full h-12 mt-1 gap-5 pl-4 cursor-pointer' onClick={() => {if(e.id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${e.id}`)}}}>
                                 <img className='relative w-10 h-10 object-cover rounded-full top-1' src={e.profile_pic_url || profile} alt="profile"></img>
                                 <div className='pt-3 text-[1.3vw]'>{e.display_name}</div>
                             </div> 
