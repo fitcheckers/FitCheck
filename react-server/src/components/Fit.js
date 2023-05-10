@@ -17,6 +17,7 @@ function Fit() {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedItemProfile, setSelectedItemProfile] = useState("");
+  const [selectedIsLiked, setSelectedIsLiked] = useState(false);
   const [postData, setPostData] = useState([]);
   const [userData, setUserData] = useState("");
   const { currentUser, setError } = useAuth();
@@ -82,6 +83,7 @@ function Fit() {
       setShowModal(true);
       setSelectedItem(item);
       setSelectedItemProfile(item.user);
+      setSelectedIsLiked(item.isLiked);
     }
     else
     {
@@ -145,6 +147,7 @@ function Fit() {
     <div>
       <PostModal post={selectedItem}
           user={selectedItemProfile}
+          like={selectedIsLiked}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)} />
       <Box

@@ -16,6 +16,7 @@ function HomePage(){
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedItemProfile, setSelectedItemProfile] = useState("");
+  const [selectedIsLiked, setSelectedIsLiked] = useState(false);
   const [postData, setPostData] = useState([]);
   const { currentUser, setError } = useAuth();
  
@@ -49,6 +50,7 @@ function HomePage(){
     async function fetchData() {
       const data = await getPost();
       setPostData(data);
+      console.log(postData);
     }
     fetchData();
   }, []);
@@ -59,6 +61,7 @@ function HomePage(){
       setShowModal(true);
       setSelectedItem(item);
       setSelectedItemProfile(item.user);
+      setSelectedIsLiked(item.isLiked);
     }
     else
     {
@@ -126,6 +129,7 @@ function HomePage(){
     <div>
       <PostModal post={selectedItem}
           user={selectedItemProfile}
+          like={selectedIsLiked}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)} />
       <Box

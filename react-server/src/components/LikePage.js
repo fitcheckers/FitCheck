@@ -18,6 +18,7 @@ function LikePage() {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedItemProfile, setSelectedItemProfile] = useState("");
+  const [selectedIsLiked, setSelectedIsLiked] = useState(true);
   const { currentUser, setError } = useAuth();
   // eslint-disable-next-line
   const [user, setUser] = useState("");
@@ -46,8 +47,8 @@ function LikePage() {
         })
     );
     const responses = await Promise.all(requests);
-    console.log(responses.map((response) => response.data.content.id));
     console.log("Calling axios from Like Page");
+    console.log(responses.map((response) => response.data));
     return responses.map((response) => response.data);
   }
 
@@ -57,7 +58,7 @@ function LikePage() {
       setUser(userData);
       const postData = await getUserPostData(userData.likes);
       setData(postData);
-      console.log(postData);
+      //console.log(postData);
     }
     fetchData();
   }, [currentUser.uid]);
@@ -68,6 +69,8 @@ function LikePage() {
       setShowModal(true);
       setSelectedItem(item.content);
       setSelectedItemProfile(item.user);
+      setSelectedIsLiked(true);
+      console.log(selectedIsLiked);
     }
     else
     {
@@ -100,6 +103,7 @@ function LikePage() {
     <div>
       <PostModal post={selectedItem}
           user={selectedItemProfile}
+          like={selectedIsLiked}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)} />
       <Box

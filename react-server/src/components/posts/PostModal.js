@@ -11,43 +11,114 @@ import {TiCancel} from "react-icons/ti";
 
 function PostModal(props) {
     const { currentUser, setError } = useAuth();
-    const { isOpen = false, toggleModal } = props;
-    const { title, image_url, description, user_id, id, likes } = props.post;
+    const { isOpen = false, toggleModal, like } = props;
+    const { title, image_url, description, user_id, id, numLikes, post_id} = props.post;
     const { profile_pic_url, display_name } = props.user;
     const [inputStr, setInputStr] = useState('');
     const [showPicker, setShowPicker] = useState(false);
     const [isMenuOpen, setOpen] = useState(false);
     const [postComments, setPostComments] = useState([]);
     const [commentUpdated, setCommentUpdated] = useState("");
+    const [postLike, setPostLike] = useState("");
 
-    async function getPostComments() {
-        try {
-          const response = await axios.post("http://localhost:80/post/comments/get", { post_id: id});
-          setPostComments(response.data);
-          console.log(response.data);
-          return response.data;
-        } catch (e) {
-          console.log(e);
-          console.log("Error from getting post comments");
-          setError("Failed to load comments");
+    async function getPost(){
+        if(id)
+        {
+            try {
+                console.log("1");
+                const response = await axios.post("http://localhost:80/post/get", {id: id});
+                setPostLike(response.data.content);
+                console.log("Post Fetched");
+                return response.data.content;
+            } catch (e) {
+                console.log(e);
+                console.log("Error from getting post comments");
+                setError("Failed to load comments");
+            }
+        }
+        else if(post_id)
+        {
+            try {
+                console.log("2");
+                const response = await axios.post("http://localhost:80/post/get", {id: post_id});
+                setPostLike(response.data.content);
+                console.log("Post Fetched");
+                return response.data.content;
+              } catch (e) {
+                console.log(e);
+                console.log("Error from getting post comments");
+                setError("Failed to load comments");
+              }
         }
     }
 
-    async function newComments(user_id, post_id, comments) {
-        try {
-          const response = await axios.post("http://localhost:80/post/comments/add", {
-            user_id: user_id,
-            post_id: post_id,
-            content: comments,
-          });
-          setCommentUpdated(response);
-          console.log("commentUpdated set to true");
-          console.log("Calling axios from newComments");
-          console.log(response);
-          return response;
-        } catch (e) {
-          console.log(e);
-          console.log("Error from calling axios from newComments");
+    async function getPostComments() {
+        if(id)
+        {
+            try {
+                console.log("3");
+            const response = await axios.post("http://localhost:80/post/comments/get", { post_id: id});
+            setPostComments(response.data);
+            console.log(response.data);
+            return response.data;
+            } catch (e) {
+            console.log(e);
+            console.log("Error from getting post comments");
+            setError("Failed to load comments");
+            }
+        }
+        else if(post_id)
+        {
+            try {
+                console.log("4");
+              const response = await axios.post("http://localhost:80/post/comments/get", { post_id: post_id});
+              setPostComments(response.data);
+              console.log(response.data);
+              return response.data;
+            } catch (e) {
+              console.log(e);
+              console.log("Error from getting post comments");
+              setError("Failed to load comments");
+            }
+        }
+    }
+
+    async function newComments(user_id, posid, comments) {
+        if(posid)
+        {
+            try {
+            const response = await axios.post("http://localhost:80/post/comments/add", {
+                user_id: user_id,
+                post_id: posid,
+                content: comments,
+            });
+            setCommentUpdated(response);
+            console.log("commentUpdated set to true");
+            console.log("Calling axios from newComments");
+            console.log(response);
+            return response;
+            } catch (e) {
+            console.log(e);
+            console.log("Error from calling axios from newComments");
+            }
+        }
+        else if(post_id)
+        {
+            try {
+                const response = await axios.post("http://localhost:80/post/comments/add", {
+                    user_id: user_id,
+                    post_id: post_id,
+                    content: comments,
+                });
+                setCommentUpdated(response);
+                console.log("commentUpdated set to true");
+                console.log("Calling axios from newComments");
+                console.log(response);
+                return response;
+            } catch (e) {
+                console.log(e);
+                console.log("Error from calling axios from newComments");
+            }
         }
     }
 
@@ -62,13 +133,24 @@ function PostModal(props) {
 
     useEffect(() => {
         async function fetchData() {
-        const data = await getPostComments();
+            if(id || post_id)
+            {
+                const data = await getPostComments();
+            }
+            if(numLikes === 0 || numLikes > 0)
+            {
+                console.log("No need fetching");
+            }
+            else
+            {
+                const data2 = await getPost();
+            }
         }
-        if(id)
+        if(id || post_id)
         {
             fetchData();
         }
-      }, [id, commentUpdated]);
+      }, [id, post_id, commentUpdated]);
 
     const onEmojiClick = (emojiObject) => { 
         setInputStr(prevInput => prevInput + emojiObject.emoji);
@@ -149,8 +231,8 @@ function PostModal(props) {
                                     ))}
                                 </div>
                                 <div className='relative items-center left-[3%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-30 top-[8%]'>
-                                    {likes && likes.length ? likes.length : "0"}
-                                    <button className=''><BsFillHeartFill/></button>
+                                    {numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )}
+                                    <button className=''><BsFillHeartFill color={like ? 'red' : 'grey'}/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 
@@ -221,8 +303,8 @@ function PostModal(props) {
                                     ))}
                                 </div>
                                 <div className='relative items-center left-[3%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-30 top-[8%]'>
-                                    {likes && likes.length ? likes.length : "0"}
-                                    <button className=''><BsFillHeartFill/></button>
+                                    {numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )}
+                                    <button className=''><BsFillHeartFill color={like ? 'red' : 'grey'}/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 

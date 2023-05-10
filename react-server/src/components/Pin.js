@@ -98,6 +98,7 @@ function Pin(props) {
         <PostModal
           post={props}
           user={props}
+          like={LikeClicked}
           isOpen={showModal}
           toggleModal={() => setShowModal(false)}
         />
