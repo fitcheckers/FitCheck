@@ -30,6 +30,9 @@ function Pin(props) {
   const [likes, setLikes] = useState(props.likes.length);
   const [LikeClicked, setLikeClicked] = useState(props.likes.includes(props.cur_user_id));
 
+  //console.log(props.user_id);
+  //console.log(props.cur_user_id);
+
   const handleLikeClick = async (e) => {
     e.stopPropagation();
 
@@ -37,7 +40,7 @@ function Pin(props) {
         setLikeClicked(true);
         setLikes(likes + 1);
         const userObject = {
-          user_id: props.user_id,
+          user_id: props.cur_user_id,
           post_id: props.post_id,
         }
         try{
@@ -51,7 +54,7 @@ function Pin(props) {
         setLikeClicked(false);
         setLikes(likes - 1);
         const userObject = {
-          user_id: props.user_id,
+          user_id: props.cur_user_id,
           post_id: props.post_id,
         }
         try{
