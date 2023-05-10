@@ -15,6 +15,7 @@ app.post('/post/new', async (req, res) => {
     const data = {
         image_url: image_url,
         description:description,
+        date:date,
         title:title,
         id: postID,
         user_id: user_id,
@@ -37,6 +38,17 @@ app.post('/post/delete', async (req, res) => {
     if (!id) {
         res.status(400).send('missing id from json');
         return;
+    }
+    let post = await db.collection('posts').doc(id).get();
+    if (!post.exists) {
+        res.status(400).send('No post was found with that ID.');
+        return;
+    }
+    let postdata = post.data();
+    for (let i = 0; i < postdata.likes.length; i++) {
+        let userdata = (await db.collection('users').doc(postdata.likes[i]).get()).data();
+        if (userdata.likes) userdata.likes.splice(userdata.likes.indexOf(id), 1);
+        await db.collection('users').doc(postdata.likes[i]).set(userdata, {merge:true});
     }
     await db.collection('posts').doc(id).delete();
     res.json({"successful": true});
@@ -140,6 +152,7 @@ app.post('/post/comments/add', async (req, res) => {
     const comment_id = (Math.floor(Math.random() * 1000000)).toString();
     post = post.data();
     post.comments.push(comment_id);
+    const date = Date.now()
     await db.collection('posts').doc(post_id).set(post, {merge:true});
     await db.collection('comments').doc(comment_id).set({user_id: user_id, comment_id:comment_id, post_id:post_id, content:content}, {merge:true});
     res.json({"successful":true})
@@ -182,7 +195,15 @@ app.post('/post/comments/get', async (req, res) => {
         return;
     }
     let posts = await db.collection('comments').where('post_id', '==', post_id).get();
-    posts = posts.docs.map(doc => { return { ...doc.data()}});
+    posts = await Promise.all(posts.docs.map(async doc => {
+        let docdata = doc.data();
+        let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
+        return { 
+            id:doc.id,
+            user:userdata,
+            ...docdata,
+        }
+    }));
     res.json(posts);
 });
 
