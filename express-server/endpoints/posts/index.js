@@ -15,7 +15,6 @@ app.post('/post/new', async (req, res) => {
     const data = {
         image_url: image_url,
         description:description,
-        date:date,
         title:title,
         id: postID,
         user_id: user_id,
@@ -231,7 +230,7 @@ app.post('/posts/query', async (req, res) => {
     if (user_id) {
         data = data.where('user_id', '==', user_id);
         if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
-        data = await data.limit(limit).orderBy('likes', 'desc').get();
+        data = await data.limit(limit).orderBy('created', 'asc').get();
         data = await Promise.all(data.docs.map(async doc => { 
             let docdata = doc.data();
             let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
@@ -245,7 +244,7 @@ app.post('/posts/query', async (req, res) => {
         return res.json(data);
     };
     if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
-    data = await data.limit(limit).orderBy('likes', 'desc').get();
+    data = await data.limit(limit).orderBy('created', 'asc').get();
     data = await Promise.all(data.docs.map(async doc => { 
         let docdata = doc.data();
         let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
