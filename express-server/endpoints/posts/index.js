@@ -154,7 +154,7 @@ app.post('/post/comments/add', async (req, res) => {
     post.comments.push(comment_id);
     const date = Date.now()
     await db.collection('posts').doc(post_id).set(post, {merge:true});
-    await db.collection('comments').doc(comment_id).set({user_id: user_id, comment_id:comment_id, post_id:post_id, content:content}, {merge:true});
+    await db.collection('comments').doc(comment_id).set({user_id: user_id, comment_id:comment_id, post_id:post_id, content:content, date:date}, {merge:true});
     res.json({"successful":true})
 });
 
