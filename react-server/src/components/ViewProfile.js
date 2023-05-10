@@ -96,8 +96,11 @@ function ViewProfile()
     return <div>Loading Post Info...</div>;
   }
 
+  console.log(currentUser.uid);
+  console.log(userId);
+
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <img
         className="left-12 -z-10 top-[80px] w-screen h-52 relative object-cover bg-center"
         src={user.profile_banner_url}
@@ -136,6 +139,12 @@ function ViewProfile()
             user_pfp={user.profile_pic_url || picture}
             user_name={user.display_name}
             description={e.content.description}
+            post_id={e.content.id}
+            profile_pic_url={e.user.profile_pic_url}
+            display_name={e.user.display_name}
+            cur_user_id={currentUser.uid}
+            user_id={e.content.user_id}
+            likes={e.content.likes}
           />
         ))}
       </div>

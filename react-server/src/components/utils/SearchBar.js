@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../../contexts/AuthContext";
 
 const SearchBar = () => {
   const query = "";
   const navigate = useNavigate();
+  const { setError } = useAuth();
 
   const handleChange = () => {
     let element = document.getElementById("default-search").value;
@@ -48,7 +49,7 @@ const SearchBar = () => {
         navigate("/YourFit/Street")
         break;
       default:
-        navigate("/YourFit/")
+        setError("Please choose a tag from the options.")
         break;
     }
     return;

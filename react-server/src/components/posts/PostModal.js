@@ -222,8 +222,8 @@ function PostModal(props) {
                                     {postComments.map((comment) => (
                                     <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
                                         <div className='break-words w-full'>
-                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={profile} alt="profile"></img>
-                                            <span className='ml-1 font-bold italic'>username</span>
+                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={comment.user.profile_pic_url || profile} alt="profile"></img>
+                                            <span className='ml-1 font-bold italic'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
                                             <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>
@@ -293,8 +293,8 @@ function PostModal(props) {
                                     {postComments.map((comment) => (
                                     <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
                                         <div className='break-words w-full'>
-                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={profile} alt="profile"></img>
-                                            <span className='ml-1 font-bold italic'>username</span>
+                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={comment.user.profile_pic_url || profile} alt="profile"></img>
+                                            <span className='ml-1 font-bold italic'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
                                             <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>
