@@ -8,34 +8,31 @@ import axios from "axios";
 import { BsHeartFill } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext.js";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { maxHeight, maxWidth } from "@mui/system";
 
-
-function HomePage(){
+function Fit() {
+  const { tags } = useParams();
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedItemProfile, setSelectedItemProfile] = useState("");
   const [selectedIsLiked, setSelectedIsLiked] = useState(false);
   const [postData, setPostData] = useState([]);
+  const [userData, setUserData] = useState("");
   const { currentUser, setError } = useAuth();
  
-  async function getPost() {
+  async function getPost(array) {
     try {
-      const response = await axios.post("http://localhost:80/posts/query");
+      console.log(array);
+      const response = await axios.post("http://localhost:80/posts/query", { tags: array });
+      console.log(response);
       const data = response.data.map((post) => {
-        if(currentUser && currentUser.uid)
+        if(post.likes.includes(currentUser.uid))
         {
-          if(post.likes.includes(currentUser.uid))
-          {
-            return {...post, isLiked: true, numLikes: post.likes.length};
-          } else {
-            return {...post, isLiked: false, numLikes: post.likes.length};
-          }
-        }
-        else
-        {
-          return post;
+          return {...post, isLiked: true, numLikes: post.likes.length};
+        } else {
+          return {...post, isLiked: false, numLikes: post.likes.length};
         }
       })
       console.log(data);
@@ -46,11 +43,36 @@ function HomePage(){
     }
   }
 
+  async function getUser(user_id) {
+    try {
+      const response = await axios.post("http://localhost:80/users/get", {
+        id: user_id,
+      });
+      console.log("Calling axios from getUser MyPost");
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      console.log("Error from calling axios from getUser MyPost");
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
-      const data = await getPost();
-      setPostData(data);
-      console.log(postData);
+      if( tags === undefined)
+      {
+        const fetchedData = await getUser(currentUser.uid);
+        setUserData(fetchedData);
+        const data = await getPost(fetchedData.styles);
+        setPostData(data);
+      }
+      else
+      {
+        const query = [];
+        query.push(tags);
+        console.log(query);
+        const data = await getPost(query);
+        setPostData(data);
+      }
     }
     fetchData();
   }, []);
@@ -121,10 +143,6 @@ function HomePage(){
     }
   }
 
-  //get all posts in collection
-  // convert them into pins object and store them in pin array
-  // render them into pin container
-
   return (
     <div>
       <PostModal post={selectedItem}
@@ -181,4 +199,4 @@ function HomePage(){
   );
 }
 
-export default HomePage;
+export default Fit;

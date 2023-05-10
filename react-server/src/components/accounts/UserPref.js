@@ -73,13 +73,13 @@ const UserPrefModal = ({setShowModal}) =>
         if((radio1.checked || radio2.checked || radio3.checked) && name)
         {
             if (radio1.checked) {
-                setUserPref([...userPref,'male']);
+                setUserPref([...userPref,'Male']);
             }
             else if (radio2.checked) {
-                setUserPref([...userPref,'female']);
+                setUserPref([...userPref,'Female']);
             }
             else{
-                setUserPref([...userPref, 'other']);
+                setUserPref([...userPref, 'Other']);
             }
             saveName();
             setPage(page + 1);
@@ -227,24 +227,24 @@ const UserPrefModal = ({setShowModal}) =>
                     </p>
                     <div className="overflow-scroll bg-gray-400 w-full text-center mt-2 mb-2">
                         <div className="inline-flex gap-2">
-                            <div className="text-center font-medium text-[#015668]">Artsy<img id="artsy" className="w-48 h-60 object-cover rounded-3xl" alt="artsy" onClick={() => addTo("artsy")} src={artsy}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Athleisure<img id="athleisure" className="w-48 h-60 object-cover rounded-3xl" alt="athleisure" onClick={() => addTo("athleisure")} src={athleisure}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Business<img id="bcasual" className="w-48 h-60 object-cover rounded-3xl" alt="business casual" onClick={() => addTo("bcasual")} src={bcasual}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Artsy<img id="Artsy" className="w-48 h-60 object-cover rounded-3xl" alt="artsy" onClick={() => addTo("Artsy")} src={artsy}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Athleisure<img id="Athleisure" className="w-48 h-60 object-cover rounded-3xl" alt="athleisure" onClick={() => addTo("Athleisure")} src={athleisure}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Business<img id="Business" className="w-48 h-60 object-cover rounded-3xl" alt="business casual" onClick={() => addTo("Business")} src={bcasual}></img></div>
                         </div>
                         <div className="inline-flex gap-2 mt-3">
-                            <div className="text-center font-medium text-[#015668]">Biker<img className="w-48 h-60 object-cover rounded-3xl" alt="biker" onClick={() => addTo("biker")} id="biker" src={biker}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Casual<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("casual")} id="casual" alt="casual" src={casual}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Classic<img className="w-48 h-60 object-cover rounded-3xl" alt="classic" onClick={() => addTo("classic")} id="classic" src={classic}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Biker<img className="w-48 h-60 object-cover rounded-3xl" alt="biker" onClick={() => addTo("Biker")} id="Biker" src={biker}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Casual<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("Casual")} id="casual" alt="Casual" src={casual}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Classic<img className="w-48 h-60 object-cover rounded-3xl" alt="classic" onClick={() => addTo("Classic")} id="Classic" src={classic}></img></div>
                         </div>
                         <div className="inline-flex gap-2 mt-3">
-                            <div className="text-center font-medium text-[#015668]">Hipster<img className="w-48 h-60 object-cover rounded-3xl" alt="hipster" onClick={() => addTo("hipster")} id="hipster" src={hipster}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Kawaii<img className="w-48 h-60 object-cover rounded-3xl" alt="kawaii" onClick={() => addTo("kawaii")} id="kawaii" src={kawaii}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Korean<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("korean")} id="korean" alt="korean" src={korean}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Hipster<img className="w-48 h-60 object-cover rounded-3xl" alt="hipster" onClick={() => addTo("Hipster")} id="Hipster" src={hipster}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Kawaii<img className="w-48 h-60 object-cover rounded-3xl" alt="kawaii" onClick={() => addTo("Kawaii")} id="Kawaii" src={kawaii}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Korean<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("Korean")} id="Korean" alt="korean" src={korean}></img></div>
                         </div>
                         <div className="inline-flex gap-2 mt-3">
-                            <div className="text-center font-medium text-[#015668]">Minimalist<img className="w-48 h-60 object-cover rounded-3xl" alt="minimalist" onClick={() => addTo("minimalist")} id="minimalist" src={minimalist}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Sporty<img className="w-48 h-60 object-cover rounded-3xl" alt="sporty" onClick={() => addTo("sporty")} id="sporty" src={sporty}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Street<img className="w-48 h-60 object-cover rounded-3xl" alt="street" onClick={() => addTo("street")} id="street" src={street}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Minimalist<img className="w-48 h-60 object-cover rounded-3xl" alt="minimalist" onClick={() => addTo("Minimalist")} id="Minimalist" src={minimalist}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Sporty<img className="w-48 h-60 object-cover rounded-3xl" alt="sporty" onClick={() => addTo("Sporty")} id="Sporty" src={sporty}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Street<img className="w-48 h-60 object-cover rounded-3xl" alt="street" onClick={() => addTo("Street")} id="Street" src={street}></img></div>
                         </div>
                     </div>
                     <div className="mx-auto mt-1">

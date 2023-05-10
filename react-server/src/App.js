@@ -11,7 +11,7 @@ import Navbar from "./components/utils/Navbar";
 import LikePage from "./components/LikePage";
 import Sidebar from "./components/utils/Sidebar";
 import MyPost from "./components/MyPost";
-import Wardrobe from "./components/Wardrobe";
+import Fit from "./components/Fit";
 import ShoppingCart from "./components/ShoppingCart";
 import Preference from "./components/Preference";
 import ViewProfile from "./components/ViewProfile";
@@ -64,11 +64,10 @@ function App() {
             }
           />
           <Route
-            exact
-            path="/Wardrobe"
+            path="/YourFit/:tags?"
             element={
               <Private>
-                <Wardrobe />
+                <Fit />
               </Private>
             }
           />

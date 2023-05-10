@@ -279,17 +279,16 @@ export default function Profile(){
 
     };
     return (
-      <div>
-        <img className="fixed border-b-2 border-gray-200 object-cover object-center -z-20 w-screen h-[375px]" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
-        <form onSubmit={bannerUpload}>
+      <div className="w-full h-[1000px]">
+        <img className="relative border-b-2 border-gray-200 object-cover object-center -z-20 w-screen h-[375px]" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
+        <form onSubmit={bannerUpload} className="w-0 h-0 ">
           <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" ref={imageUploader2} id="bg_img" accept="image/*" type="file" onChange={handleBannerUpload}></input>
-          <div className="relative left-24 top-[310px] z-40 w-8 h-8 cursor-pointer" onClick={() => imageUploader2.current.click()}></div>
-          <input className="fixed left-[140px] top-[345px] z-40 w-20 opacity-100 cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white rounded-lg" type="submit"></input>
+          <div className="relative left-24 top-[-72px] z-40 w-8 h-8 cursor-pointer" onClick={() => imageUploader2.current.click()}></div>
+          <input className="relative left-[140px] top-[-100px] z-0 w-20 opacity-100 cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white rounded-lg" type="submit"></input>
         </form>  
-        <BsFillCameraFill size="32" className="relative left-24 top-[280px] z-30 cursor-pointer bg-white rounded-lg"/>
-          <div className="relative h-40 -z-20"></div>
-          <div className="flex items-center justify-center space-x-8 top-30 w-screen">
-            <div className="flex flex-col items-center w-96">
+        <BsFillCameraFill size="32" className="relative left-24 top-[-42px] z-0 cursor-pointer bg-white rounded-lg"/>
+          <div className="relative flex items-center justify-center w-[90%] left-[6%]">
+            <div className="relative flex flex-col items-center w-96">
               <input className="hidden"
                 type="file"
                 accept="image/*"
@@ -297,7 +296,7 @@ export default function Profile(){
                 ref={imageUploader}
                 id="upload_img"
               />
-              <div className="h-60 w-60 cursor-pointer"
+              <div className="h-60 w-60 cursor-pointer top-[50%] "
                 onClick={() => imageUploader.current.click()}
               >
                 <img className="shadow-lg rounded-full max-w-full h-60 w-60 items-stretch border-none object-cover bg-center"
@@ -313,7 +312,7 @@ export default function Profile(){
                     type="text" 
                     placeholder="Enter Image Url"
                     id="userInput"
-                    className="appearance-none rounded-none w-96 px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
+                    className="relative appearance-none rounded-none w-96 px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
                     onChange={(e) => setDisplayPictureUrl(e.target.value)}
                   />
                 </div>
@@ -321,14 +320,14 @@ export default function Profile(){
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="relative w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     Update Profile Picture
                   </button>
                 </div>
               </form>
             </div>
-            <div className="flex flex-col w-96">
+            <div className="relative w-96 left-[1%]">
               <h1 className="text-3xl">Hello {currentUser.displayName}</h1>
               <form className="space-y-6" onSubmit={handleFormSubmit}>
                 <div className="rounded-md shadow-sm -space-y-px">
@@ -355,7 +354,7 @@ export default function Profile(){
                 </div>
               </form>
             </div>
-            <div className="flex flex-col relative w-96 h-16 top-32 end-[416px]">
+            <div className="relative w-96 h-16 left-[2%]">
               <form className="space-y-6">
                 <div className="rounded-md shadow-sm -space-y-px">
                   Click to update Bio
