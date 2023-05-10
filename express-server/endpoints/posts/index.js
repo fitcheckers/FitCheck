@@ -49,6 +49,9 @@ app.post('/post/delete', async (req, res) => {
         if (userdata.likes) userdata.likes.splice(userdata.likes.indexOf(id), 1);
         await db.collection('users').doc(postdata.likes[i]).set(userdata, {merge:true});
     }
+    let userdata = (await db.collection('users').doc(postdata.user_id).get()).data();
+    userdata.posts.splice(userdata.posts.indexOf(id), 1);
+    await db.collection('users').doc(postdata.user_id).set(userdata, {merge:true});
     await db.collection('posts').doc(id).delete();
     res.json({"successful": true});
 });
@@ -193,7 +196,7 @@ app.post('/post/comments/get', async (req, res) => {
         res.status(400).send('missing post_id');
         return;
     }
-    let posts = await db.collection('comments').where('post_id', '==', post_id).get();
+    let posts = await db.collection('comments').where('post_id', '==', post_id).orderBy('date', 'asc').get();
     posts = await Promise.all(posts.docs.map(async doc => {
         let docdata = doc.data();
         let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
