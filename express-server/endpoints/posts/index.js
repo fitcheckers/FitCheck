@@ -234,7 +234,7 @@ app.post('/posts/query', async (req, res) => {
     if (user_id) {
         data = data.where('user_id', '==', user_id);
         if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
-        data = await data.orderBy('created', 'asc').offset(page_size * (page - 1)).limit(page_size).get();
+        data = await data.orderBy('created', 'desc').offset(page_size * (page - 1)).limit(page_size).get();
         data = await Promise.all(data.docs.map(async doc => { 
             let docdata = doc.data();
             let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
@@ -247,7 +247,7 @@ app.post('/posts/query', async (req, res) => {
         return res.json(data);
     };
     if (tags.length > 0) data = data.where('tags', 'array-contains-any', tags);
-    data = await data.orderBy('created', 'asc').offset(page_size * (page - 1)).limit(page_size).get();
+    data = await data.orderBy('created', 'desc').offset(page_size * (page - 1)).limit(page_size).get();
     data = await Promise.all(data.docs.map(async doc => { 
         let docdata = doc.data();
         let userdata = (await db.collection('users').doc(docdata.user_id).get()).data();
