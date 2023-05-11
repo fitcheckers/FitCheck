@@ -23,7 +23,7 @@ function HomePage(){
   async function getPost() {
     try {
       const response = await axios.post("http://localhost:80/posts/query");
-      const data = response.data.map((post) => {
+      const data = response.data.data.map((post) => {
         if(currentUser && currentUser.uid)
         {
           if(post.likes.includes(currentUser.uid))
@@ -142,7 +142,7 @@ function HomePage(){
         }}
       >
         <ImageList variant="woven" cols={5} gap={25}>
-          {postData.map((item) => (
+          {postData && postData.map((item) => (
             <ImageListItem key={item.id}
             onMouseOver={() => setHoveredItem(item)}
             onMouseOut={() => setHoveredItem(null)}>

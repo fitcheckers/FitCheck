@@ -26,8 +26,8 @@ function Fit() {
     try {
       console.log(array);
       const response = await axios.post("http://localhost:80/posts/query", { tags: array });
-      console.log(response);
-      const data = response.data.map((post) => {
+      console.log(response.data);
+      const data = response.data.data.map((post) => {
         if(post.likes.includes(currentUser.uid))
         {
           return {...post, isLiked: true, numLikes: post.likes.length};
@@ -160,7 +160,7 @@ function Fit() {
         }}
       >
         <ImageList variant="woven" cols={5} gap={25}>
-          {postData.map((item) => (
+          {postData && postData.map((item) => (
             <ImageListItem key={item.id}
             onMouseOver={() => setHoveredItem(item)}
             onMouseOut={() => setHoveredItem(null)}>
