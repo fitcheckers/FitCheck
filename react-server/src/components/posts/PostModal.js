@@ -12,7 +12,7 @@ import {TiCancel} from "react-icons/ti";
 function PostModal(props) {
     const { currentUser, setError } = useAuth();
     const { isOpen = false, toggleModal, like } = props;
-    const { title, image_url, description, user_id, id, numLikes, post_id} = props.post;
+    const { title, image_url, description, user_id, id, numLikes, post_id, tags} = props.post;
     const { profile_pic_url, display_name } = props.user;
     const [inputStr, setInputStr] = useState('');
     const [showPicker, setShowPicker] = useState(false);
@@ -218,6 +218,11 @@ function PostModal(props) {
                             <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
                                 <div className='relative flex items-center left-[3%] top-[1%] w-[90%] h-[7%] font-bold pl-1 text-base sm:text-2xl' >{title}</div>
                                 <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>{description}</div>
+                                <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>
+                                    {tags && tags.map((tag, index) => (
+                                        <span key={index} className="bg-gray-200 rounded-md px-2 py-1 mx-1">{tag}</span>
+                                    ))}
+                                </div>
                                 <div className='relative left-[1%] w-[93%] h-[60%] top-[5%] pl-1 overflow-y-hidden hover:overflow-y-scroll'>
                                     {postComments.map((comment) => (
                                     <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
@@ -289,6 +294,11 @@ function PostModal(props) {
                             <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
                                 <div className='relative flex items-center left-[3%] top-[1%] w-[90%] h-[7%] font-bold pl-1 text-base sm:text-2xl' >{title}</div>
                                 <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>{description}</div>
+                                <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>
+                                    {tags && tags.map((tag, index) => (
+                                        <span key={index} className="bg-gray-200 rounded-md px-2 py-1 mx-1">{tag}</span>
+                                    ))}
+                                </div>
                                 <div className='relative left-[1%] w-[93%] h-[60%] top-[5%] pl-1 overflow-y-hidden hover:overflow-y-scroll'>
                                     {postComments.map((comment) => (
                                     <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>

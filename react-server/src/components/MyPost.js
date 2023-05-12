@@ -74,6 +74,7 @@ const FetchPost = (props) => {
           description={e.content.description}
           user_id={e.content.user_id}
           likes={e.content.likes}
+          tags={e.content.tags}
         />
       ))}
     </div>
