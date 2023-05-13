@@ -216,32 +216,32 @@ function PostModal(props) {
                         
                             {/* Content of Post (Title, Description, Comments and Comment Bar) */}
                             <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
-                                <div className='relative flex items-center left-[3%] top-[1%] w-[90%] h-[7%] font-bold pl-1 text-base sm:text-2xl' >{title}</div>
-                                <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>{description}</div>
-                                <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>
+                                <div className='relative flex items-center left-[3%] w-[90%] h-[8%] font-bold ml-1 text-base sm:text-2xl' >{title}</div>
+                                <div className='relative z-10 flex items-center left-[3%] font-light w-[90%] h-[6%] ml-1 pb-1'>{description}</div>
+                                <div className='relative z-10 flex items-center left-[3%] font-light w-[90%]'>
                                     {tags && tags.map((tag, index) => (
                                         <span key={index} className="bg-gray-200 rounded-md px-2 py-1 mx-1">{tag}</span>
                                     ))}
                                 </div>
-                                <div className='relative left-[1%] w-[93%] h-[60%] top-[5%] pl-1 overflow-y-hidden hover:overflow-y-scroll'>
+                                <div className='relative left-[1%] w-[93%] h-[60%] ml-1 overflow-y-hidden hover:overflow-y-scroll mt-2'>
                                     {postComments.map((comment) => (
-                                    <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
+                                    <div className='flex mt-1 ml-1 pr-2' key={comment.comment_id}>
                                         <div className='break-words w-full'>
                                             <img className='w-8 h-8 float-left rounded-full object-cover' src={comment.user.profile_pic_url || profile} alt="profile"></img>
-                                            <span className='ml-1 font-bold italic'>{comment.user.display_name}</span>
+                                            <span className='ml-2 font-bold italic'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
                                             <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>
                                     </div>
                                     ))}
                                 </div>
-                                <div className='relative items-center left-[2%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-30 top-[5%]'>
+                                <div className='relative items-center left-[2%] font-bold text-2xl w-[90%] h-[4%] ml-1 mt-2 mb-2 z-30'>
                                     <button className=''><BsFillHeartFill color={like ? 'red' : 'black'}/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
-                                <div className='relative top-[4%] left-[3%] text-base'>{numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )} likes</div>
+                                <div className='relative left-[3%] text-base'>{numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )} likes</div>
                                 {/* Comment Bar */}
-                                <div className='relative flex items-center top-[5%] w-[93%] left-[3%] bg-gray-200 '> 
+                                <div className='relative flex items-center w-[93%] left-[3%] bg-gray-200 '> 
                                     <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
                                     <input id="content" className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
                                     <button className='text-blue-600 font-bold pr-2' onClick={() => onPostClick()}>Post</button>
@@ -292,32 +292,32 @@ function PostModal(props) {
                         
                             {/* Content of Post (Title, Description, Comments and Comment Bar) */}
                             <div className='fixed bg-white h-[64%] w-[34%] top-[23%] left-[50%] rounded-br-2xl flex flex-col pb-2'> {/*  */}
-                                <div className='relative flex items-center left-[3%] top-[1%] w-[90%] h-[7%] font-bold pl-1 text-base sm:text-2xl' >{title}</div>
-                                <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>{description}</div>
-                                <div className='relative z-10 flex items-center left-[3%] top-[3%] font-light w-[90%] h-[5%] pl-1'>
+                                <div className='relative flex items-center left-[3%] w-[90%] h-[8%] font-bold ml-1 text-base sm:text-2xl' >{title}</div>
+                                <div className='relative z-10 flex items-center left-[3%] font-light w-[90%] h-[6%] ml-1 pb-1'>{description}</div>
+                                <div className='relative z-10 flex items-center left-[3%] font-light w-[90%]'>
                                     {tags && tags.map((tag, index) => (
                                         <span key={index} className="bg-gray-200 rounded-md px-2 py-1 mx-1">{tag}</span>
                                     ))}
                                 </div>
-                                <div className='relative left-[1%] w-[93%] h-[60%] top-[5%] pl-1 overflow-y-hidden hover:overflow-y-scroll'>
+                                <div className='relative left-[1%] w-[93%] h-[60%] ml-1 overflow-y-hidden hover:overflow-y-scroll mt-2'>
                                     {postComments.map((comment) => (
-                                    <div className='flex mt-1 pl-1 pr-2' key={comment.comment_id}>
+                                    <div className='flex mt-1 ml-1 pr-2' key={comment.comment_id}>
                                         <div className='break-words w-full'>
                                             <img className='w-8 h-8 float-left rounded-full object-cover' src={comment.user.profile_pic_url || profile} alt="profile"></img>
-                                            <span className='ml-1 font-bold italic'>{comment.user.display_name}</span>
+                                            <span className='ml-2 font-bold italic'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
                                             <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>
                                     </div>
                                     ))}
                                 </div>
-                                <div className='relative items-center left-[2%] font-bold text-2xl w-[90%] h-[7%] pl-1 mt-1 z-30 top-[5%]'>
+                                <div className='relative items-center left-[2%] font-bold text-2xl w-[90%] h-[4%] ml-1 mt-2 mb-2 z-30'>
                                     <button className=''><BsFillHeartFill color={like ? 'red' : 'black'}/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
-                                <div className='relative top-[4%] left-[3%] text-base'>{numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )} likes</div>
+                                <div className='relative left-[3%] text-base'>{numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )} likes</div>
                                 {/* Comment Bar */}
-                                <div className='relative flex items-center top-[5%] w-[93%] left-[3%] bg-gray-200 '> 
+                                <div className='relative flex items-center w-[93%] left-[3%] bg-gray-200 '> 
                                     <img className='relative cursor-pointer w-[3%] min-w-[20px] z-20 left-[1.5%]' alt="emoji" src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg' onClick={() => setShowPicker(val => !val)}/>
                                     <input id="content" className='relative flex pl-4 w-full h-[8%] left-[0%] min-h-[50px] bg-gray-200 outline-none pr-1' type='text' placeholder='Add a comment...' value={inputStr} onChange={e => setInputStr(e.target.value)}/>
                                     <button className='text-blue-600 font-bold pr-2' onClick={() => onPostClick()}>Post</button>
