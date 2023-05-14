@@ -70,6 +70,20 @@ function Pin(props) {
     setShowModal(true);
   };
 
+  const handleLikeModalChange = (likeModalVal, id) => {
+    console.log(likeModalVal, id);
+    if(likeModalVal)
+    {
+      setLikeClicked(true);
+      setLikes(likes + 1);
+    }
+    else
+    {
+      setLikeClicked(false);
+      setLikes(likes - 1);
+    }
+  }
+
   return (
     <div className="card card_large bg-neutral-300">
       <div className="pin_modal " onClick={handlePinClick}>
@@ -103,6 +117,7 @@ function Pin(props) {
           user={props}
           like={LikeClicked}
           isOpen={showModal}
+          onLikeModal={handleLikeModalChange}
           toggleModal={() => setShowModal(false)}
         />
       )}

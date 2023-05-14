@@ -94,7 +94,10 @@ function LikePage() {
     navigate(0);
   }
 
-
+  const handleLikeModalChange = (likeModalVal, id) => {
+    console.log(likeModalVal, id);
+    navigate(0);
+  }
   //get all posts in collection
   // convert them into pins object and store them in pin array
   // render them into pin container
@@ -105,6 +108,7 @@ function LikePage() {
           user={selectedItemProfile}
           like={selectedIsLiked}
           isOpen={showModal}
+          onLikeModal={handleLikeModalChange}
           toggleModal={() => setShowModal(false)} />
       <Box
         sx={{

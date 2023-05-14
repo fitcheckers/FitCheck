@@ -121,6 +121,36 @@ function HomePage(){
     }
   }
 
+  const handleLikeModalChange = (likeModalVal, id) => {
+    setSelectedIsLiked(!selectedIsLiked)
+    setPostData((data) =>
+      data.map((post) => {
+        if (post.id === id) {
+          return {...post, isLiked: likeModalVal};
+        }
+        return post;
+    }));
+    if(likeModalVal)
+    {
+      setPostData((data) =>
+          data.map((post) => {
+            if (post.id === id) {
+              return {...post, numLikes: post.numLikes+1};
+            }
+            return post;
+        }));
+    }
+    else
+    {
+      setPostData((data) =>
+          data.map((post) => {
+            if (post.id === id) {
+              return {...post, numLikes: post.numLikes-1};
+            }
+            return post;
+        }));
+    }
+  }
   //get all posts in collection
   // convert them into pins object and store them in pin array
   // render them into pin container
@@ -131,6 +161,7 @@ function HomePage(){
           user={selectedItemProfile}
           like={selectedIsLiked}
           isOpen={showModal}
+          onLikeModal={handleLikeModalChange}
           toggleModal={() => setShowModal(false)} />
       <Box
         sx={{

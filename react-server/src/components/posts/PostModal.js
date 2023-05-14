@@ -20,7 +20,7 @@ function PostModal(props) {
     const [postComments, setPostComments] = useState([]);
     const [commentUpdated, setCommentUpdated] = useState("");
     const [postLike, setPostLike] = useState("");
-
+    
     async function getPost(){
         if(id)
         {
@@ -192,6 +192,65 @@ function PostModal(props) {
             setError("You did not make the comments");
         }
     }
+    const likeButton = async () =>{
+        console.log(id);
+        console.log(post_id);
+        if(id)
+        {
+            props.onLikeModal(!like, id);
+            const userObject = {
+                user_id: currentUser.uid,
+                post_id: id,
+            }
+            if(like)
+            {                
+                try{
+                    const response = await axios.post("http://localhost:80/post/unlike", userObject);
+                    console.log("unliked from id");
+                    console.log(response);
+                } catch (e){
+                    console.log(e);
+                }
+            }
+            else
+            {
+                try{
+                    const response = await axios.post("http://localhost:80/post/like", userObject);
+                    console.log(response);
+                } catch (e){
+                    console.log(e);
+                }
+            }
+        }
+        else if(post_id)
+        {
+            props.onLikeModal(!like, post_id);
+            const userObject = {
+                user_id: currentUser.uid,
+                post_id: post_id,
+            }
+            if(like)
+            {
+                try{
+                    const response = await axios.post("http://localhost:80/post/unlike", userObject);
+                    console.log("unliked from post_id");
+                    console.log(response);
+                } catch (e){
+                    console.log(e);
+                }
+            }
+            else
+            {
+                //setModalLike(true);
+                try{
+                    const response = await axios.post("http://localhost:80/post/like", userObject);
+                    console.log(response);
+                } catch (e){
+                    console.log(e);
+                }
+            }
+        }
+    }
 
     if(currentUser && currentUser.uid){
         if(currentUser.uid === user_id){
@@ -236,7 +295,7 @@ function PostModal(props) {
                                     ))}
                                 </div>
                                 <div className='relative items-center left-[2%] font-bold text-2xl w-[90%] h-[4%] ml-1 mt-2 mb-2 z-30'>
-                                    <button className=''><BsFillHeartFill color={like ? 'red' : 'black'}/></button>
+                                    <button className='' onClick={() => likeButton()}><BsFillHeartFill color={like ? 'red' : 'black'}/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 <div className='relative left-[3%] text-base'>{numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )} likes</div>
@@ -312,7 +371,7 @@ function PostModal(props) {
                                     ))}
                                 </div>
                                 <div className='relative items-center left-[2%] font-bold text-2xl w-[90%] h-[4%] ml-1 mt-2 mb-2 z-30'>
-                                    <button className=''><BsFillHeartFill color={like ? 'red' : 'black'}/></button>
+                                    <button className='' onClick={() => likeButton()}><BsFillHeartFill color={like ? 'red' : 'black'}/></button>
                                     <button className='relative left-[1%]'><BsFillCartFill /></button>
                                 </div>
                                 <div className='relative left-[3%] text-base'>{numLikes || (postLike.likes && postLike.likes.length ? postLike.likes.length : "0" )} likes</div>
