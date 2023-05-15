@@ -8,8 +8,10 @@ import Picker from 'emoji-picker-react';
 import { useAuth } from "../../contexts/AuthContext";
 import axios from 'axios';
 import {TiCancel} from "react-icons/ti";
+import { useNavigate } from 'react-router-dom';
 
 function PostModal(props) {
+    const navigate = useNavigate();
     const { currentUser, setError } = useAuth();
     const { isOpen = false, toggleModal, like } = props;
     const { title, image_url, description, user_id, id, numLikes, post_id, tags} = props.post;
@@ -268,8 +270,8 @@ function PostModal(props) {
 
                             {/* User Info */}
                             <div className='flex fixed border-b-2 border-gray-200 bg-white h-[13%] w-[34%] top-[10%] left-[50%] rounded-tr-2xl z-0 items-center'>
-                                <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={profile_pic_url || profile} alt="user's pfp"></img>
-                                <div className='relative left-[5%] font-bold text-xl w-[77%]'>{display_name}</div>
+                                <img onClick={() => navigate("/MyPost")} className="relative left-[3%] h-16 w-16 object-cover rounded-full cursor-pointer" src={profile_pic_url || profile} alt="user's pfp"></img>
+                                <div onClick={() => navigate("/MyPost")} className='relative left-[5%] font-bold text-xl w-[77%] cursor-pointer'>{display_name}</div>
                                 <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
                             </div>
                         
@@ -286,8 +288,8 @@ function PostModal(props) {
                                     {postComments.map((comment) => (
                                     <div className='flex mt-1 ml-1 pr-2' key={comment.comment_id}>
                                         <div className='break-words w-full'>
-                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={comment.user.profile_pic_url || profile} alt="profile"></img>
-                                            <span className='ml-2 font-bold italic'>{comment.user.display_name}</span>
+                                            <img onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='w-8 h-8 float-left rounded-full object-cover cursor-pointer' src={comment.user.profile_pic_url || profile} alt="profile"></img>
+                                            <span onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='ml-2 font-bold italic cursor-pointer'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
                                             <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>
@@ -344,8 +346,8 @@ function PostModal(props) {
     
                             {/* User Info */}
                             <div className='flex fixed border-b-2 border-gray-200 bg-white h-[13%] w-[34%] top-[10%] left-[50%] rounded-tr-2xl z-0 items-center'>
-                                <img className="relative left-[3%] h-16 w-16 object-cover rounded-full" src={profile_pic_url || profile} alt="user's pfp"></img>
-                                <div className='relative left-[5%] font-bold text-xl w-[77%]'>{display_name}</div>
+                                <img onClick={() => {navigate(`/user/${user_id}`)}} className="relative left-[3%] h-16 w-16 object-cover rounded-full cursor-pointer" src={profile_pic_url || profile} alt="user's pfp"></img>
+                                <div onClick={() => {navigate(`/user/${user_id}`)}} className='relative left-[5%] font-bold text-xl w-[77%] cursor-pointer'>{display_name}</div>
                                 <BsThreeDotsVertical onClick={() => toggleDropMenu()} size={28} className='cursor-pointer z-10'/>
                             </div>
                         
@@ -362,8 +364,8 @@ function PostModal(props) {
                                     {postComments.map((comment) => (
                                     <div className='flex mt-1 ml-1 pr-2' key={comment.comment_id}>
                                         <div className='break-words w-full'>
-                                            <img className='w-8 h-8 float-left rounded-full object-cover' src={comment.user.profile_pic_url || profile} alt="profile"></img>
-                                            <span className='ml-2 font-bold italic'>{comment.user.display_name}</span>
+                                            <img onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='w-8 h-8 float-left rounded-full object-cover cursor-pointer' src={comment.user.profile_pic_url || profile} alt="profile"></img>
+                                            <span onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='ml-2 font-bold italic cursor-pointer'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
                                             <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>

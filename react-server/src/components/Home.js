@@ -10,6 +10,28 @@ import { useAuth } from "../contexts/AuthContext.js";
 import { useState, useEffect } from "react";
 import { maxHeight, maxWidth } from "@mui/system";
 
+const pageSize = 1550;
+var pages = 1;
+const arr = [];
+
+function getScrollPosition() {
+  var scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+  return scrollTop;
+}
+
+function getCurrentPage(position) {
+  return Math.floor(position / pageSize);
+}
+
+window.addEventListener('scroll', function() {
+  var scrollPosition = getScrollPosition();
+  var curPage = getCurrentPage(scrollPosition) + 1;
+  if(curPage > pages)
+  {
+    console.log('Current page', curPage);
+    pages = curPage;
+  }
+});
 
 function HomePage(){
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -20,9 +42,9 @@ function HomePage(){
   const [postData, setPostData] = useState([]);
   const { currentUser, setError } = useAuth();
  
-  async function getPost() {
+  async function getPost(num) {
     try {
-      const response = await axios.post("http://localhost:80/posts/query");
+      const response = await axios.post("http://localhost:80/posts/query", {page: num});
       const data = response.data.data.map((post) => {
         if(currentUser && currentUser.uid)
         {
@@ -48,12 +70,17 @@ function HomePage(){
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getPost();
-      setPostData(data);
-      console.log(postData);
+      if(!arr.includes(pages))
+      {
+        arr.push(pages);
+        console.log(pages);
+        const data = await getPost(pages);
+        setPostData(prevData => [...prevData, ...data]);
+        console.log(postData);
+      }
     }
     fetchData();
-  }, []);
+  }, [pages]);
 
   const handlePinClick = (item) => {
     if(currentUser)
