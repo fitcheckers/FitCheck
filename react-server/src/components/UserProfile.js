@@ -82,7 +82,7 @@ const UserProfile = ({ backImg, post }) => {
         Edit Profile
       </a>
       <p className="relative left-80 mt-5 text-base ">
-        Biography section
+        {user.bio}
       </p>
       <HiOutlineSquares2X2 size="32" className="relative left-24 top-16" />
       <p className="relative left-32 top-9 font-extrabold text-xl -mb-10">

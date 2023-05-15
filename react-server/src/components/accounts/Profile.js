@@ -275,8 +275,26 @@ export default function Profile(){
         document.getElementById("username").value = "";
     };
 
-    const HandleBioSubmit = async (e) =>{
-
+    const HandleBioSubmit = async () =>{
+      const _bio = document.getElementById("bio").value;
+      console.log(_bio);
+      try {
+        const users_data = {
+          id: currentUser.uid,
+          bio: _bio,
+        }
+        try{
+          const response = await axios.post("http://localhost:80/users/update", users_data);
+          console.log("Changed bio name url");
+          console.log(response.data);
+        } catch(e){
+          console.log(e);
+        }
+        console.log(users_data)
+      } catch (e) {
+        setError("Failed to update bio");
+      }
+      setLoading(false);
     };
     return (
       <div className="w-full h-[1000px]">
@@ -361,16 +379,17 @@ export default function Profile(){
                   <textarea
                     id="bio"
                     name="bio"
-                    maxlength="200"
+                    maxLength="200"
                     className="appearance-none rounded-none relative block w-full h-32 px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
                     placeholder="Enter your bio"
                   ></textarea>
                 </div>
                 <div>
                   <button
-                    type="submit"
+                    type="button"
                     disabled={loading}
                     className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    onClick={HandleBioSubmit}
                   >
                     Update Bio
                   </button>
