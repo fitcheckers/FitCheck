@@ -17,7 +17,7 @@ app.post('/users/get', async (req, res) => {
 });
 
 app.post('/users/update', async (req, res) => {
-    const { id, profile_pic_url, profile_banner_url, display_name, username, styles, posts, followers, following, likes } = req.body;
+    const { id, profile_pic_url, profile_banner_url, display_name, username, styles, posts, followers, following, likes, bio } = req.body;
     if (!id) {
         res.status(400).send('missing id from json');
         return;
@@ -32,6 +32,7 @@ app.post('/users/update', async (req, res) => {
     if (followers) data.followers = followers;
     if (following) data.following = following;
     if (likes) data.likes = likes;
+    if (bio) data.bio = bio;
     await db.collection('users').doc(id).set(data, { merge: true });
     res.json({ "success": true });
 });
