@@ -253,6 +253,35 @@ function PostModal(props) {
             }
         }
     }
+    const handleDelete = async () => {
+
+        if(id)
+        {
+            try {
+                const response = await axios.post("http://localhost:80/post/delete", {id: id});
+                console.log("Post Deleted 1");
+                navigate(0);
+                return response;
+            } catch (e) {
+                console.log(e);
+                console.log("Error from deleting post");
+                setError("Failed to delete post");
+            }
+        }
+        else if(post_id)
+        {
+            try {
+                const response = await axios.post("http://localhost:80/post/delete", {id: post_id});
+                console.log("Post Deleted 2");
+                navigate(0);
+                return response;
+              } catch (e) {
+                console.log(e);
+                console.log("Error from deleting post");
+                setError("Failed to delete post");
+              }
+        }
+    }
 
     if(currentUser && currentUser.uid){
         if(currentUser.uid === user_id){
@@ -324,7 +353,7 @@ function PostModal(props) {
                         <div className={`fixed left-[74%] top-[19%] z-20 ${isMenuOpen ? "fixed" : "hidden"}`}>
                                 <ul className='rounded-xl border-2 border-gray-200 bg-gray-200 text-center w-28'>
                                     {/* <li><button className="rounded-xl border-b-2 hover:text-sky-400/100 hover:bg-gray-100 w-full">Edit</button></li> */}
-                                    <li><button className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full">Delete</button></li>
+                                    <li><button  onClick ={() => handleDelete()} className="rounded-xl p-[1px] hover:text-red-400/100 hover:bg-gray-100 w-full">Delete</button></li>
                                 </ul>
                         </div>
                 </div>
