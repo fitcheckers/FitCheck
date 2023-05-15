@@ -291,7 +291,7 @@ function PostModal(props) {
                                             <img onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='w-8 h-8 float-left rounded-full object-cover cursor-pointer' src={comment.user.profile_pic_url || profile} alt="profile"></img>
                                             <span onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='ml-2 font-bold italic cursor-pointer'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
-                                            <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
+                                            <TiCancel className='inline-block ' role='button' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>
                                     </div>
                                     ))}
@@ -367,7 +367,7 @@ function PostModal(props) {
                                             <img onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='w-8 h-8 float-left rounded-full object-cover cursor-pointer' src={comment.user.profile_pic_url || profile} alt="profile"></img>
                                             <span onClick={() => {if(comment.user_id === currentUser.uid){navigate('/MyPost')} else{navigate(`/user/${comment.user_id}`)}}} className='ml-2 font-bold italic cursor-pointer'>{comment.user.display_name}</span>
                                             <span className='ml-1 text-gray-700 break-words'>{comment.content}</span>
-                                            <TiCancel className='inline-block' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
+                                            <TiCancel className='inline-block' role='button' onClick={() => deleteComment(comment.comment_id, comment.user_id)}/>
                                         </div>
                                     </div>
                                     ))}
