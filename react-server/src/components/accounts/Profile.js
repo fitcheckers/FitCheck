@@ -301,10 +301,9 @@ export default function Profile(){
         <img className="relative border-b-2 border-gray-200 object-cover object-center -z-20 w-screen h-[375px]" id="banner_img" src={user.profile_banner_url ||background} alt="background cover"></img>
         <form onSubmit={bannerUpload} className="w-0 h-0 ">
           <input className="relative left-24 top-[340px] z-40 w-8 opacity-0" ref={imageUploader2} id="bg_img" accept="image/*" type="file" onChange={handleBannerUpload}></input>
-          <div className="relative left-24 top-[-72px] z-40 w-8 h-8 cursor-pointer" onClick={() => imageUploader2.current.click()}></div>
-          <input className="relative left-[140px] top-[-100px] z-0 w-20 opacity-100 cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white rounded-lg" type="submit"></input>
+          <input className="relative left-[140px] top-[-66px] z-0 w-20 opacity-100 cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white rounded-lg" type="submit"></input>
         </form>  
-        <BsFillCameraFill size="32" className="relative left-24 top-[-42px] z-0 cursor-pointer bg-white rounded-lg"/>
+        <BsFillCameraFill size="32" onClick={() => imageUploader2.current.click()} className="relative left-24 top-[-42px] z-0 cursor-pointer bg-white rounded-lg"/>
           <div className="relative flex items-center justify-center w-[90%] left-[6%]">
             <div className="relative flex flex-col items-center w-96">
               <input className="hidden"
@@ -314,7 +313,7 @@ export default function Profile(){
                 ref={imageUploader}
                 id="upload_img"
               />
-              <div className="h-60 w-60 cursor-pointer top-[50%] "
+              <div className="h-60 w-60 cursor-pointer top-[50%]"
                 onClick={() => imageUploader.current.click()}
               >
                 <img className="shadow-lg rounded-full max-w-full h-60 w-60 items-stretch border-none object-cover bg-center"
