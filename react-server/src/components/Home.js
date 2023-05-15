@@ -10,29 +10,6 @@ import { useAuth } from "../contexts/AuthContext.js";
 import { useState, useEffect } from "react";
 import { maxHeight, maxWidth } from "@mui/system";
 
-const pageSize = 1550;
-var pages = 1;
-const arr = [];
-
-function getScrollPosition() {
-  var scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-  return scrollTop;
-}
-
-function getCurrentPage(position) {
-  return Math.floor(position / pageSize);
-}
-
-window.addEventListener('scroll', function() {
-  var scrollPosition = getScrollPosition();
-  var curPage = getCurrentPage(scrollPosition) + 1;
-  if(curPage > pages)
-  {
-    console.log('Current page', curPage);
-    pages = curPage;
-  }
-});
-
 function HomePage(){
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -41,6 +18,29 @@ function HomePage(){
   const [selectedIsLiked, setSelectedIsLiked] = useState(false);
   const [postData, setPostData] = useState([]);
   const { currentUser, setError } = useAuth();
+  const [pages, setPages] = useState(1);
+
+  const pageSize = 1550;
+  const arr = [];
+
+  function getScrollPosition() {
+    var scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    return scrollTop;
+  }
+
+  function getCurrentPage(position) {
+    return Math.floor(position / pageSize);
+  }
+
+  window.addEventListener('scroll', function() {
+    var scrollPosition = getScrollPosition();
+    var curPage = getCurrentPage(scrollPosition) + 1;
+    if(curPage > pages)
+    {
+      console.log('Current page', curPage);
+      setPages(curPage);
+    }
+  });
  
   async function getPost(num) {
     try {
@@ -70,13 +70,23 @@ function HomePage(){
 
   useEffect(() => {
     async function fetchData() {
-      if(!arr.includes(pages))
+      if(pages === 1)
       {
         arr.push(pages);
         console.log(pages);
-        const data = await getPost(pages);
-        setPostData(prevData => [...prevData, ...data]);
+        const data = await getPost(1);
+        setPostData(data);
         console.log(postData);
+      }
+      else{
+        if(!arr.includes(pages))
+        {
+          arr.push(pages);
+          console.log(pages);
+          const data = await getPost(pages);
+          setPostData(prevData => [...prevData, ...data]);
+          console.log(postData);
+        }
       }
     }
     fetchData();
