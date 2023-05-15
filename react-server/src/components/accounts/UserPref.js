@@ -233,7 +233,7 @@ const UserPrefModal = ({setShowModal}) =>
                         </div>
                         <div className="inline-flex gap-2 mt-3">
                             <div className="text-center font-medium text-[#015668]">Biker<img className="w-48 h-60 object-cover rounded-3xl" alt="biker" onClick={() => addTo("Biker")} id="Biker" src={biker}></img></div>
-                            <div className="text-center font-medium text-[#015668]">Casual<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("Casual")} id="casual" alt="Casual" src={casual}></img></div>
+                            <div className="text-center font-medium text-[#015668]">Casual<img className="w-48 h-60 object-cover rounded-3xl" onClick={() => addTo("Casual")} id="Casual" alt="Casual" src={casual}></img></div>
                             <div className="text-center font-medium text-[#015668]">Classic<img className="w-48 h-60 object-cover rounded-3xl" alt="classic" onClick={() => addTo("Classic")} id="Classic" src={classic}></img></div>
                         </div>
                         <div className="inline-flex gap-2 mt-3">
