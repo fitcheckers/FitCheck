@@ -11,29 +11,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { maxHeight, maxWidth } from "@mui/system";
 
-const pageSize = 1550;
-var pages = 1;
-const arr = [];
-
-function getScrollPosition() {
-  var scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-  return scrollTop;
-}
-
-function getCurrentPage(position) {
-  return Math.floor(position / pageSize);
-}
-
-window.addEventListener('scroll', function() {
-  var scrollPosition = getScrollPosition();
-  var curPage = getCurrentPage(scrollPosition) + 1;
-  if(curPage > pages)
-  {
-    console.log('Current page', curPage);
-    pages = curPage;
-  }
-});
-
 function Fit() {
   const { tags } = useParams();
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -44,6 +21,31 @@ function Fit() {
   const [postData, setPostData] = useState([]);
   const [userData, setUserData] = useState("");
   const { currentUser, setError } = useAuth();
+  const [pages, setPages] = useState(1);
+  const [arr, setArr] = useState([]);
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
+
+  const pageSize = 1550;
+
+  function getScrollPosition() {
+    const scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    return scrollTop;
+  }
+
+  function getCurrentPage(position) {
+    return Math.floor(position / pageSize);
+  }
+
+  window.addEventListener('scroll', function() {
+    var scrollPosition = getScrollPosition();
+    var curPage = getCurrentPage(scrollPosition) + 1;
+    if(curPage > pages && scrollPosition > lastScrollPosition)
+    {
+      //console.log('Current page', curPage);
+      setPages(curPage);
+      setLastScrollPosition(scrollPosition);
+    }
+  });
  
   async function getPost(array, num) {
     try {
@@ -81,23 +83,47 @@ function Fit() {
 
   useEffect(() => {
     async function fetchData() {
-      if(!arr.includes(pages))
+      if(pages === 1)
       {
-        arr.push(pages);
-        if( tags === undefined)
+        console.log(pages)
+          setArr(prevArr => [...prevArr, pages])
+          if(tags === undefined)
+          {
+            const fetchedData = await getUser(currentUser.uid);
+            setUserData(fetchedData);
+            const data = await getPost(fetchedData.styles, pages);
+            setPostData(data);
+          }
+          else
+          {
+            const query = [];
+            query.push(tags);
+            console.log(query);
+            const data = await getPost(query, pages);
+            setPostData(data);
+          }
+      }
+      else
+      {
+        if(!arr.includes(pages))
         {
-          const fetchedData = await getUser(currentUser.uid);
-          setUserData(fetchedData);
-          const data = await getPost(fetchedData.styles, pages);
-          setPostData(prevData => [...prevData, ...data]);
-        }
-        else
-        {
-          const query = [];
-          query.push(tags);
-          console.log(query);
-          const data = await getPost(query, pages);
-          setPostData(prevData => [...prevData, ...data]);
+          console.log(pages)
+          setArr(prevArr => [...prevArr, pages])
+          if(tags === undefined)
+          {
+            const fetchedData = await getUser(currentUser.uid);
+            setUserData(fetchedData);
+            const data = await getPost(fetchedData.styles, pages);
+            setPostData(prevData => [...prevData, ...data]);
+          }
+          else
+          {
+            const query = [];
+            query.push(tags);
+            console.log(query);
+            const data = await getPost(query, pages);
+            setPostData(prevData => [...prevData, ...data]);
+          }
         }
       }
     }

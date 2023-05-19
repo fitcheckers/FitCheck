@@ -19,12 +19,14 @@ function HomePage(){
   const [postData, setPostData] = useState([]);
   const { currentUser, setError } = useAuth();
   const [pages, setPages] = useState(1);
+  const [arr, setArr] = useState([]);
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
+
 
   const pageSize = 1550;
-  const arr = [];
 
   function getScrollPosition() {
-    var scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     return scrollTop;
   }
 
@@ -35,16 +37,18 @@ function HomePage(){
   window.addEventListener('scroll', function() {
     var scrollPosition = getScrollPosition();
     var curPage = getCurrentPage(scrollPosition) + 1;
-    if(curPage > pages)
+    if(curPage > pages && scrollPosition > lastScrollPosition)
     {
-      console.log('Current page', curPage);
+      //console.log('Current page', curPage);
       setPages(curPage);
+      setLastScrollPosition(scrollPosition);
     }
   });
  
   async function getPost(num) {
     try {
       const response = await axios.post("http://localhost:80/posts/query", {page: num});
+      console.log(response);
       const data = response.data.data.map((post) => {
         if(currentUser && currentUser.uid)
         {
@@ -72,8 +76,7 @@ function HomePage(){
     async function fetchData() {
       if(pages === 1)
       {
-        arr.push(pages);
-        console.log(pages);
+        setArr(prevArr => [...prevArr, 1])
         const data = await getPost(1);
         setPostData(data);
         console.log(postData);
@@ -81,8 +84,8 @@ function HomePage(){
       else{
         if(!arr.includes(pages))
         {
-          arr.push(pages);
-          console.log(pages);
+          setArr(prevArr => [...prevArr, pages])
+          //console.log(pages);
           const data = await getPost(pages);
           setPostData(prevData => [...prevData, ...data]);
           console.log(postData);
