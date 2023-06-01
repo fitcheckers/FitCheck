@@ -40,7 +40,6 @@ function upload_img(
   setShowLabel,
   setShowModalPin,
   setContainOuterwearLabel,
-  setContainOuterwearObject
 ) {
   if (event.target.files && event.target.files[0]) {
     if (/image\/*/.test(event.target.files[0].type)) {
@@ -60,40 +59,34 @@ function upload_img(
   }
 
   file = document.getElementById("upload_img").files[0];
-
+  //console.log(file);
   const data = new FormData();
-  data.append("file", document.getElementById("upload_img").files[0]);
+  data.append("file", file);
 
   axios
-    .post("http://localhost:80/vision/label", data)
-    .then(function (result) {
-      const labels = result.data[0].labelAnnotations;
-
-      labels.forEach((object) => {
-        if (object.description === "Outerwear" && object.score > 0.5) {
-          setContainOuterwearLabel(true);
-        }
-      });
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-
-  axios
-    .post("http://localhost:80/vision/object", data)
-    .then(function (result) {
-      const labels = result.data[0].localizedObjectAnnotations;
-
-      labels.forEach((object) => {
+    .post("http://localhost:80/clarifai/upload", data)
+    .then(response => {
+      const predict = response.data.result;
+      console.log(predict);
+      predict.forEach((object) => {
         if (
-          (object.name === "Outerwear" ||
-            object.name === "Top" ||
-            object.name === "Shoe" ||
-            object.name === "Shorts" ||
-            object.name === "Pants") &&
-          object.score >= 0.5
+          (object.name === "outerwear" ||
+            object.name === "top" ||
+            object.name === "fashion" ||
+            object.name === "jacket" ||
+            object.name === "casual" ||
+            object.name === "shoe" ||
+            object.name === "denim" ||
+            object.name === "model" ||
+            object.name === "dress" ||
+            object.name === "fashionable" ||
+            object.name === "wear" ||
+            object.name === "sneakers" ||
+            object.name === "shorts" ||
+            object.name === "pants") &&
+          object.value >= 0.5
         ) {
-          setContainOuterwearObject(true);
+          setContainOuterwearLabel(true);
         }
       });
     })
@@ -132,10 +125,9 @@ function Modal(props) {
   const navigate = useNavigate();
 
   async function save_pin(pinDetails, user, add_pin) {
-    if (!containOuterwearLabel && !containOuterwearObject) {
+    if (!containOuterwearLabel) {
       // if img is not clothes, it wont upload
       console.log(containOuterwearLabel);
-      console.log(containOuterwearObject);
       console.log("DOES NOT CONTAIN CLOTHES");
       setError("Please use an appropriate image for Fitcheck Please!");
 
@@ -179,7 +171,6 @@ function Modal(props) {
   const [showLabel, setShowLabel] = useState(true);
   const [showModalPin, setShowModalPin] = useState(false);
   const [containOuterwearLabel, setContainOuterwearLabel] = useState(false);
-  const [containOuterwearObject, setContainOuterwearObject] = useState(false);
   const { currentUser, setError } = useAuth();
 
   const [chipData, setChipData] = useState([]);
@@ -249,7 +240,6 @@ function Modal(props) {
                     setShowLabel,
                     setShowModalPin,
                     setContainOuterwearLabel,
-                    setContainOuterwearObject
                   )
                 }
                 value=""
